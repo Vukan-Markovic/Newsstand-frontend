@@ -1,6 +1,13 @@
 {
   "name": "trafika-frontend",
-  "version": "0.0.0",
+  "description": "Web MEAN application for books trading with authentication.",
+  "author": "Vukan Marković",
+  "license": "MIT",
+  "homepage": "https://bookclubtrading.herokuapp.com/",
+  "repository": {
+    "Book-trading-club": "https://github.com/Vukan-Markovic/Book-trading-club.git"
+  },
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
