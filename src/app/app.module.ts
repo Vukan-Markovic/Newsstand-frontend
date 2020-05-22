@@ -20,6 +20,14 @@ import {
     MatCheckboxModule, MatDatepickerModule, MatPaginatorModule, MatSortModule, MatTooltipModule,
     MatStepperModule
 } from '@angular/material';
+import { DobavljacComponent } from './_components/dobavljac/dobavljac.component';
+import { IzvestajComponent } from './_components/izvestaj/izvestaj.component';
+import { PorudzbinaComponent } from './_components/porudzbina/porudzbina.component';
+import { ProizvodComponent } from './_components/proizvod/proizvod.component';
+import { ProdavacComponent } from './_components/prodavac/prodavac.component';
+import { ProizvodjacComponent } from './_components/proizvodjac/proizvodjac.component';
+import { RacunComponent } from './_components/racun/racun.component';
+import { VrstaProizvodaComponent } from './_components/vrsta-proizvoda/vrsta-proizvoda.component';
 
 @NgModule({
     imports: [
@@ -59,7 +67,15 @@ import {
         AppComponent,
         HomeComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        DobavljacComponent,
+        IzvestajComponent,
+        PorudzbinaComponent,
+        ProizvodComponent,
+        ProdavacComponent,
+        ProizvodjacComponent,
+        RacunComponent,
+        VrstaProizvodaComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
