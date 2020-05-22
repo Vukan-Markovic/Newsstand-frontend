@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Tim } from '../models/tim';
+import { Dobavljac } from '../_models/dobavljac';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
-export class TimService {
-    private readonly API_URL = 'http://localhost:8083/tim/';
-    dataChange: BehaviorSubject<Tim[]> = new BehaviorSubject<Tim[]>([]);
+export class DobavljacService {
+    private readonly API_URL = 'http://localhost:8080/api/dobavljac';
+    dataChange: BehaviorSubject<Dobavljac[]> = new BehaviorSubject<Dobavljac[]>([]);
     private readonly API_URL_BYID = 'http://localhost:8083/igraciZaTimId/';
     dataChange: BehaviorSubject<Igrac[]> = new BehaviorSubject<Igrac[]>([]);
     
     constructor(private httpClient: HttpClient) { }
 
-    public getAllTim(): Observable<Tim[]> {
-        this.httpClient.get<Tim[]>(this.API_URL).subscribe(data => {
+    public getDobavljac(): Observable<Dobavljac[]> {
+        this.httpClient.get<Dobavljac[]>(this.API_URL).subscribe(data => {
             this.dataChange.next(data);
         },
             (error: HttpErrorResponse) => {
@@ -34,15 +34,15 @@ export class TimService {
         return this.dataChange.asObservable();
     }
 
-    public addTim(tim: Tim): void {
-        this.httpClient.post(this.API_URL, tim).subscribe();
+    public addDobavljac(dobavljac: Dobavljac): void {
+        this.httpClient.post(this.API_URL, dobavljac).subscribe();
     }
 
-    public updateTim(tim: Tim): void {
-        this.httpClient.put(this.API_URL, tim).subscribe();
+    public updateDobavljac(dobavljac: Dobavljac): void {
+        this.httpClient.put(this.API_URL, dobavljac).subscribe();
     }
 
-    public deleteTim(id: number): void {
+    public deleteDobavljac(id: number): void {
         this.httpClient.delete(this.API_URL + id).subscribe();
     }
 }

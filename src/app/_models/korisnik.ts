@@ -1,8 +1,8 @@
-﻿export class User {
-    id: number;
-    username: string;
-    password: string;
-    firstName: string;
-    lastName: string;
+﻿export class Korisnik {
+    korisnikID: number;
+    email: string;
+    lozinka: string;
+    uloga: string;
+    verifikovan: string;
     token: string;
 }

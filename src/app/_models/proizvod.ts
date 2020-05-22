@@ -1,3 +1,17 @@
+export class Proizvod {
+    proizvodID: number; 
+    nazivProizvoda: string; 
+    opisProizvoda: string; 
+    cena: number; 
+    tipPakovanja: string; 
+    velicinaPakovanja: string; 
+    barKod: string; 
+    masa: number; 
+    raspolozivaKolicina: number;
+    proizvodjacID: number;
+    vrstaProizvodaID: number;
+}
+/*
 export class Book {
     title: string;
     price: number;
@@ -28,3 +42,4 @@ export class Book {
         this.solded = solded;
     }
 }
+*/

@@ -1,17 +1,17 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../_models/korisnik';
+import { Korisnik } from '../_models/korisnik';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class KorisnikService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-        return this.http.get<User[]>(`${config.apiUrl}/users`);
+        return this.http.get<Korisnik[]>(`${config.apiUrl}/users`);
     }
 
-    register(user: User) {
-        return this.http.post(`${config.apiUrl}/users/register`, user);
+    register(korisnik: Korisnik) {
+        return this.http.post(`${config.apiUrl}/users/register`, korisnik);
     }
 
     delete(id: number) {
