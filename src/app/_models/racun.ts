@@ -1,3 +1,5 @@
+import { Prodavac } from './prodavac';
+
 export class Racun {
     racunID: number;
     vremeIzdavanja: Date;
@@ -7,5 +9,5 @@ export class Racun {
     nacinPlacanja: string; 
     brojRacuna: string; 
     tipRacuna: string; 
-    prodavacID: number;
+    prodavac: Prodavac;
 }

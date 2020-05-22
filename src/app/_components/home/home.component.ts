@@ -1,8 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { User } from '../../_models/korisnik';
+import { User } from '../../_models/user';
 import { AuthenticationService } from '../../_services/authentication.service';
-import { UserService } from '../../_services/korisnik.service';
+import { UserService } from '../../_services/user.service';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit {

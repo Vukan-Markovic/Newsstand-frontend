@@ -28,6 +28,14 @@ import { ProdavacComponent } from './_components/prodavac/prodavac.component';
 import { ProizvodjacComponent } from './_components/proizvodjac/proizvodjac.component';
 import { RacunComponent } from './_components/racun/racun.component';
 import { VrstaProizvodaComponent } from './_components/vrsta-proizvoda/vrsta-proizvoda.component';
+import { PageNotFoundComponent } from './_components/page-not-found/page-not-found.component';
+import { DobavljacDialogComponent } from './_components/dialogs/dobavljac-dialog/dobavljac-dialog.component';
+import { IzvestajDialogComponent } from './_components/dialogs/izvestaj-dialog/izvestaj-dialog.component';
+import { PorudzbinaDialogComponent } from './_components/dialogs/porudzbina-dialog/porudzbina-dialog.component';
+import { ProizvodDialogComponent } from './_components/dialogs/proizvod-dialog/proizvod-dialog.component';
+import { ProizvodjacDialogComponent } from './_components/dialogs/proizvodjac-dialog/proizvodjac-dialog.component';
+import { RacunDialogComponent } from './_components/dialogs/racun-dialog/racun-dialog.component';
+import { VrstaProizvodaDialogComponent } from './_components/dialogs/vrsta-proizvoda-dialog/vrsta-proizvoda-dialog.component';
 
 @NgModule({
     imports: [
@@ -75,7 +83,15 @@ import { VrstaProizvodaComponent } from './_components/vrsta-proizvoda/vrsta-pro
         ProdavacComponent,
         ProizvodjacComponent,
         RacunComponent,
-        VrstaProizvodaComponent
+        VrstaProizvodaComponent,
+        PageNotFoundComponent,
+        DobavljacDialogComponent,
+        IzvestajDialogComponent,
+        PorudzbinaDialogComponent,
+        ProizvodDialogComponent,
+        ProizvodjacDialogComponent,
+        RacunDialogComponent,
+        VrstaProizvodaDialogComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -1,3 +1,6 @@
+import { Proizvodjac } from './proizvodjac';
+import { VrstaProizvoda } from './vrstaProizvoda';
+
 export class Proizvod {
     proizvodID: number; 
     nazivProizvoda: string; 
@@ -8,9 +11,10 @@ export class Proizvod {
     barKod: string; 
     masa: number; 
     raspolozivaKolicina: number;
-    proizvodjacID: number;
-    vrstaProizvodaID: number;
+    proizvodjac: Proizvodjac;
+    vrstaProizvoda: VrstaProizvoda;
 }
+
 /*
 export class Book {
     title: string;

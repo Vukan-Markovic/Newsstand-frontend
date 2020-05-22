@@ -1,1 +1,86 @@
-<p>dobavljac works!</p>
+<mat-toolbar class="toolbarNew" color="primary">
+    <span class="title-center">Dobavljač</span>
+  </mat-toolbar>
+  
+  <div class="container mat-elevation-z8">
+    
+    <mat-form-field class="search">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite dobavljače">
+    </mat-form-field>
+  
+    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+  
+      <ng-container matColumnDef="skraceniNaziv">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Skraćeni naziv</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.skraceniNaziv}}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="punNaziv">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Pun naziv</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.punNaziv}}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="kontaktDobavljaca">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Kontakt dobavljača</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.kontaktDobavljaca}}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="adresaDobavljaca">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Adresa dobavljača</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.adresaDobavljaca}}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="grad">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Grad</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.grad}}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="drzava">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Država</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.drzava}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="postanskiBroj">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Poštanski broj</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.postanskiBroj}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="PIB">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>PIB</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.PIB}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="kontaktOsoba">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Kontakt osoba</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.kontaktOsoba}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="brojZiroRacuna">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Broj žiro računa</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.brojZiroRacuna}}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="primary" matTooltip="Dodajte novog dobavljača" matTooltipClass="example-tooltip-blue" (click)="openDialog(1)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-header-cell>
+  
+        <mat-cell *matCellDef="let row; let i=index;">
+          <button mat-icon-button color="primary" matTooltip="Izmenite dobavljača"
+            (click)="openDialog(2, row.dobavljacID, row.skraceniNaziv, row.punNaziv, row.kontaktDobavljaca, row.adresaDobavljaca, row.grad, row.drzava, row.postanskiBroj, row.PIB, row.kontaktOsoba, row.brojZiroRacuna)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" matTooltip="Izbrišite dobavljača"
+            (click)="openDialog(3, row.dobavljacID, row.skraceniNaziv, row.punNaziv, row.kontaktDobavljaca, row.adresaDobavljaca, row.grad, row.drzava, row.postanskiBroj, row.PIB, row.kontaktOsoba, row.brojZiroRacuna)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSize]="[5]" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
+  </div>

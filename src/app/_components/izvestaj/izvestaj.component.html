@@ -1,1 +1,62 @@
-<p>izvestaj works!</p>
+<mat-toolbar class="toolbarNew" color="primary">
+  <span class="title-center">Izveštaj</span>
+</mat-toolbar>
+
+<div class="container mat-elevation-z8">
+
+  <mat-form-field class="search">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite Izveštaje">
+  </mat-form-field>
+
+  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+
+    <ng-container matColumnDef="promet">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Promet</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.promet}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="brojKupovina">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Broj kupovina</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.brojKupovina}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="datumOd">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Od datuma</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.datumOd | date : "dd.MM.yyyy."}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="datumDo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Do datuma</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.datumDo | date : "dd.MM.yyyy."}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="menadzer">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Menadžer</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.menadzer.ime}} {{row.menadzer.prezime}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" matTooltip="Dodajte novi izveštaj"
+          matTooltipClass="example-tooltip-blue" (click)="openDialog(1)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="primary" matTooltip="Izmenite izveštaj"
+          (click)="openDialog(2, row.izvestajID, row.promet, row.brojKupovina, row.datumOd, row.datumDo, row.menadzer)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" matTooltip="Izbrišite izveštaj"
+          (click)="openDialog(2, row.izvestajID, row.promet, row.brojKupovina, row.datumOd, row.datumDo, row.menadzer)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator [pageSize]="[5]" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
+</div>
