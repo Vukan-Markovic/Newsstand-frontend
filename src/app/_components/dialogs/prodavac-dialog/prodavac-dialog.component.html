@@ -1,0 +1,92 @@
+<div class="container">
+  <h3 mat-dialog-title *ngIf="flag == 2">Modifikacija prodavca</h3>
+  <h3 mat-dialog-title *ngIf="flag == 3">Brisanje prodavca</h3>
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+    <div class="form">
+      <mat-form-field hintLabel="Maksimalno 20 karaktera">
+        <input matInput #input maxlength="20" placeholder="Ime" [(ngModel)]="data.ime" name="ime" [disabled]="flag == 3"
+          required>
+        <mat-hint align="end">{{input.value?.length || 0}}/20</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field hintLabel="Maksimalno 30 karaktera">
+        <input matInput #input2 maxlength="30" placeholder="Prezime" [(ngModel)]="data.prezime" name="prezime"
+          [disabled]="flag == 3" required>
+        <mat-hint align="end">{{input2.value?.length || 0}}/30</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field>
+        <mat-select [(ngModel)]="data.pol" placeholder="Pol" name="pol" [disabled]="flag == 3" required>
+          <mat-option [value]="pol">
+            muško
+          </mat-option>
+          <mat-option [value]="pol">
+            žensko
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field class="example-full-width" color="accent">
+        <input matInput [matDatepicker]="datumRodjenja" placeholder="Datum rođenja" [(ngModel)]="data.datumRodjenja"
+          name="datumRodjenja" [disabled]="flag == 3">
+        <mat-datepicker-toggle matSuffix [for]="datumRodjenja"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #datumRodjenja></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field hintLabel="Maksimalno 50 karaktera">
+        <input matInput #input3 maxlength="50" placeholder="Adresa stanovanja" [(ngModel)]="data.adresaStanovanja"
+          name="adresaStanovanja" [disabled]="flag == 3" required>
+        <mat-hint align="end">{{input3.value?.length || 0}}/50</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field hintLabel="Maksimalno 20 karaktera">
+        <input matInput #input4 maxlength="20" placeholder="Telefon" [(ngModel)]="data.telefon" name="telefon"
+          [disabled]="flag == 3" required>
+        <mat-hint align="end">{{input4.value?.length || 0}}/20</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field hintLabel="JMBG treba da ima 13 cifara">
+        <input matInput #input5 minlength="13" maxlength="13" placeholder="JMBG" [(ngModel)]="data.JMBG" name="JMBG"
+          [disabled]="flag == 3" required>
+        <mat-hint align="end">{{input5.value?.length || 0}}/13</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field class="example-full-width" color="accent">
+        <input matInput [matDatepicker]="datumZaposlenja" placeholder="Datum zaposlenja"
+          [(ngModel)]="data.datumZaposlenja" name="datumZaposlenja" [disabled]="flag == 3">
+        <mat-datepicker-toggle matSuffix [for]="datumZaposlenja"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #datumZaposlenja></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field hintLabel="Maksimalno 20 karaktera">
+        <input matInput #input6 maxlength="20" placeholder="Stručna sprema" [(ngModel)]="data.strucnaSprema"
+          name="strucnaSprema" [disabled]="flag == 3" required>
+        <mat-hint align="end">{{input6.value?.length || 0}}/20</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-raised-button color="accent" *ngIf="flag == 2" [type]="submit" [mat-dialog-close]="1"
+        (click)="update()" [disabled]="!formControl.valid">Sačuvaj</button>
+      <button mat-raised-button color="primary" *ngIf="flag == 3" [type]="submit" [mat-dialog-close]="1"
+        (click)="delete()">Obriši</button>
+      <button mat-raised-button color="warn" (click)="cancel()" tabindex="-1">Poništi</button>
+    </div>
+  </form>
+</div>

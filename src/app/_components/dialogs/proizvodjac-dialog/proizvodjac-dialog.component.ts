@@ -12,7 +12,7 @@ import { ProizvodjacService } from 'src/app/_services/proizvodjac.service';
 export class ProizvodjacDialogComponent implements OnInit {
   public flag: number;
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<ProizvodjacDialogComponent>,

@@ -9,20 +9,20 @@ import { ProizvodjacService } from 'src/app/_services/proizvodjac.service';
 import { VrstaProizvodaService } from 'src/app/_services/vrstaProizvoda.service';
 
 @Component({
-  selector: 'app-tim-dialog',
-  templateUrl: './tim-dialog.component.html',
-  styleUrls: ['./tim-dialog.component.css']
+  selector: 'app-proizvod-dialog',
+  templateUrl: './proizvod-dialog.component.html',
+  styleUrls: ['./proizvod-dialog.component.css']
 })
-export class TimDialogComponent implements OnInit {
+export class ProizvodDialogComponent implements OnInit {
   public flag: number;
   proizvodjaci: Proizvodjac[];
   vrsteProizvoda: VrstaProizvoda[];
 
   constructor(public snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<TimDialogComponent>,
+    public dialogRef: MatDialogRef<ProizvodDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Proizvod,
     public proizvodService: ProizvodService,
-    public proizvodjacService: ProizvodjacService, 
+    public proizvodjacService: ProizvodjacService,
     public vrstaProizvodaService: VrstaProizvodaService) { }
 
   ngOnInit() {

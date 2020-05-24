@@ -9,11 +9,11 @@ import { VrstaProizvodaService } from 'src/app/_services/vrstaProizvoda.service'
 import { VrstaProizvodaDialogComponent } from '../dialogs/vrsta-proizvoda-dialog/vrsta-proizvoda-dialog.component';
 
 @Component({
-  selector: 'app-igrac',
-  templateUrl: './igrac.component.html',
-  styleUrls: ['./igrac.component.css']
+  selector: 'app-vrsta-proizvoda',
+  templateUrl: './vrsta-proizvoda.component.html',
+  styleUrls: ['./vrsta-proizvoda.component.css']
 })
-export class IgracComponent implements OnInit {
+export class VrstaProizvodaComponent implements OnInit {
   displayedColumns = ['nazivVrsteProizvoda', 'opisVrsteProizvoda', 'actions'];
   dataSource: MatTableDataSource<VrstaProizvoda>;
   @ViewChild(MatPaginator) paginator: MatPaginator;

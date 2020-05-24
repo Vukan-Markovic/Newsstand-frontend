@@ -1,60 +1,75 @@
 <mat-toolbar color="primary">
-    <span class="title-center">Tim</span>
-  </mat-toolbar>
-  
-  <div class="container mat-elevation-z8">
-  
-    <mat-form-field class="search">
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite timove">
-    </mat-form-field>
-  
-    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
-  
-      <ng-container matColumnDef="naziv">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.naziv}}</mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="osnovan">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Osnovan</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.osnovan | date : "dd.MM.yyyy."}}</mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="sediste">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Sedište</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.sediste}}</mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="liga">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Liga</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.liga.naziv}}</mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>
-          <button mat-icon-button color="primary" (click)="openDialog(1)" matTooltip="Dodajte novi tim">
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-header-cell>
-  
-        <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="primary" matTooltip="Izmenite tim"
-            (click)="openDialog(2, row.id, row.naziv, row.osnovan, row.sediste, row.liga)">
-            <mat-icon aria-label="Edit">edit</mat-icon>
-          </button>
-          <button mat-icon-button color="primary" matTooltip="Izbrišite tim"
-            (click)="openDialog(3, row.id, row.naziv, row.osnovan, row.sediste, row.liga)">
-            <mat-icon aria-label="Delete">delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-  
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"
-        [ngClass]="{'selectRow': selektovanTim != null && selektovanTim.id == row.id}"></mat-row>
-    </mat-table>
-    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-  </div>
-  <div class="container mat-elevation-z8">
-    <app-igrac *ngIf="selektovanTim" [selektovanTim]="selektovanTim"></app-igrac>
-  </div>
+  <span class="title-center">Račun</span>
+</mat-toolbar>
+
+<div class="container mat-elevation-z8">
+
+  <mat-form-field class="search">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite račune">
+  </mat-form-field>
+
+  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+
+    <ng-container matColumnDef="vremeIzdavanja">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Vreme izdavanja</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.vremeIzdavanja | date : "dd.MM.yyyy."}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ukupanIznosRacuna">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Ukupan iznos</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.ukupanIznosRacuna}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nazivProdavnice">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv prodavnice</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.nazivProdavnice}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nacinPlacanja">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Način plaćanja</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.nacinPlacanja}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="brojRacuna">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Broj računa</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.brojRacuna}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tipRacuna">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Tip računa</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.tipRacuna}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="prodavac">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Prodavac</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.prodavac.ime}} {{row.prodavac.ime}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="openDialog(1)" matTooltip="Dodajte novi račun">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="primary" matTooltip="Izmenite račun"
+          (click)="openDialog(2, row.racunID, row.vremeIzdavanja, row.mestoIzdavanja, row.ukupanIznosRacuna, row.nazivProdavnice, row.nacinPlacanja, row.brojRacuna, row.tipRacuna, row.prodavac)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" matTooltip="Izbrišite račun"
+          (click)="openDialog(2, row.racunID, row.vremeIzdavanja, row.mestoIzdavanja, row.ukupanIznosRacuna, row.nazivProdavnice, row.nacinPlacanja, row.brojRacuna, row.tipRacuna, row.prodavac)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"
+      [ngClass]="{'selectRow': selektovanTim != null && selektovanTim.id == row.id}"></mat-row>
+  </mat-table>
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+<div class="container mat-elevation-z8">
+  <app-igrac *ngIf="selektovanTim" [selektovanTim]="selektovanTim"></app-igrac>
+</div>

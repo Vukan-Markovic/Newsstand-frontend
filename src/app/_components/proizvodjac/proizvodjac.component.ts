@@ -5,16 +5,15 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { Proizvodjac } from 'src/app/_models/proizvodjac';
-import { ProizvodService } from 'src/app/_services/proizvod.service';
 import { ProizvodjacService } from 'src/app/_services/proizvodjac.service';
 import { ProizvodjacDialogComponent } from '../dialogs/proizvodjac-dialog/proizvodjac-dialog.component';
 
 @Component({
-  selector: 'app-igrac',
-  templateUrl: './igrac.component.html',
-  styleUrls: ['./igrac.component.css']
+  selector: 'app-proizvodjac',
+  templateUrl: './proizvodjac.component.html',
+  styleUrls: ['./proizvodjac.component.css']
 })
-export class IgracComponent implements OnInit {
+export class ProizvodjacComponent implements OnInit {
   displayedColumns = ['nazivProizvodjaca', 'kontaktProizvodjaca', 'adresaProizvodjaca', 'actions'];
   dataSource: MatTableDataSource<Proizvodjac>;
   @ViewChild(MatPaginator) paginator: MatPaginator;

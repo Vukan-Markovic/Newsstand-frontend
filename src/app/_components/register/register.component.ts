@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../../_services/authentication.service';
-import { UserService } from '../../_services/korisnik.service';
+import { KorisnikService } from '../../_services/korisnik.service';
 
 @Component({ templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
         private formBuilder: FormBuilder,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private userService: UserService
+        private korisnikService: KorisnikService
     ) {
         if (this.authenticationService.currentUserValue) {
             this.router.navigate(['/']);
@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        this.userService.register(this.registerForm.value)
+        this.korisnikService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(
                 data => {

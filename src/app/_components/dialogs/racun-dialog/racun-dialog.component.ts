@@ -21,11 +21,7 @@ export class RacunDialogComponent implements OnInit {
     public racunService: RacunService,
     public prodavacService: ProdavacService) { }
 
-  ngOnInit() {
-    // this.ligaService.getAllLiga().subscribe(lige =>
-    //   this.lige = lige
-    // );
-  }
+  ngOnInit() { }
 
   public add(): void {
     this.data.racunID = -1;

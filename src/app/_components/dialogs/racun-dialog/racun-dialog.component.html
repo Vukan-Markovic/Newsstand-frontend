@@ -13,16 +13,16 @@
       </div>
 
       <div class="form">
-        <mat-form-field hintLabel="Maksimalno 100 karaktera">
-          <input matInput #input maxlength="100" placeholder="Mesto izdavanja" [(ngModel)]="data.mestoIzdavanja" name="mestoIzdavanja" [disabled]="flag == 3" required>
-          <mat-hint align="end">{{input.value?.length || 0}}/100</mat-hint>
+        <mat-form-field hintLabel="Maksimalno 20 karaktera">
+          <input matInput #input maxlength="20" placeholder="Mesto izdavanja" [(ngModel)]="data.mestoIzdavanja" name="mestoIzdavanja" [disabled]="flag == 3" required>
+          <mat-hint align="end">{{input.value?.length || 0}}/20</mat-hint>
         </mat-form-field>
       </div>
   
       <div class="form">
-        <mat-form-field hintLabel="Maksimalno 100 karaktera">
-          <input matInput #input2 maxlength="100" placeholder="Naziv prodavnice" [(ngModel)]="data.nazivProdavnice" name="nazivProdavnice" [disabled]="flag == 3">
-          <mat-hint align="end">{{input2.value?.length || 0}}/100</mat-hint>
+        <mat-form-field hintLabel="Maksimalno 50 karaktera">
+          <input matInput #input2 maxlength="50" placeholder="Naziv prodavnice" [(ngModel)]="data.nazivProdavnice" name="nazivProdavnice" [disabled]="flag == 3">
+          <mat-hint align="end">{{input2.value?.length || 0}}/50</mat-hint>
         </mat-form-field>
       </div>
   
@@ -31,26 +31,26 @@
           <mat-select [(ngModel)]="data.nacinPlacanja" placeholder="Način plaćanja" name="nacinPlacanja" [compareWith]="compareTo"
             [disabled]="flag == 3" required>
             <mat-option [value]="nacinPlacanja">
-              Gotovina
+              gotovina
             </mat-option>
             <mat-option [value]="nacinPlacanja">
-              Kartica
+              kartica
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
   
       <div class="form">
-        <mat-form-field hintLabel="Maksimalno 100 karaktera">
-          <input matInput #input2 maxlength="100" placeholder="Broj računa" [(ngModel)]="data.brojRacuna" name="brojRacuna" [disabled]="flag == 3">
-          <mat-hint align="end">{{input2.value?.length || 0}}/100</mat-hint>
+        <mat-form-field hintLabel="Maksimalno 20 karaktera">
+          <input matInput #input3 maxlength="20" placeholder="Broj računa" [(ngModel)]="data.brojRacuna" name="brojRacuna" [disabled]="flag == 3">
+          <mat-hint align="end">{{input3.value?.length || 0}}/20</mat-hint>
         </mat-form-field>
       </div>
 
       <div class="form">
-        <mat-form-field hintLabel="Maksimalno 100 karaktera">
-          <input matInput #input2 maxlength="100" placeholder="Tip računa" [(ngModel)]="data.tipRacuna" name="tipRacuna" [disabled]="flag == 3">
-          <mat-hint align="end">{{input2.value?.length || 0}}/100</mat-hint>
+        <mat-form-field hintLabel="Maksimalno 30 karaktera">
+          <input matInput #input4 maxlength="30" placeholder="Tip računa" [(ngModel)]="data.tipRacuna" name="tipRacuna" [disabled]="flag == 3">
+          <mat-hint align="end">{{input4.value?.length || 0}}/30</mat-hint>
         </mat-form-field>
       </div>
 

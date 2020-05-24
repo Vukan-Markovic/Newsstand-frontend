@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { AuthenticationService } from './_services';
-import { Korisnik } from './_models';
+import { AuthenticationService } from './_services/authentication.service';
+import { Korisnik } from './_models/korisnik';
 
 import './_content/app.less';
 
-@Component({ selector: 'app', templateUrl: 'app.component.html' })
+@Component({
+    selector: 'app',
+    templateUrl: 'app.component.html'
+})
 export class AppComponent {
     currentUser: Korisnik;
 
-    constructor(
-        private router: Router,
-        private authenticationService: AuthenticationService
-    ) {
+    constructor(private router: Router, private authenticationService: AuthenticationService) {
         this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     }
 

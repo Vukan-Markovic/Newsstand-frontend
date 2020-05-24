@@ -21,11 +21,7 @@ export class IzvestajDialogComponent implements OnInit {
     public izvestajService: IzvestajService,
     public menadzerService: MenadzerService) { }
 
-  ngOnInit() {
-    // this.menadzerService.getAllLiga().subscribe(lige =>
-    //   this.lige = lige
-    // );
-  }
+  ngOnInit() { }
 
   compareTo(a: { id: any; }, b: { id: any; }) {
     return a.id == b.id;

@@ -1,32 +1,28 @@
-  
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
+import { Prodavac } from 'src/app/_models/prodavac';
+import { ProdavacService } from 'src/app/_services/prodavac.service';
 
 @Component({
-  selector: 'app-igrac',
-  templateUrl: './igrac.component.html',
-  styleUrls: ['./igrac.component.css']
+  selector: 'app-prodavac',
+  templateUrl: './prodavac.component.html',
+  styleUrls: ['./prodavac.component.css']
 })
-export class IgracComponent implements OnInit {
-  displayedColumns = ['ime', 'prezime', 'brojReg', 'datumRodjenja', 'nacionalnost', 'tim', 'actions'];
-  dataSource: MatTableDataSource<Igrac>;
-  @Input() selektovanTim: Tim;
+export class ProdavacComponent implements OnInit {
+  displayedColumns = ['ime', 'prezime', 'pol', 'datumRodjenja', 'adresaStanovanja', 'telefon', 'JMBG', 'datumZaposlenja', 'strucnaSprema', 'actions'];
+  dataSource: MatTableDataSource<Prodavac>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public igracService: IgracService, public dialog: MatDialog) { }
+  constructor(public prodavacService: ProdavacService, public dialog: MatDialog) { }
 
   ngOnInit() { }
 
-  ngOnChanges() {
-    if (this.selektovanTim.id) this.loadData();
-  }
-
   public loadData() {
-    this.ligaService.getAllLiga().subscribe(data => {
+    this.prodavacService.getProdavac().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sortingDataAccessor = (data, property) => {
         return data[property].toLocaleLowerCase();
@@ -38,16 +34,24 @@ export class IgracComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number, id: number, ime: string, prezime: string, brojReg: string,
-    datumRodjenja: Date, nacionalnost: Nacionalnost, tim: Tim) {
-    const dialogRef = this.dialog.open(IgracDialogComponent, {
+  public openDialog(flag: number,   prodavacID: number,
+    ime: string,
+    prezime: string,
+    pol: string,
+    datumRodjenja: string,
+    adresaStanovanja: string,
+    telefon: string,
+    JMBG: string,
+    datumZaposlenja: string,
+    strucnaSprema: string) {
+    const dialogRef = this.dialog.open(ProdavacDialogComponent, {
       data: {
-        i: id, id: id, ime: ime, prezime: prezime, brojReg: brojReg,
-        datumRodjenja: datumRodjenja, nacionalnost: nacionalnost, tim: tim
+        i: prodavacID, id: prodavacID, ime: ime, prezime: prezime, pol: pol,
+        datumRodjenja: datumRodjenja, adresaStanovanja: adresaStanovanja, telefon: telefon, JMBG: JMBG
+        , datumZaposlenja: datumZaposlenja, strucnaSprema: strucnaSprema
       }
     });
     dialogRef.componentInstance.flag = flag;
-    if (flag == 1) dialogRef.componentInstance.data.tim = this.selektovanTim;
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == 1)

@@ -1,11 +1,11 @@
 {
   "name": "trafika-frontend",
-  "description": "Web MEAN application for books trading with authentication.",
+  "description": "Veb aplikacija za vođenje trafike.",
   "author": "Vukan Marković",
   "license": "MIT",
   "homepage": "https://bookclubtrading.herokuapp.com/",
   "repository": {
-    "Book-trading-club": "https://github.com/Vukan-Markovic/Book-trading-club.git"
+    "trafika-frontend": "https://github.com/Vukan-Markovic/trafika-frontend.git"
   },
   "version": "1.0.0",
   "scripts": {
@@ -28,6 +28,7 @@
     "@angular/platform-browser": "~9.1.9",
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
+    "ngx-toastr": "^12.0.1",
     "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.3"

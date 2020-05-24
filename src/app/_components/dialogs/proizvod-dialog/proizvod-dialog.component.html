@@ -4,9 +4,9 @@
     <h3 mat-dialog-title *ngIf="flag == 3">Brisanje proizvoda</h3>
     <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
       <div class="form">
-        <mat-form-field hintLabel="Maksimalno 100 karaktera">
-          <input matInput #input maxlength="100" placeholder="Naziv" [(ngModel)]="data.nazivProizvoda" name="nazivProizvoda" [disabled]="flag == 3" required>
-          <mat-hint align="end">{{input.value?.length || 0}}/100</mat-hint>
+        <mat-form-field hintLabel="Maksimalno 30 karaktera">
+          <input matInput #input maxlength="30" placeholder="Naziv" [(ngModel)]="data.nazivProizvoda" name="nazivProizvoda" [disabled]="flag == 3" required>
+          <mat-hint align="end">{{input.value?.length || 0}}/30</mat-hint>
         </mat-form-field>
       </div>
   
@@ -18,37 +18,37 @@
       </div>
 
       <div class="form">
-        <mat-form-field hintLabel="Maksimalno 100 karaktera"></mat-form-field>
-          <input matInput #input2 maxlength="100" placeholder="Cena" [(ngModel)]="data.cena" name="cena" [disabled]="flag == 3">
-          <mat-hint align="end">{{input2.value?.length || 0}}/100</mat-hint>
+        <mat-form-field hintLabel="Maksimalno 10 cifara"></mat-form-field>
+          <input matInput #input3 maxlength="10" type="number" placeholder="Cena" [(ngModel)]="data.cena" name="cena" [disabled]="flag == 3">
+          <mat-hint align="end">{{input3.value?.length || 0}}/10</mat-hint>
         </mat-form-field>
       </div>
 
       <div class="form">
-        <mat-form-field hintLabel="Maksimalno 100 karaktera">
-          <input matInput #input2 maxlength="100" placeholder="Tip pakovanja" [(ngModel)]="data.tipPakovanja" name="tipPakovanja" [disabled]="flag == 3">
-          <mat-hint align="end">{{input2.value?.length || 0}}/100</mat-hint>
+        <mat-form-field hintLabel="Maksimalno 20 karaktera">
+          <input matInput #input4 maxlength="20" placeholder="Tip pakovanja" [(ngModel)]="data.tipPakovanja" name="tipPakovanja" [disabled]="flag == 3">
+          <mat-hint align="end">{{input4.value?.length || 0}}/20</mat-hint>
         </mat-form-field>
       </div>
 
       <div class="form">
-        <mat-form-field hintLabel="Maksimalno 100 karaktera">
-          <input matInput #input2 maxlength="100" placeholder="Veličina pakovanja" [(ngModel)]="data.velicinaPakovanja" name="velicinaPakovanja" [disabled]="flag == 3">
-          <mat-hint align="end">{{input2.value?.length || 0}}/100</mat-hint>
+        <mat-form-field hintLabel="Maksimalno 20 karaktera">
+          <input matInput #input5 maxlength="20" placeholder="Veličina pakovanja" [(ngModel)]="data.velicinaPakovanja" name="velicinaPakovanja" [disabled]="flag == 3">
+          <mat-hint align="end">{{input5.value?.length || 0}}/20</mat-hint>
         </mat-form-field>
       </div>
 
       <div class="form">
-        <mat-form-field hintLabel="Maksimalno 100 karaktera">
-          <input matInput #input2 maxlength="100" placeholder="Bar kod" [(ngModel)]="data.barKod" name="barKod" [disabled]="flag == 3">
-          <mat-hint align="end">{{input2.value?.length || 0}}/100</mat-hint>
+        <mat-form-field hintLabel="Maksimalno 20 karaktera">
+          <input matInput #input6 maxlength="20" placeholder="Bar kod" [(ngModel)]="data.barKod" name="barKod" [disabled]="flag == 3">
+          <mat-hint align="end">{{input6.value?.length || 0}}/20</mat-hint>
         </mat-form-field>
       </div>
 
       <div class="form">
-        <mat-form-field hintLabel="Maksimalno 100 karaktera">
-          <input matInput #input2 maxlength="100" placeholder="Masa" [(ngModel)]="data.masa" name="masa" [disabled]="flag == 3">
-          <mat-hint align="end">{{input2.value?.length || 0}}/100</mat-hint>
+        <mat-form-field hintLabel="Maksimalno 10 cifara">
+          <input matInput #input7 maxlength="10" type="number" placeholder="Masa" [(ngModel)]="data.masa" name="masa" [disabled]="flag == 3">
+          <mat-hint align="end">{{input7.value?.length || 0}}/10</mat-hint>
         </mat-form-field>
       </div>
   

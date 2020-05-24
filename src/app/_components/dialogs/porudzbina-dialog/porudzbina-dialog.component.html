@@ -26,13 +26,13 @@
           <mat-select [(ngModel)]="data.statusPorudzbine" placeholder="Status porudžbine" name="statusPorudzbine" [compareWith]="compareTo"
             [disabled]="flag == 3" required>
             <mat-option [value]="statusPorudzbine">
-              {{ dobavljac.punNaziv }}
+              poručeno
             </mat-option>
             <mat-option [value]="statusPorudzbine">
-              {{ dobavljac.punNaziv }}
+              kompletirano
             </mat-option>
             <mat-option [value]="statusPorudzbine">
-              {{ dobavljac.punNaziv }}
+              reklamacija
             </mat-option>
           </mat-select>
         </mat-form-field>

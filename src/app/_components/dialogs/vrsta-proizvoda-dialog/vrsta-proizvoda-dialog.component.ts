@@ -17,7 +17,7 @@ export class VrstaProizvodaDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: VrstaProizvoda,
     public vrstaProizvodaService: VrstaProizvodaService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   public add(): void {
     this.data.vrstaProizvodaID = -1;

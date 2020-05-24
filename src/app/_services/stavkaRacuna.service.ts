@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
-export class RacunService {
+export class StavkaRacunaService {
     private readonly API_URL = 'http://localhost:8080/api/stavkaRacuna';
     dataChange: BehaviorSubject<StavkaRacuna[]> = new BehaviorSubject<StavkaRacuna[]>([]);
     

@@ -10,11 +10,11 @@ import { Menadzer } from 'src/app/_models/menadzer';
 import { IzvestajDialogComponent } from '../dialogs/izvestaj-dialog/izvestaj-dialog.component';
 
 @Component({
-  selector: 'app-igrac',
-  templateUrl: './igrac.component.html',
-  styleUrls: ['./igrac.component.css']
+  selector: 'app-izvestaj',
+  templateUrl: './izvestaj.component.html',
+  styleUrls: ['./izvestaj.component.css']
 })
-export class IgracComponent implements OnInit {
+export class IzvestajComponent implements OnInit {
   displayedColumns = ['promet', 'brojKupovina', 'datumOd', 'datumDo', 'menadzer', 'actions'];
   dataSource: MatTableDataSource<Izvestaj>;
   @ViewChild(MatPaginator) paginator: MatPaginator;

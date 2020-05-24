@@ -4,20 +4,25 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
+import { Proizvod } from 'src/app/_models/proizvod';
+import { ProizvodService } from 'src/app/_services/proizvod.service';
+import { Proizvodjac } from 'src/app/_models/proizvodjac';
+import { VrstaProizvoda } from 'src/app/_models/vrstaProizvoda';
+import { ProizvodjacDialogComponent } from '../dialogs/proizvodjac-dialog/proizvodjac-dialog.component';
 
 @Component({
-  selector: 'app-igrac',
-  templateUrl: './igrac.component.html',
-  styleUrls: ['./igrac.component.css']
+  selector: 'app-proizvod',
+  templateUrl: './proizvod.component.html',
+  styleUrls: ['./proizvod.component.css']
 })
-export class IgracComponent implements OnInit {
-  displayedColumns = ['ime', 'prezime', 'brojReg', 'datumRodjenja', 'nacionalnost', 'tim', 'actions'];
-  dataSource: MatTableDataSource<Igrac>;
+export class ProizvodComponent implements OnInit {
+  displayedColumns = ['nazivProizvoda', 'opisProizvoda', 'cena', 'tipPakovanja', 'velicinaPakovanja', 'barKod', 'masa', 'raspolozivaKolicina', 'proizvodjac', 'vrstaProizvoda', 'actions'];
+  dataSource: MatTableDataSource<Proizvod>;
   @Input() selektovanTim: Tim;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public igracService: IgracService, public dialog: MatDialog) { }
+  constructor(public proizvodService: ProizvodService, public dialog: MatDialog) { }
 
   ngOnInit() { }
 
@@ -26,7 +31,7 @@ export class IgracComponent implements OnInit {
   }
 
   public loadData() {
-    this.igracService.getIgraceZaTim(this.selektovanTim.id)
+    this.proizvodService.getProizvod()
       .subscribe(data => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.filterPredicate = (data, filter: string) => {
@@ -50,12 +55,22 @@ export class IgracComponent implements OnInit {
       });
   }
 
-  public openDialog(flag: number, id: number, ime: string, prezime: string, brojReg: string,
-    datumRodjenja: Date, nacionalnost: Nacionalnost, tim: Tim) {
-    const dialogRef = this.dialog.open(IgracDialogComponent, {
+  public openDialog(flag: number, proizvodID: number,
+    nazivProizvoda: string,
+    opisProizvoda: string,
+    cena: number,
+    tipPakovanja: string,
+    velicinaPakovanja: string,
+    barKod: string, 
+    masa: number,
+    raspolozivaKolicina: number,
+    proizvodjac: Proizvodjac,
+    vrstaProizvoda: VrstaProizvoda) {
+    const dialogRef = this.dialog.open(ProizvodjacDialogComponent, {
       data: {
-        i: id, id: id, ime: ime, prezime: prezime, brojReg: brojReg,
-        datumRodjenja: datumRodjenja, nacionalnost: nacionalnost, tim: tim
+        i: proizvodID, id: proizvodID, nazivProizvoda: nazivProizvoda, opisProizvoda: opisProizvoda, cena: cena,
+        tipPakovanja: tipPakovanja, velicinaPakovanja: velicinaPakovanja, masa: masa, raspolozivaKolicina: raspolozivaKolicina, proizvodjac: proizvodjac,
+        vrstaProizvoda: vrstaProizvoda
       }
     });
     dialogRef.componentInstance.flag = flag;

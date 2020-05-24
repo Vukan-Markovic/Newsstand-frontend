@@ -12,14 +12,24 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-
-import {
-    MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatGridListModule,
-    MatExpansionModule, MatTableModule, MatToolbarModule, MatOptionModule, MatSelectModule,
-    MatSnackBarModule, MatDialogModule, MatInputModule, MatNativeDateModule,
-    MatCheckboxModule, MatDatepickerModule, MatPaginatorModule, MatSortModule, MatTooltipModule,
-    MatStepperModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { DobavljacComponent } from './_components/dobavljac/dobavljac.component';
 import { IzvestajComponent } from './_components/izvestaj/izvestaj.component';
 import { PorudzbinaComponent } from './_components/porudzbina/porudzbina.component';
@@ -36,16 +46,29 @@ import { ProizvodDialogComponent } from './_components/dialogs/proizvod-dialog/p
 import { ProizvodjacDialogComponent } from './_components/dialogs/proizvodjac-dialog/proizvodjac-dialog.component';
 import { RacunDialogComponent } from './_components/dialogs/racun-dialog/racun-dialog.component';
 import { VrstaProizvodaDialogComponent } from './_components/dialogs/vrsta-proizvoda-dialog/vrsta-proizvoda-dialog.component';
+import { KorisnikComponent } from './_components/korisnik/korisnik.component';
+import { ProdavacDialogComponent } from './_components/dialogs/prodavac-dialog/prodavac-dialog.component';
+import { MenadzerComponent } from './_components/menadzer/menadzer.component';
+import { DobavljacService } from './_services/dobavljac.service';
+import { IzvestajService } from './_services/izvestaj.service';
+import { AuthenticationService } from './_services/authentication.service';
+import { StavkaPorudzbineService } from './_services/stavkaPorudzbine.service';
+import { PorudzbinaService } from './_services/porudzbina.service';
+import { KorisnikService } from './_services/korisnik.service';
+import { MenadzerService } from './_services/menadzer.service';
+import { ProdavacService } from './_services/prodavac.service';
+import { ProizvodService } from './_services/proizvod.service';
+import { ProizvodjacService } from './_services/proizvodjac.service';
+import { VrstaProizvodaService } from './_services/vrstaProizvoda.service';
+import { RacunService } from './_services/racun.service';
+import { StavkaRacunaService } from './_services/stavkaRacuna.service';
+import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
+import { EmailInputComponent } from './_components/email-input/email-input.component';
 
 @NgModule({
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        ToastrModule.forRoot({
-            positionClass: 'toast-top-right',
-            preventDuplicates: true,
-            tapToDismiss: true
-        }),
         MatButtonModule,
         MatIconModule,
         MatSidenavModule,
@@ -55,21 +78,24 @@ import { VrstaProizvodaDialogComponent } from './_components/dialogs/vrsta-proiz
         MatTableModule,
         MatToolbarModule,
         MatSelectModule,
-        MatOptionModule,
         MatSnackBarModule,
         MatDialogModule,
         MatInputModule,
         FormsModule,
         MatDatepickerModule,
         MatCheckboxModule,
-        MatNativeDateModule,
         MatPaginatorModule,
         MatSortModule,
         MatTooltipModule,
         MatStepperModule,
         ReactiveFormsModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule, 
+        ToastrModule.forRoot({
+            positionClass: 'toast-top-right',
+            preventDuplicates: true,
+            tapToDismiss: true
+        }),
     ],
     declarations: [
         AppComponent,
@@ -91,11 +117,29 @@ import { VrstaProizvodaDialogComponent } from './_components/dialogs/vrsta-proiz
         ProizvodDialogComponent,
         ProizvodjacDialogComponent,
         RacunDialogComponent,
-        VrstaProizvodaDialogComponent
+        VrstaProizvodaDialogComponent,
+        KorisnikComponent,
+        ProdavacDialogComponent,
+        MenadzerComponent,
+        ResetPasswordComponent,
+        EmailInputComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        AuthenticationService,
+        DobavljacService,
+        IzvestajService,
+        KorisnikService,
+        MenadzerService,
+        PorudzbinaService,
+        ProdavacService,
+        ProizvodService,
+        ProizvodjacService,
+        RacunService,
+        StavkaPorudzbineService,
+        StavkaRacunaService,
+        VrstaProizvodaService
     ],
     bootstrap: [AppComponent]
 })

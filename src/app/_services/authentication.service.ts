@@ -2,24 +2,24 @@
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from '../_models/korisnik';
+import { Korisnik } from '../_models/korisnik';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    private currentUserSubject: BehaviorSubject<User>;
-    public currentUser: Observable<User>;
+    private currentUserSubject: BehaviorSubject<Korisnik>;
+    public currentUser: Observable<Korisnik>;
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+        this.currentUserSubject = new BehaviorSubject<Korisnik>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
-    public get currentUserValue(): User {
+    public get currentUserValue(): Korisnik {
         return this.currentUserSubject.value;
     }
 
     login(username, password) {
-        return this.http.post<any>(`${config.apiUrl}/users/authenticate`, { username, password })
+        return this.http.post<any>('http://localhost:8080/api//authenticate', { username, password })
             .pipe(map(user => {
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
@@ -27,17 +27,27 @@ export class AuthenticationService {
             }));
     }
 
-    public setCurrentUserRole(role: string) {
-        this.currentUserSubject.value.role = role;
+    public setCurrentUserRole(uloga: string) {
+        this.currentUserSubject.value.uloga = uloga;
     }
 
     isLoggedIn() {
         return localStorage.getItem('currentUser') !== null;
     }
 
-    isAdmin() {
+    isProdavac() {
         if (this.isLoggedIn())
-            return this.currentUserSubject.value.role == "ADMIN";
+            return this.currentUserSubject.value.uloga == "prodavac";
+    }
+
+    isDobavljac() {
+        if (this.isLoggedIn())
+            return this.currentUserSubject.value.uloga == "dobavljač";
+    }
+
+    isMenadzer() {
+        if (this.isLoggedIn())
+            return this.currentUserSubject.value.uloga == "menadžer";
     }
 
     logout() {

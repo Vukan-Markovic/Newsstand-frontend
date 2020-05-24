@@ -3,27 +3,32 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
+import { Racun } from 'src/app/_models/racun';
+import { RacunService } from 'src/app/_services/racun.service';
+import { Prodavac } from 'src/app/_models/prodavac';
+import { TimDialogComponent } from '../dialogs/proizvod-dialog/proizvod-dialog.component';
+import { RacunDialogComponent } from '../dialogs/racun-dialog/racun-dialog.component';
 
 @Component({
-  selector: 'app-tim',
-  templateUrl: './tim.component.html',
-  styleUrls: ['./tim.component.css']
+  selector: 'app-racun',
+  templateUrl: './racun.component.html',
+  styleUrls: ['./racun.component.css']
 })
-export class TimComponent implements OnInit {
-  displayedColumns = ['naziv', 'osnovan', 'sediste', 'liga', 'actions'];
-  dataSource: MatTableDataSource<Tim>;
+export class RacunComponent implements OnInit {
+  displayedColumns = ['vremeIzdavanja', 'mestoIzdavanja', 'ukupanIznosRacuna', 'nazivProdavnice', 'nacinPlacanja', 'brojRacuna', 'tipRacuna', 'prodavac', 'actions'];
+  dataSource: MatTableDataSource<Racun>;
   selektovanTim: Tim;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public timService: TimService, public dialog: MatDialog) { }
+  constructor(public racunService: RacunService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.loadData();
   }
 
   public loadData() {
-    this.timService.getAllTim().subscribe(data => {
+    this.racunService.getRacun().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
 
       this.dataSource.filterPredicate = (data, filter: string) => {
@@ -48,9 +53,19 @@ export class TimComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number, id: number, naziv: string, osnovan: Date, sediste: string, liga: Liga) {
-    const dialogRef = this.dialog.open(TimDialogComponent,
-      { data: { id: id, naziv: naziv, osnovan: osnovan, sediste: sediste, liga: liga } }
+  public openDialog(flag: number,  racunID: number,
+    vremeIzdavanja: Date,
+    mestoIzdavanja: string,
+    ukupanIznosRacuna: number,
+    nazivProdavnice: string,
+    nacinPlacanja: string,
+    brojRacuna: string,
+    tipRacuna: string,
+    prodavac: Prodavac) {
+    const dialogRef = this.dialog.open(RacunDialogComponent,
+      { data: { id: racunID, vremeIzdavanja: vremeIzdavanja, mestoIzdavanja: mestoIzdavanja, ukupanIznosRacuna: ukupanIznosRacuna, 
+        nazivProdavnice: nazivProdavnice, nacinPlacanja: nacinPlacanja, brojRacuna: brojRacuna, tipRacuna: tipRacuna
+        , prodavac: prodavac} }
     );
     dialogRef.componentInstance.flag = flag;
     dialogRef.afterClosed().subscribe((result: number) => {

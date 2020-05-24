@@ -8,6 +8,6 @@ export class Dobavljac {
     drzava: string;
     postanskiBroj: string;
     PIB: number;
-    kontaktOsoba: number;
+    kontaktOsoba: string;
     brojZiroRacuna: string;
 }
