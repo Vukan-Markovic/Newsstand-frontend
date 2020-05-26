@@ -23,12 +23,22 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.authenticationService.isLoggedIn()) this.router.navigate(['/']);
+        
         this.loginForm = this.formBuilder.group({
             email: ['', Validators.required],
             password: ['', Validators.required]
         });
 
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        // this.route.queryParams.subscribe(
+        //     (queyParams: Params) => {
+        //         this.token = queyParams['token'];
+        //         if (this.token != undefined) {
+        //             this.registrationService.sendToken(this.token);
+        //         }
+        //     }
+        // );
     }
 
     get f() { return this.loginForm.controls; }
@@ -36,10 +46,8 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         this.submitted = true;
 
-        if (this.loginForm.invalid) {
-            return;
-        }
-
+        if (this.loginForm.invalid) return;
+        
         this.loading = true;
         this.authenticationService.login(this.f.email.value, this.f.password.value)
             .pipe(first())

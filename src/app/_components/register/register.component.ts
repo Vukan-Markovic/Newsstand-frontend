@@ -21,13 +21,12 @@ export class RegisterComponent implements OnInit {
             this.router.navigate(['/']);
         }
     }
-
+    // this.re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            email: ['', Validators.required, Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")],
+            password: ['', [Validators.required, Validators.minLength(8)]], 
+            passwordRepeat: ['', [Validators.required, Validators.minLength(8)]]
         });
     }
 
@@ -39,6 +38,11 @@ export class RegisterComponent implements OnInit {
         if (this.registerForm.invalid) {
             return;
         }
+
+        if (!(this.registerForm.value.lozinka === this.registerForm.value.passwordRepeat)) {
+            this.toastr.error("Password must match in both fields.", 'Registration');
+            return;
+          }
 
         this.loading = true;
         this.korisnikService.register(this.registerForm.value)

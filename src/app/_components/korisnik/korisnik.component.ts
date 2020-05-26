@@ -10,7 +10,7 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
   selector: 'app-korisnik',
   templateUrl: './korisnik.component.html'
 })
-export class UserProfileComponent implements OnInit {
+export class KorisnikComponent implements OnInit {
   korisnik: Korisnik;
   userForm: FormGroup;
   message: string = "";
