@@ -25,7 +25,7 @@ export class EmailInputComponent implements OnInit {
 
     this.authenticationService.resetPassword(this.emailForm.value.email).subscribe(
       data => {
-        this.toastr.success(data, "Reset password");
+        this.toastr.success(JSON.stringify(data), "Reset password");
         this.router.navigate(['/login']);
       }, message => {
         if (message.status != 200)

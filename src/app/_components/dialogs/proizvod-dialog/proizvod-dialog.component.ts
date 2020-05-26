@@ -26,11 +26,11 @@ export class ProizvodDialogComponent implements OnInit {
     public vrstaProizvodaService: VrstaProizvodaService) { }
 
   ngOnInit() {
-    this.proizvodjacService.getProizvodjac().subscribe(proizvodjaci =>
+    this.proizvodjacService.getProizvodjaci().subscribe(proizvodjaci =>
       this.proizvodjaci = proizvodjaci
     );
 
-    this.vrstaProizvodaService.getVrstaProizvoda().subscribe(vrsteProizvoda =>
+    this.vrstaProizvodaService.getVrsteProizvoda().subscribe(vrsteProizvoda =>
       this.vrsteProizvoda = vrsteProizvoda
     );
   }

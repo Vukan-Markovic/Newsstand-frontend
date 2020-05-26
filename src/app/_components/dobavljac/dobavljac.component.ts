@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Dobavljac } from 'src/app/_models/dobavljac';
 import { DobavljacService } from 'src/app/_services/dobavljac.service';
 import { MatDialog } from '@angular/material/dialog';
+import { DobavljacDialogComponent } from '../dialogs/dobavljac-dialog/dobavljac-dialog.component';
 
 @Component({
   selector: 'app-dobavljac',
@@ -23,7 +24,7 @@ export class DobavljacComponent implements OnInit {
   ngOnInit() { }
 
   public loadData() {
-    this.dobavljacService.getDobavljac().subscribe(data => {
+    this.dobavljacService.getDobavljaci().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sortingDataAccessor = (data, property) => {
         return data[property].toLocaleLowerCase();

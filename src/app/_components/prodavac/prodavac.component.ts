@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { Prodavac } from 'src/app/_models/prodavac';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
+import { ProdavacDialogComponent } from '../dialogs/prodavac-dialog/prodavac-dialog.component';
 
 @Component({
   selector: 'app-prodavac',
@@ -22,7 +23,7 @@ export class ProdavacComponent implements OnInit {
   ngOnInit() { }
 
   public loadData() {
-    this.prodavacService.getProdavac().subscribe(data => {
+    this.prodavacService.getProdavci().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sortingDataAccessor = (data, property) => {
         return data[property].toLocaleLowerCase();

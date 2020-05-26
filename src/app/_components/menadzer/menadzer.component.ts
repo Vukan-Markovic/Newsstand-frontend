@@ -23,7 +23,7 @@ export class MenadzerComponent implements OnInit {
   ngOnInit() { }
 
   public loadData() {
-    this.menadzerService.getMenadzer().subscribe(data => {
+    this.menadzerService.getMenadzeri().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sortingDataAccessor = (data, property) => {
         return data[property].toLocaleLowerCase();

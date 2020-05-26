@@ -1,4 +1,4 @@
-  
+
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -24,7 +24,7 @@ export class ProizvodjacComponent implements OnInit {
   ngOnInit() { }
 
   public loadData() {
-    this.proizvodjacService.getProizvodjac().subscribe(data => {
+    this.proizvodjacService.getProizvodjaci().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sortingDataAccessor = (data, property) => {
         return data[property].toLocaleLowerCase();
@@ -36,7 +36,7 @@ export class ProizvodjacComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number,  proizvodjacID: number,
+  public openDialog(flag: number, proizvodjacID: number,
     nazivProizvodjaca: string,
     kontaktProizvodjaca: string,
     adresaProizvodjaca: string) {

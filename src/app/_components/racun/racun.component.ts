@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Racun } from 'src/app/_models/racun';
 import { RacunService } from 'src/app/_services/racun.service';
 import { Prodavac } from 'src/app/_models/prodavac';
-import { TimDialogComponent } from '../dialogs/proizvod-dialog/proizvod-dialog.component';
 import { RacunDialogComponent } from '../dialogs/racun-dialog/racun-dialog.component';
 
 @Component({
@@ -17,7 +16,7 @@ import { RacunDialogComponent } from '../dialogs/racun-dialog/racun-dialog.compo
 export class RacunComponent implements OnInit {
   displayedColumns = ['vremeIzdavanja', 'mestoIzdavanja', 'ukupanIznosRacuna', 'nazivProdavnice', 'nacinPlacanja', 'brojRacuna', 'tipRacuna', 'prodavac', 'actions'];
   dataSource: MatTableDataSource<Racun>;
-  selektovanTim: Tim;
+  // selektovanTim: Tim;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -28,12 +27,12 @@ export class RacunComponent implements OnInit {
   }
 
   public loadData() {
-    this.racunService.getRacun().subscribe(data => {
+    this.racunService.getRacuni().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
 
       this.dataSource.filterPredicate = (data, filter: string) => {
         const accumulator = (currentTerm, key: string) => {
-          return key === 'liga' ? currentTerm + data.liga.naziv : currentTerm + data[key];
+          // return key === 'liga' ? currentTerm + data.liga.naziv : currentTerm + data[key];
         };
         const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
         const transformedFilter = filter.trim().toLowerCase();
@@ -42,7 +41,7 @@ export class RacunComponent implements OnInit {
 
       this.dataSource.sortingDataAccessor = (data, property) => {
         switch (property) {
-          case 'liga': return data.liga.naziv.toLocaleLowerCase();
+          // case 'liga': return data.liga.naziv.toLocaleLowerCase();
           default: return data[property];
         }
       };
@@ -73,9 +72,9 @@ export class RacunComponent implements OnInit {
     });
   }
 
-  selectRow(row: Tim) {
-    this.selektovanTim = row;
-  }
+  // selectRow(row: Tim) {
+  //   this.selektovanTim = row;
+  // }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

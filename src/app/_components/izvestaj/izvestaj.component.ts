@@ -1,4 +1,4 @@
-  
+
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -25,7 +25,7 @@ export class IzvestajComponent implements OnInit {
   ngOnInit() { }
 
   public loadData() {
-    this.izvestajService.getIzvestaj().subscribe(data => {
+    this.izvestajService.getIzvestaji().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sortingDataAccessor = (data, property) => {
         return data[property].toLocaleLowerCase();
@@ -37,7 +37,7 @@ export class IzvestajComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number,  izvestajID: number,
+  public openDialog(flag: number, izvestajID: number,
     promet: number,
     brojKupovina: number,
     datumOd: Date,
@@ -50,7 +50,7 @@ export class IzvestajComponent implements OnInit {
       }
     });
     dialogRef.componentInstance.flag = flag;
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result == 1)
         this.loadData();

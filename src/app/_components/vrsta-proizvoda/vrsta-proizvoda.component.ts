@@ -1,4 +1,3 @@
-  
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -24,7 +23,7 @@ export class VrstaProizvodaComponent implements OnInit {
   ngOnInit() { }
 
   public loadData() {
-    this.vrstaProizvodaService.getVrstaProizvoda().subscribe(data => {
+    this.vrstaProizvodaService.getVrsteProizvoda().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sortingDataAccessor = (data, property) => {
         return data[property].toLocaleLowerCase();

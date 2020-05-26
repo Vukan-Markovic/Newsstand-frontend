@@ -18,7 +18,7 @@ import { Prodavac } from 'src/app/_models/prodavac';
 export class PorudzbinaComponent implements OnInit {
   displayedColumns = ['datumPorucivanja', 'datumIsporuke', 'ukupanIznosPorudzbine', 'statusPorudzbine', 'dobavljac', 'menadzer', 'prodavac', 'actions'];
   dataSource: MatTableDataSource<Porudzbina>;
-  selektovanTim: Tim;
+  // selektovanTim: Tim;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -29,12 +29,12 @@ export class PorudzbinaComponent implements OnInit {
   }
 
   public loadData() {
-    this.porudzbinaService.getPorudzbina().subscribe(data => {
+    this.porudzbinaService.getPorudzbine().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
 
       this.dataSource.filterPredicate = (data, filter: string) => {
         const accumulator = (currentTerm, key: string) => {
-          return key === 'liga' ? currentTerm + data.liga.naziv : currentTerm + data[key];
+          // return key === 'liga' ? currentTerm + data.liga.naziv : currentTerm + data[key];
         };
         const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
         const transformedFilter = filter.trim().toLowerCase();
@@ -43,7 +43,7 @@ export class PorudzbinaComponent implements OnInit {
 
       this.dataSource.sortingDataAccessor = (data, property) => {
         switch (property) {
-          case 'liga': return data.liga.naziv.toLocaleLowerCase();
+          // case 'liga': return data.liga.naziv.toLocaleLowerCase();
           default: return data[property];
         }
       };
@@ -72,9 +72,9 @@ export class PorudzbinaComponent implements OnInit {
     });
   }
 
-  selectRow(row: Tim) {
-    this.selektovanTim = row;
-  }
+  // selectRow(row: Tim) {
+  //   this.selektovanTim = row;
+  // }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

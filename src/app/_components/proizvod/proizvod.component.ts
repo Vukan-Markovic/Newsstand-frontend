@@ -18,7 +18,7 @@ import { ProizvodjacDialogComponent } from '../dialogs/proizvodjac-dialog/proizv
 export class ProizvodComponent implements OnInit {
   displayedColumns = ['nazivProizvoda', 'opisProizvoda', 'cena', 'tipPakovanja', 'velicinaPakovanja', 'barKod', 'masa', 'raspolozivaKolicina', 'proizvodjac', 'vrstaProizvoda', 'actions'];
   dataSource: MatTableDataSource<Proizvod>;
-  @Input() selektovanTim: Tim;
+  // @Input() selektovanTim: Tim;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -26,26 +26,26 @@ export class ProizvodComponent implements OnInit {
 
   ngOnInit() { }
 
-  ngOnChanges() {
-    if (this.selektovanTim.id) this.loadData();
-  }
+  // ngOnChanges() {
+  //   if (this.selektovanTim.id) this.loadData();
+  // }
 
   public loadData() {
-    this.proizvodService.getProizvod()
+    this.proizvodService.getProizvodi()
       .subscribe(data => {
         this.dataSource = new MatTableDataSource(data);
-        this.dataSource.filterPredicate = (data, filter: string) => {
-          const accumulator = (currentTerm: string, key: string) => {
-            return key === 'nacionalnost' ? currentTerm + data.nacionalnost.naziv : currentTerm + data[key];
-          };
-          const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
-          const transformedFilter = filter.trim().toLowerCase();
-          return dataStr.indexOf(transformedFilter) !== -1;
-        };
+        // this.dataSource.filterPredicate = (data, filter: string) => {
+        //   const accumulator = (currentTerm: string, key: string) => {
+        //     return key === 'nacionalnost' ? currentTerm + data.nacionalnost.naziv : currentTerm + data[key];
+        //   };
+        //   const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+        //   const transformedFilter = filter.trim().toLowerCase();
+        //   return dataStr.indexOf(transformedFilter) !== -1;
+        // };
 
         this.dataSource.sortingDataAccessor = (data, property) => {
           switch (property) {
-            case 'nacionalnost': return data.nacionalnost.naziv.toLocaleLowerCase();
+            // case 'nacionalnost': return data.nacionalnost.naziv.toLocaleLowerCase();
             default: return data[property];
           }
         };
@@ -74,7 +74,7 @@ export class ProizvodComponent implements OnInit {
       }
     });
     dialogRef.componentInstance.flag = flag;
-    if (flag == 1) dialogRef.componentInstance.data.tim = this.selektovanTim;
+    // if (flag == 1) dialogRef.componentInstance.data.tim = this.selektovanTim;
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == 1)
