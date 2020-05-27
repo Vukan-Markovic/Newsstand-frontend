@@ -54,14 +54,14 @@ export class PorudzbinaComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number, porudzbinaID: number,
-    datumPorucivanja: Date,
-    datumIsporuke: Date,
-    ukupanIznosPorudzbine: number,
-    statusPorudzbine: string,
-    dobavljac: Dobavljac, 
-    menadzer: Menadzer,
-    prodavac: Prodavac) {
+  public openDialog(flag: number, porudzbinaID?: number,
+    datumPorucivanja?: Date,
+    datumIsporuke?: Date,
+    ukupanIznosPorudzbine?: number,
+    statusPorudzbine?: string,
+    dobavljac?: Dobavljac, 
+    menadzer?: Menadzer,
+    prodavac?: Prodavac) {
     const dialogRef = this.dialog.open(PorudzbinaDialogComponent,
       { data: { id: porudzbinaID, datumPorucivanja: datumPorucivanja, datumIsporuke: datumIsporuke, ukupanIznosPorudzbine: ukupanIznosPorudzbine, statusPorudzbine: statusPorudzbine, 
         dobavljac: dobavljac, menadzer: menadzer, prodavac: prodavac } }

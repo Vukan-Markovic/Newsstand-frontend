@@ -5,10 +5,10 @@ import { Prodavac } from './prodavac';
 export class Porudzbina {
     porudzbinaID: number;
     datumPorucivanja: Date;
-    datumIsporuke: Date; 
+    datumIsporuke: Date;
     ukupanIznosPorudzbine: number;
-    statusPorudzbine: string; 
-    dobavljac: Dobavljac; 
-    menadzer: Menadzer; 
-    prodavac: Prodavac; 
+    statusPorudzbine: string;
+    dobavljac: Dobavljac;
+    menadzer: Menadzer;
+    prodavac: Prodavac;
 }

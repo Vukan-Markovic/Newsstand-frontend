@@ -30,15 +30,15 @@ export class PorudzbinaDialogComponent implements OnInit {
     public prodavacService: ProdavacService) { }
 
   ngOnInit() {
-    this.dobavljacService.getDobavljac().subscribe(dobavljaci =>
+    this.dobavljacService.getDobavljaci().subscribe(dobavljaci =>
       this.dobavljaci = dobavljaci
     );
 
-    this.menadzerService.getMenadzer().subscribe(menadzeri =>
+    this.menadzerService.getMenadzeri().subscribe(menadzeri =>
       this.menadzeri = menadzeri
     );
 
-    this.prodavacService.getProdavac().subscribe(prodavci =>
+    this.prodavacService.getProdavci().subscribe(prodavci =>
       this.prodavci = prodavci
     );
   }

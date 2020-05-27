@@ -23,6 +23,10 @@ export class RacunDialogComponent implements OnInit {
 
   ngOnInit() { }
 
+  compareTo(a: { id: any; }, b: { id: any; }) {
+    return a.id == b.id;
+  }
+  
   public add(): void {
     this.data.racunID = -1;
     this.racunService.addRacun(this.data);

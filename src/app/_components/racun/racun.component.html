@@ -65,11 +65,11 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"
-      [ngClass]="{'selectRow': selektovanTim != null && selektovanTim.id == row.id}"></mat-row>
+    <!-- <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"
+      [ngClass]="{'selectRow': selektovanTim != null && selektovanTim.id == row.id}"></mat-row> -->
   </mat-table>
   <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
 <div class="container mat-elevation-z8">
-  <app-igrac *ngIf="selektovanTim" [selektovanTim]="selektovanTim"></app-igrac>
+  <!-- <app-igrac *ngIf="selektovanTim" [selektovanTim]="selektovanTim"></app-igrac> -->
 </div>

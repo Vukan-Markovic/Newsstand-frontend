@@ -15,22 +15,24 @@ import { IzvestajComponent } from './_components/izvestaj/izvestaj.component';
 import { DobavljacComponent } from './_components/dobavljac/dobavljac.component';
 import { KorisnikComponent } from './_components/korisnik/korisnik.component';
 import { Menadzer } from './_models/menadzer';
+import { ZaposleniGuard } from './_helpers/zaposleni.guard';
+import { MenadzerGuard } from './_helpers/menadzer.guard';
 
 const routes: Routes = [
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dobavljac', component: DobavljacComponent },
-  { path: 'izvestaj', component: IzvestajComponent },
-  { path: 'korisnik', component: KorisnikComponent },
-  { path: 'menadzer', component: Menadzer },
-  { path: 'porudzbina', component: PorudzbinaComponent },
-  { path: 'prodavac', component: ProdavacComponent },
-  { path: 'proizvod', component: ProizvodComponent },
-  { path: 'proizvodjac', component: ProizvodjacComponent },
-  { path: 'racun', component: RacunComponent },
-  { path: 'vrstaProizvoda', component: VrstaProizvodaComponent },
+  { path: 'dobavljac', component: DobavljacComponent, canActivate: [ZaposleniGuard] },
+  { path: 'izvestaj', component: IzvestajComponent, canActivate: [MenadzerGuard] },
+  { path: 'korisnik', component: KorisnikComponent, canActivate: [AuthGuard] },
+  { path: 'menadzer', component: Menadzer, canActivate: [ZaposleniGuard] },
+  { path: 'porudzbina', component: PorudzbinaComponent, canActivate: [AuthGuard] },
+  { path: 'prodavac', component: ProdavacComponent, canActivate: [MenadzerGuard] },
+  { path: 'proizvod', component: ProizvodComponent, canActivate: [ZaposleniGuard] },
+  { path: 'proizvodjac', component: ProizvodjacComponent, canActivate: [ZaposleniGuard] },
+  { path: 'racun', component: RacunComponent, canActivate: [ZaposleniGuard] },
+  { path: 'vrstaProizvoda', component: VrstaProizvodaComponent, canActivate: [ZaposleniGuard] },
   { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -5,12 +5,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class MenadzerService {
-    private readonly API_URL = 'http://localhost:8080/api/menadzer';
+    private readonly API_URL = 'http://localhost:8080/api/menadzer/';
     dataChange: BehaviorSubject<Menadzer[]> = new BehaviorSubject<Menadzer[]>([]);
+    dataChangeMenadzer: BehaviorSubject<Menadzer> = new BehaviorSubject<Menadzer>(null);
 
     constructor(private httpClient: HttpClient) { }
 
-    public getMenadzer(): Observable<Menadzer[]> {
+    public getMenadzeri(): Observable<Menadzer[]> {
         this.httpClient.get<Menadzer[]>(this.API_URL).subscribe(data => {
             this.dataChange.next(data);
         },
@@ -21,8 +22,19 @@ export class MenadzerService {
         return this.dataChange.asObservable();
     }
 
-    public addMenadzer(menadzer: Menadzer): void {
-        this.httpClient.post(this.API_URL, menadzer).subscribe();
+    public getMenadzer(id: number): Observable<Menadzer> {
+        this.httpClient.get<Menadzer>(this.API_URL + id).subscribe(data => {
+            this.dataChangeMenadzer.next(data);
+        },
+            (error: HttpErrorResponse) => {
+                console.log(error.name + ' ' + error.message);
+            });
+
+        return this.dataChangeMenadzer.asObservable();
+    }
+
+    public addMenadzer(menadzer: Menadzer) {
+        return this.httpClient.post(this.API_URL, menadzer);
     }
 
     public updateMenadzer(menadzer: Menadzer): void {

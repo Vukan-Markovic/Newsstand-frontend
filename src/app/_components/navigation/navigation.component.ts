@@ -11,7 +11,7 @@ import { Korisnik } from 'src/app/_models/korisnik';
 })
 export class NavigationComponent implements OnInit {
   currentUser: Korisnik;
-  
+
   constructor(private authenticationService: AuthenticationService, private userService: KorisnikService,
     private router: Router) { }
 
@@ -24,25 +24,5 @@ export class NavigationComponent implements OnInit {
     // this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
-  isLoggedIn() {
-    return this.authenticationService.isLoggedIn();
-  }
-
-  isProdavac() {
-    return this.authenticationService.isProdavac();
-  }
-
-
-  isDobavljac() {
-    return this.authenticationService.isDobavljac();
-  }
-
-  isMenadzer() {
-    return this.authenticationService.isMenadzer();
-  }
-
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/login']);
-  }
+ 
 }

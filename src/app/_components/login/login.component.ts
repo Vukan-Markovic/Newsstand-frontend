@@ -4,7 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../../_services/authentication.service';
 
-@Component({ templateUrl: 'login.component.html' })
+@Component({ 
+    templateUrl: 'login.component.html' 
+})
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
@@ -20,8 +22,8 @@ export class LoginComponent implements OnInit {
         if (this.authenticationService.isLoggedIn()) this.router.navigate(['/']);
         
         this.loginForm = this.formBuilder.group({
-            email: ['', Validators.required, Validators.email],
-            password: ['', Validators.required, Validators.minLength(8)]
+            email: ['', [Validators.required, Validators.email]],
+            lozinka: ['', [Validators.required, Validators.minLength(8)]]
         });
 
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.invalid) return;
         this.loading = true;
 
-        this.authenticationService.login(this.f.email.value, this.f.password.value)
+        this.authenticationService.login(this.loginForm.value.email, this.loginForm.value.lozinka)
             .pipe(first())
             .subscribe(
                 data => {

@@ -138,7 +138,10 @@
         <div class="form-group">
             <label for="pol">Pol</label>
             <select id="pol" formControlName="pol" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.pol.errors }" />
+                [ngClass]="{ 'is-invalid': submitted && f.pol.errors }">
+                <option value="uloga">muško</option>
+                <option value="uloga">žensko</option>
+            </select>
             <div *ngIf="submitted && f.pol.errors" class="invalid-feedback">
                 <div *ngIf="f.pol.errors.required">Pol je obavezan</div>
             </div>

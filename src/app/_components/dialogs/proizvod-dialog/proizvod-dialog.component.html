@@ -2,13 +2,13 @@
     <h3 mat-dialog-title *ngIf="flag == 1">Dodavanje proizvoda</h3>
     <h3 mat-dialog-title *ngIf="flag == 2">Modifikacija proizvoda</h3>
     <h3 mat-dialog-title *ngIf="flag == 3">Brisanje proizvoda</h3>
-    <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+    <form class="mat-dialog-content" ngSubmit="submit" #formControl="ngForm">
       <div class="form">
         <mat-form-field hintLabel="Maksimalno 30 karaktera">
           <input matInput #input maxlength="30" placeholder="Naziv" [(ngModel)]="data.nazivProizvoda" name="nazivProizvoda" [disabled]="flag == 3" required>
           <mat-hint align="end">{{input.value?.length || 0}}/30</mat-hint>
         </mat-form-field>
-      </div>
+      </div> 
   
       <div class="form">
         <mat-form-field hintLabel="Maksimalno 100 karaktera">
@@ -18,7 +18,7 @@
       </div>
 
       <div class="form">
-        <mat-form-field hintLabel="Maksimalno 10 cifara"></mat-form-field>
+        <mat-form-field hintLabel="Maksimalno 10 cifara">
           <input matInput #input3 maxlength="10" type="number" placeholder="Cena" [(ngModel)]="data.cena" name="cena" [disabled]="flag == 3">
           <mat-hint align="end">{{input3.value?.length || 0}}/10</mat-hint>
         </mat-form-field>
@@ -75,11 +75,11 @@
       </div>
   
       <div mat-dialog-actions>
-        <button mat-raised-button color="accent" *ngIf="flag == 1" [type]="submit" [mat-dialog-close]="1" (click)="add()"
+        <button mat-raised-button color="accent" *ngIf="flag == 1" type="submit" [mat-dialog-close]="1" (click)="add()"
           [disabled]="!formControl.valid">Sačuvaj</button>
-        <button mat-raised-button color="accent" *ngIf="flag == 2" [type]="submit" [mat-dialog-close]="1" (click)="update()"
+        <button mat-raised-button color="accent" *ngIf="flag == 2" type="submit" [mat-dialog-close]="1" (click)="update()"
           [disabled]="!formControl.valid">Sačuvaj</button>
-        <button mat-raised-button color="primary" *ngIf="flag == 3" [type]="submit" [mat-dialog-close]="1" (click)="delete()">Obriši</button>
+        <button mat-raised-button color="primary" *ngIf="flag == 3" type="submit" [mat-dialog-close]="1" (click)="delete()">Obriši</button>
         <button mat-raised-button color="warn" (click)="cancel()" tabindex="-1">Poništi</button>
       </div>
     </form>

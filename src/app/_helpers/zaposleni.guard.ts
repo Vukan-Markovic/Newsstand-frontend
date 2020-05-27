@@ -3,7 +3,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { AuthenticationService } from '../_services/authentication.service';
 
 @Injectable({ providedIn: 'root' })
-export class AdminGuard implements CanActivate {
+export class ZaposleniGuard implements CanActivate {
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService
@@ -12,7 +12,7 @@ export class AdminGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authenticationService.currentUserValue;
         if (currentUser) {
-            if (currentUser.uloga.toLowerCase() == "admin") return true;
+            if (currentUser.uloga.toLowerCase() == "prodavac" || currentUser.uloga.toLowerCase() == "menadžer") return true;
             this.router.navigate(['/']);
             return false;
         }

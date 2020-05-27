@@ -36,10 +36,10 @@ export class ProizvodjacComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number, proizvodjacID: number,
-    nazivProizvodjaca: string,
-    kontaktProizvodjaca: string,
-    adresaProizvodjaca: string) {
+  public openDialog(flag: number, proizvodjacID?: number,
+    nazivProizvodjaca?: string,
+    kontaktProizvodjaca?: string,
+    adresaProizvodjaca?: string) {
     const dialogRef = this.dialog.open(ProizvodjacDialogComponent, {
       data: {
         i: proizvodjacID, id: proizvodjacID, nazivProizvodjaca: nazivProizvodjaca, kontaktProizvodjaca: kontaktProizvodjaca,

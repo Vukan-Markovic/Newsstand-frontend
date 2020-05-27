@@ -1,6 +1,6 @@
 export class StavkaPorudzbine {
     porudzbinaID: number;
     proizvodID: number;
-    kolicina: number; 
+    kolicina: number;
     nabavnaCena: number;
 }

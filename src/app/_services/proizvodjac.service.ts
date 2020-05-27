@@ -5,12 +5,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class ProizvodjacService {
-    private readonly API_URL = 'http://localhost:8080/api/proizvodjac';
+    private readonly API_URL = 'http://localhost:8080/api/proizvodjac/';
     dataChange: BehaviorSubject<Proizvodjac[]> = new BehaviorSubject<Proizvodjac[]>([]);
-    
+    dataChangeProizvodjac: BehaviorSubject<Proizvodjac> = new BehaviorSubject<Proizvodjac>(null);
+
     constructor(private httpClient: HttpClient) { }
 
-    public getProizvodjac(): Observable<Proizvodjac[]> {
+    public getProizvodjaci(): Observable<Proizvodjac[]> {
         this.httpClient.get<Proizvodjac[]>(this.API_URL).subscribe(data => {
             this.dataChange.next(data);
         },
@@ -19,6 +20,17 @@ export class ProizvodjacService {
             });
 
         return this.dataChange.asObservable();
+    }
+
+    public getProizvodjac(id: number): Observable<Proizvodjac> {
+        this.httpClient.get<Proizvodjac>(this.API_URL + id).subscribe(data => {
+            this.dataChangeProizvodjac.next(data);
+        },
+            (error: HttpErrorResponse) => {
+                console.log(error.name + ' ' + error.message);
+            });
+
+        return this.dataChangeProizvodjac.asObservable();
     }
 
     public addProizvodjac(proizvodjac: Proizvodjac): void {

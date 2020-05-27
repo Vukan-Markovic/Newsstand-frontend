@@ -5,12 +5,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class VrstaProizvodaService {
-    private readonly API_URL = 'http://localhost:8080/api/vrstaProizvoda';
+    private readonly API_URL = 'http://localhost:8080/api/vrstaProizvoda/';
     dataChange: BehaviorSubject<VrstaProizvoda[]> = new BehaviorSubject<VrstaProizvoda[]>([]);
-    
+    dataChangeVrstaProizovda: BehaviorSubject<VrstaProizvoda> = new BehaviorSubject<VrstaProizvoda>(null);
+
     constructor(private httpClient: HttpClient) { }
 
-    public getVrstaProizvoda(): Observable<VrstaProizvoda[]> {
+    public getVrsteProizvoda(): Observable<VrstaProizvoda[]> {
         this.httpClient.get<VrstaProizvoda[]>(this.API_URL).subscribe(data => {
             this.dataChange.next(data);
         },
@@ -19,6 +20,17 @@ export class VrstaProizvodaService {
             });
 
         return this.dataChange.asObservable();
+    }
+
+    public getVrstaProizvoda(id: number): Observable<VrstaProizvoda> {
+        this.httpClient.get<VrstaProizvoda>(this.API_URL + id).subscribe(data => {
+            this.dataChangeVrstaProizovda.next(data);
+        },
+            (error: HttpErrorResponse) => {
+                console.log(error.name + ' ' + error.message);
+            });
+
+        return this.dataChangeVrstaProizovda.asObservable();
     }
 
     public addVrstaProizvoda(vrstaProizvoda: VrstaProizvoda): void {
@@ -44,7 +56,7 @@ export class VrstaProizvodaService {
 // @Injectable()
 // export class BookService {
 //     public books: Book[] = [];
-    
+
 //     constructor(private http: Http, private errorService: ErrorService) {}
 
 //     addBook(book: Book) {

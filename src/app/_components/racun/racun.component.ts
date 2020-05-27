@@ -52,15 +52,15 @@ export class RacunComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number,  racunID: number,
-    vremeIzdavanja: Date,
-    mestoIzdavanja: string,
-    ukupanIznosRacuna: number,
-    nazivProdavnice: string,
-    nacinPlacanja: string,
-    brojRacuna: string,
-    tipRacuna: string,
-    prodavac: Prodavac) {
+  public openDialog(flag: number,  racunID?: number,
+    vremeIzdavanja?: Date,
+    mestoIzdavanja?: string,
+    ukupanIznosRacuna?: number,
+    nazivProdavnice?: string,
+    nacinPlacanja?: string,
+    brojRacuna?: string,
+    tipRacuna?: string,
+    prodavac?: Prodavac) {
     const dialogRef = this.dialog.open(RacunDialogComponent,
       { data: { id: racunID, vremeIzdavanja: vremeIzdavanja, mestoIzdavanja: mestoIzdavanja, ukupanIznosRacuna: ukupanIznosRacuna, 
         nazivProdavnice: nazivProdavnice, nacinPlacanja: nacinPlacanja, brojRacuna: brojRacuna, tipRacuna: tipRacuna

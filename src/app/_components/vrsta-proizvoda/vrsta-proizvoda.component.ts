@@ -35,7 +35,7 @@ export class VrstaProizvodaComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number, vrstaProizvodaID: number, nazivVrsteProizvoda: string, opisVrsteProizvoda: string) {
+  public openDialog(flag: number, vrstaProizvodaID?: number, nazivVrsteProizvoda?: string, opisVrsteProizvoda?: string) {
     const dialogRef = this.dialog.open(VrstaProizvodaDialogComponent, {
       data: {
         i: vrstaProizvodaID, id: vrstaProizvodaID, nazivVrsteProizvoda: nazivVrsteProizvoda, opisVrsteProizvoda: opisVrsteProizvoda

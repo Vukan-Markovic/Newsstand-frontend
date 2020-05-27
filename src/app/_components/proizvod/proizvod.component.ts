@@ -55,17 +55,17 @@ export class ProizvodComponent implements OnInit {
       });
   }
 
-  public openDialog(flag: number, proizvodID: number,
-    nazivProizvoda: string,
-    opisProizvoda: string,
-    cena: number,
-    tipPakovanja: string,
-    velicinaPakovanja: string,
-    barKod: string, 
-    masa: number,
-    raspolozivaKolicina: number,
-    proizvodjac: Proizvodjac,
-    vrstaProizvoda: VrstaProizvoda) {
+  public openDialog(flag: number, proizvodID?: number,
+    nazivProizvoda?: string,
+    opisProizvoda?: string,
+    cena?: number,
+    tipPakovanja?: string,
+    velicinaPakovanja?: string,
+    barKod?: string, 
+    masa?: number,
+    raspolozivaKolicina?: number,
+    proizvodjac?: Proizvodjac,
+    vrstaProizvoda?: VrstaProizvoda) {
     const dialogRef = this.dialog.open(ProizvodjacDialogComponent, {
       data: {
         i: proizvodID, id: proizvodID, nazivProizvoda: nazivProizvoda, opisProizvoda: opisProizvoda, cena: cena,

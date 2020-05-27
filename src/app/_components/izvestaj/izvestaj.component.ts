@@ -37,12 +37,12 @@ export class IzvestajComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number, izvestajID: number,
-    promet: number,
-    brojKupovina: number,
-    datumOd: Date,
-    datumDo: Date,
-    menadzer: Menadzer) {
+  public openDialog(flag: number, izvestajID?: number,
+    promet?: number,
+    brojKupovina?: number,
+    datumOd?: Date,
+    datumDo?: Date,
+    menadzer?: Menadzer) {
     const dialogRef = this.dialog.open(IzvestajDialogComponent, {
       data: {
         i: izvestajID, id: izvestajID, promet: promet, brojKupovina: brojKupovina, datumOd: datumOd,

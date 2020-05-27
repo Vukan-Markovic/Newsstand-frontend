@@ -1,23 +1,36 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthenticationService } from './_services/authentication.service';
-import { Korisnik } from './_models/korisnik';
-
-import './_content/app.less';
+import { KorisnikService } from './_services/korisnik.service';
+import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app',
+    selector: 'app-root',
     templateUrl: 'app.component.html'
 })
 export class AppComponent {
-    currentUser: Korisnik;
 
-    constructor(private router: Router, private authenticationService: AuthenticationService) {
-        this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    }
+    constructor(private authenticationService: AuthenticationService, private userService: KorisnikService,
+        private router: Router) { }
 
-    logout() {
+    isLoggedIn() {
+        return this.authenticationService.isLoggedIn();
+      }
+    
+      isProdavac() {
+        return this.authenticationService.isProdavac();
+      }
+    
+    
+      isDobavljac() {
+        return this.authenticationService.isDobavljac();
+      }
+    
+      isMenadzer() {
+        return this.authenticationService.isMenadzer();
+      }
+    
+      logout() {
         this.authenticationService.logout();
         this.router.navigate(['/login']);
-    }
+      }
 }

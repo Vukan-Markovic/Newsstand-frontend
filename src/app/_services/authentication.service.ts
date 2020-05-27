@@ -3,13 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Korisnik } from '../_models/korisnik';
+import { KorisnikService } from './korisnik.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<Korisnik>;
     public currentUser: Observable<Korisnik>;
+    private readonly API_URL = 'http://localhost:8080/api/';
 
-    constructor(private http: HttpClient) {
+    constructor(private httpClient: HttpClient, private korisnikService: KorisnikService) {
         this.currentUserSubject = new BehaviorSubject<Korisnik>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -18,13 +20,28 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(username, password) {
-        return this.http.post<any>('http://localhost:8080/api//authenticate', { username, password })
-            .pipe(map(user => {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
-                return user;
+    login(email, password) {
+        return this.httpClient.post<any>(this.API_URL + 'login', { email, password })
+            .pipe(map(data => {
+                this.korisnikService.getKorisnik(data.korisnikID).subscribe(korisnik => {
+                    korisnik.token = data.token;
+                    localStorage.setItem('currentUser', JSON.stringify(korisnik));
+                    this.currentUserSubject.next(korisnik);
+                    return korisnik;
+                });
             }));
+    }
+
+    register(korisnik: Korisnik) {
+        return this.httpClient.post<Korisnik>(this.API_URL + 'korisnik', korisnik);
+    }
+
+    resetPassword(email: String) {
+        return this.httpClient.post(this.API_URL + 'resetPassword', email);
+    }
+
+    public updatePassword(password: String, token: String) {
+        return this.httpClient.put(this.API_URL + 'updatePassword' + token, password, {responseType: 'json'});
     }
 
     public setCurrentUserRole(uloga: string) {
@@ -54,6 +71,21 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
+
+    // idFromUrl() {
+    //     const urlParts = url.split('/');
+    //     return parseInt(urlParts[urlParts.length - 1]);
+    // }
+
+    // sendToken(token: string) {
+    //     this.http.post(this.baseurl + '/api/confirmAccount', null, {
+    //       params: new HttpParams().set('token', token)
+    //     }).subscribe(data => {
+    //       this.router.navigate(['/login']);
+    //     },
+    //       error => {
+    //       });
+    //   }
 
     // register(user: User) {
     //     const body = JSON.stringify(user);

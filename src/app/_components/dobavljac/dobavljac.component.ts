@@ -36,17 +36,17 @@ export class DobavljacComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number, dobavljacID: number,
-    skraceniNaziv: string,
-    punNaziv: string,
-    kontaktDobavljaca: string,
-    adresaDobavljaca: string,
-    grad: string,
-    drzava: string,
-    postanskiBroj: string,
-    PIB: number,
-    kontaktOsoba: number,
-    brojZiroRacuna: string) {
+  public openDialog(flag: number, dobavljacID?: number,
+    skraceniNaziv?: string,
+    punNaziv?: string,
+    kontaktDobavljaca?: string,
+    adresaDobavljaca?: string,
+    grad?: string,
+    drzava?: string,
+    postanskiBroj?: string,
+    PIB?: number,
+    kontaktOsoba?: number,
+    brojZiroRacuna?: string) {
     const dialogRef = this.dialog.open(DobavljacDialogComponent, {
       data: {
         i: dobavljacID, id: dobavljacID, skraceniNaziv: skraceniNaziv, punNaziv: punNaziv, kontaktDobavljaca: kontaktDobavljaca,

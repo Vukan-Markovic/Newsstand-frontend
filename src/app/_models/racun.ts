@@ -5,9 +5,9 @@ export class Racun {
     vremeIzdavanja: Date;
     mestoIzdavanja: string;
     ukupanIznosRacuna: number;
-    nazivProdavnice: string; 
-    nacinPlacanja: string; 
-    brojRacuna: string; 
-    tipRacuna: string; 
+    nazivProdavnice: string;
+    nacinPlacanja: string;
+    brojRacuna: string;
+    tipRacuna: string;
     prodavac: Prodavac;
 }

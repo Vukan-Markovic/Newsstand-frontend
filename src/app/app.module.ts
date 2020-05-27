@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -10,16 +9,19 @@ import { LoginComponent } from './_components/login/login.component';
 import { RegisterComponent } from './_components/register/register.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+// MatOptionModule
+// MatNativeDateModule
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -64,6 +66,7 @@ import { RacunService } from './_services/racun.service';
 import { StavkaRacunaService } from './_services/stavkaRacuna.service';
 import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
 import { EmailInputComponent } from './_components/email-input/email-input.component';
+import { NavigationComponent } from './_components/navigation/navigation.component';
 
 @NgModule({
     imports: [
@@ -71,6 +74,7 @@ import { EmailInputComponent } from './_components/email-input/email-input.compo
         BrowserAnimationsModule,
         MatButtonModule,
         MatIconModule,
+        MatFormFieldModule,
         MatSidenavModule,
         MatListModule,
         MatGridListModule,
@@ -122,8 +126,19 @@ import { EmailInputComponent } from './_components/email-input/email-input.compo
         ProdavacDialogComponent,
         MenadzerComponent,
         ResetPasswordComponent,
-        EmailInputComponent
+        EmailInputComponent,
+        NavigationComponent
     ],
+    entryComponents: [
+        DobavljacDialogComponent,
+        IzvestajDialogComponent,
+        PorudzbinaDialogComponent,
+        ProizvodDialogComponent,
+        ProizvodjacDialogComponent,
+        RacunDialogComponent,
+        VrstaProizvodaDialogComponent,
+        ProdavacDialogComponent
+      ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

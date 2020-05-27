@@ -5,12 +5,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class RacunService {
-    private readonly API_URL = 'http://localhost:8080/api/racun';
+    private readonly API_URL = 'http://localhost:8080/api/racun/';
     dataChange: BehaviorSubject<Racun[]> = new BehaviorSubject<Racun[]>([]);
-    
+    dataChangeRacun: BehaviorSubject<Racun> = new BehaviorSubject<Racun>(null);
+
     constructor(private httpClient: HttpClient) { }
 
-    public getRacun(): Observable<Racun[]> {
+    public getRacuni(): Observable<Racun[]> {
         this.httpClient.get<Racun[]>(this.API_URL).subscribe(data => {
             this.dataChange.next(data);
         },
@@ -19,6 +20,17 @@ export class RacunService {
             });
 
         return this.dataChange.asObservable();
+    }
+
+    public getRacun(id: number): Observable<Racun> {
+        this.httpClient.get<Racun>(this.API_URL + id).subscribe(data => {
+            this.dataChangeRacun.next(data);
+        },
+            (error: HttpErrorResponse) => {
+                console.log(error.name + ' ' + error.message);
+            });
+
+        return this.dataChangeRacun.asObservable();
     }
 
     public addRacun(racun: Racun): void {

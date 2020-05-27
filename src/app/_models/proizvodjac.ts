@@ -1,6 +1,6 @@
 export class Proizvodjac {
     proizvodjacID: number;
     nazivProizvodjaca: string;
-    kontaktProizvodjaca: string; 
+    kontaktProizvodjaca: string;
     adresaProizvodjaca: string;
 }
