@@ -31,40 +31,89 @@ export class RegisterComponent implements OnInit {
    
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
-            email: ['', Validators.required, Validators.email],
+            email: ['', [Validators.required, Validators.email]],
             lozinka: ['', [Validators.required, Validators.minLength(8)]],
             passwordRepeat: ['', [Validators.required, Validators.minLength(8)]],
-            uloga: ['', [Validators.required]],
-            skraceniNaziv: ['', [Validators.required]],
-            punNaziv: ['', [Validators.nullValidator]],
-            kontaktDobavljaca: ['', [Validators.required]],
-            adresaDobavljaca: ['', [Validators.required]],
-            grad: ['', [Validators.nullValidator]],
-            drzava: ['', [Validators.nullValidator]],
-            postanskiBroj: ['', [Validators.required]],
-            PIB: ['', [Validators.required]],
-            kontaktOsoba: ['', [Validators.nullValidator]],
-            brojZiroRacuna: ['', [Validators.nullValidator]],
-            ime: ['', [Validators.nullValidator]],
-            prezime: ['', [Validators.required]],
-            pol: ['', [Validators.required]],
-            datumRodjenja: ['', [Validators.required]],
-            adresaStanovanja: ['', [Validators.nullValidator]],
-            telefon: ['', [Validators.nullValidator]],
-            JMBG: ['', [Validators.required]],
-            datumZaposlenja: ['', [Validators.nullValidator]],
-            strucnaSprema: ['', [Validators.required]],
-            adresaKancelarije: ['', [Validators.required]],
-            brojKancelarije: ['', [Validators.nullValidator]]
+            uloga: ['', Validators.required],
+            skraceniNaziv: ['', Validators.nullValidator],
+            punNaziv: ['', Validators.nullValidator],
+            kontaktDobavljaca: ['', Validators.nullValidator],
+            adresaDobavljaca: ['', Validators.nullValidator],
+            grad: ['', Validators.nullValidator],
+            drzava: ['', Validators.nullValidator],
+            postanskiBroj: ['', Validators.nullValidator],
+            PIB: ['', Validators.nullValidator],
+            kontaktOsoba: ['', Validators.nullValidator],
+            brojZiroRacuna: ['', Validators.nullValidator],
+            ime: ['', Validators.nullValidator],
+            prezime: ['', Validators.nullValidator],
+            pol: ['', Validators.nullValidator],
+            datumRodjenja: ['', Validators.nullValidator],
+            adresaStanovanja: ['', Validators.nullValidator],
+            telefon: ['', Validators.nullValidator],
+            JMBG: ['', Validators.nullValidator],
+            datumZaposlenja: ['', Validators.nullValidator],
+            strucnaSprema: ['', Validators.nullValidator],
+            adresaKancelarije: ['', Validators.nullValidator],
+            brojKancelarije: ['', Validators.nullValidator]
         });
 
-        this.registerForm.get('ime').valueChanges.subscribe(val => {
-            if (this.isProdavac()) {
+        this.registerForm.get('uloga').valueChanges.subscribe(val => {
+            if (val == 'prodavac' || val == 'menadžer') {
+                this.registerForm.controls['skraceniNaziv'].clearValidators();
+                this.registerForm.controls['skraceniNaziv'].updateValueAndValidity();
+                this.registerForm.controls['kontaktDobavljaca'].clearValidators();
+                this.registerForm.controls['kontaktDobavljaca'].updateValueAndValidity();
+                this.registerForm.controls['adresaDobavljaca'].clearValidators();
+                this.registerForm.controls['adresaDobavljaca'].updateValueAndValidity();
+                this.registerForm.controls['postanskiBroj'].clearValidators();
+                this.registerForm.controls['postanskiBroj'].updateValueAndValidity();
+                this.registerForm.controls['PIB'].clearValidators();
+                this.registerForm.controls['PIB'].updateValueAndValidity();
+
                 this.registerForm.controls['ime'].setValidators([Validators.required]);
                 this.registerForm.controls['ime'].updateValueAndValidity();
+                this.registerForm.controls['prezime'].setValidators([Validators.required]);
+                this.registerForm.controls['prezime'].updateValueAndValidity();
+                this.registerForm.controls['pol'].setValidators([Validators.required]);
+                this.registerForm.controls['pol'].updateValueAndValidity();
+                this.registerForm.controls['datumRodjenja'].setValidators([Validators.required]);
+                this.registerForm.controls['datumRodjenja'].updateValueAndValidity();
+                this.registerForm.controls['JMBG'].setValidators([Validators.required]);
+                this.registerForm.controls['JMBG'].updateValueAndValidity();
+                this.registerForm.controls['strucnaSprema'].setValidators([Validators.required]);
+                this.registerForm.controls['strucnaSprema'].updateValueAndValidity();
+                
+                if(val == 'menadžer') {
+                    this.registerForm.controls['adresaKancelarije'].setValidators([Validators.required]);
+                    this.registerForm.controls['adresaKancelarije'].updateValueAndValidity();
+                }
             } else {
                 this.registerForm.controls['ime'].clearValidators();
                 this.registerForm.controls['ime'].updateValueAndValidity();
+                this.registerForm.controls['prezime'].clearValidators();
+                this.registerForm.controls['prezime'].updateValueAndValidity();
+                this.registerForm.controls['pol'].clearValidators();
+                this.registerForm.controls['pol'].updateValueAndValidity();
+                this.registerForm.controls['datumRodjenja'].clearValidators();
+                this.registerForm.controls['datumRodjenja'].updateValueAndValidity();
+                this.registerForm.controls['JMBG'].clearValidators();
+                this.registerForm.controls['JMBG'].updateValueAndValidity();
+                this.registerForm.controls['strucnaSprema'].clearValidators();
+                this.registerForm.controls['strucnaSprema'].updateValueAndValidity();
+                this.registerForm.controls['adresaKancelarije'].clearValidators();
+                this.registerForm.controls['adresaKancelarije'].updateValueAndValidity();
+                
+                this.registerForm.controls['skraceniNaziv'].setValidators([Validators.required]);
+                this.registerForm.controls['skraceniNaziv'].updateValueAndValidity();
+                this.registerForm.controls['kontaktDobavljaca'].setValidators([Validators.required]);
+                this.registerForm.controls['kontaktDobavljaca'].updateValueAndValidity();
+                this.registerForm.controls['adresaDobavljaca'].setValidators([Validators.required]);
+                this.registerForm.controls['adresaDobavljaca'].updateValueAndValidity();
+                this.registerForm.controls['postanskiBroj'].setValidators([Validators.required]);
+                this.registerForm.controls['postanskiBroj'].updateValueAndValidity();
+                this.registerForm.controls['PIB'].setValidators([Validators.required]);
+                this.registerForm.controls['PIB'].updateValueAndValidity();
             }
         });
     }
@@ -104,9 +153,11 @@ export class RegisterComponent implements OnInit {
 
         this.authenticationService.register(this.korisnik)
             .pipe(first())
-            .subscribe(
-                data => {
+            .subscribe(               
+                d => {
+                    console.log(d);
                     this.korisnikService.getKorisnikByEmail(this.korisnik.email).subscribe(data => {
+                        console.log(data);
                         if (this.korisnik.uloga == 'prodavac' || this.korisnik.uloga == 'menadžer') {
                             this.prodavac.JMBG = this.registerForm.value.JMBG;
                             this.prodavac.adresaStanovanja = this.registerForm.value.adresaStanovanja;

@@ -1,4 +1,4 @@
-﻿<h2>Login</h2>
+﻿<h2>Prijavljivanje</h2>
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label for="email">Email</label>
@@ -19,8 +19,8 @@
     <div class="form-group">
         <button [disabled]="loading" class="btn btn-primary">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Login
+            Prijavi se
         </button>
-        <a routerLink="/register" class="btn btn-link">Register</a>
+        <a routerLink="/register" class="btn btn-link">Registruj se</a>
     </div>
 </form>

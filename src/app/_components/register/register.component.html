@@ -3,7 +3,7 @@
     <div class="form-group">
         <label for="email">Email</label>
         <input type="email" formControlName="email" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
             <div *ngIf="f.email.errors.required">Email je obavezan</div>
         </div>
@@ -32,9 +32,9 @@
         <label for="uloga">Uloga</label>
         <select id="uloga" formControlName="uloga" class="form-control"
             [ngClass]="{ 'is-invalid': submitted && f.uloga.errors }">
-            <option value="uloga">prodavac</option>
-            <option value="uloga">menadžer</option>
-            <option value="uloga">dobavljač</option>
+            <option value="prodavac">prodavac</option>
+            <option value="menadžer">menadžer</option>
+            <option value="dobavljač">dobavljač</option>
         </select>
         <div *ngIf="submitted && f.uloga.errors" class="invalid-feedback">
             <div *ngIf="f.uloga.errors.required">Uloga je obavezna</div>

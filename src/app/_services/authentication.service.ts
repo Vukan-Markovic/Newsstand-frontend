@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Korisnik } from '../_models/korisnik';
@@ -20,16 +20,16 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(email, password) {
-        return this.httpClient.post<any>(this.API_URL + 'login', { email, password })
-            .pipe(map(data => {
-                this.korisnikService.getKorisnik(data.korisnikID).subscribe(korisnik => {
-                    korisnik.token = data.token;
-                    localStorage.setItem('currentUser', JSON.stringify(korisnik));
-                    this.currentUserSubject.next(korisnik);
-                    return korisnik;
-                });
-            }));
+    login(email, lozinka) { 
+        return this.httpClient.post<any>(this.API_URL + 'login', { email, lozinka });
+            // .pipe(map(data => {
+            //     this.korisnikService.getKorisnik(data.korisnikID).subscribe(korisnik => {
+            //         korisnik.token = data.token;
+            //         localStorage.setItem('currentUser', JSON.stringify(korisnik));
+            //         this.currentUserSubject.next(korisnik);
+            //         return korisnik;
+            //     });
+            // }));
     }
 
     register(korisnik: Korisnik) {
