@@ -3,8 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
 import { RacunService } from 'src/app/_services/racun.service';
-import { Racun } from 'src/app/_models/racun';
 import { Prodavac } from 'src/app/_models/prodavac';
+import { RacunDO } from 'src/app/_models/racunDO';
 
 @Component({
   selector: 'app-racun-dialog',
@@ -17,7 +17,7 @@ export class RacunDialogComponent implements OnInit {
 
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<RacunDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Racun,
+    @Inject(MAT_DIALOG_DATA) public data: RacunDO,
     public racunService: RacunService,
     public prodavacService: ProdavacService) { }
 
@@ -26,9 +26,8 @@ export class RacunDialogComponent implements OnInit {
   compareTo(a: { id: any; }, b: { id: any; }) {
     return a.id == b.id;
   }
-  
+
   public add(): void {
-    this.data.racunID = -1;
     this.racunService.addRacun(this.data);
     this.snackBar.open("Uspešno dodat račun", "U redu", {
       duration: 2500,
@@ -36,7 +35,7 @@ export class RacunDialogComponent implements OnInit {
   }
 
   public update(): void {
-    this.racunService.updateRacun(this.data);
+    this.racunService.updateRacun(this.data.racunID, this.data);
     this.snackBar.open("Uspešno modifikovan račun", "U redu", {
       duration: 2500,
     });

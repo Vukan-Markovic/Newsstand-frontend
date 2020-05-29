@@ -17,12 +17,15 @@ import { KorisnikComponent } from './_components/korisnik/korisnik.component';
 import { Menadzer } from './_models/menadzer';
 import { ZaposleniGuard } from './_helpers/zaposleni.guard';
 import { MenadzerGuard } from './_helpers/menadzer.guard';
+import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
+import { EmailInputComponent } from './_components/email-input/email-input.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'emailInput', component: EmailInputComponent },
+  { path: 'resetPassword', component: ResetPasswordComponent },
   { path: 'dobavljac', component: DobavljacComponent, canActivate: [ZaposleniGuard] },
   { path: 'izvestaj', component: IzvestajComponent, canActivate: [MenadzerGuard] },
   { path: 'korisnik', component: KorisnikComponent, canActivate: [AuthGuard] },

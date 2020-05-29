@@ -1,4 +1,3 @@
-  
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -24,7 +23,9 @@ export class ProizvodComponent implements OnInit {
 
   constructor(public proizvodService: ProizvodService, public dialog: MatDialog) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadData();
+  }
 
   // ngOnChanges() {
   //   if (this.selektovanTim.id) this.loadData();
@@ -33,6 +34,7 @@ export class ProizvodComponent implements OnInit {
   public loadData() {
     this.proizvodService.getProizvodi()
       .subscribe(data => {
+        if (!Array.isArray(data)) return;
         this.dataSource = new MatTableDataSource(data);
         // this.dataSource.filterPredicate = (data, filter: string) => {
         //   const accumulator = (currentTerm: string, key: string) => {
@@ -61,18 +63,19 @@ export class ProizvodComponent implements OnInit {
     cena?: number,
     tipPakovanja?: string,
     velicinaPakovanja?: string,
-    barKod?: string, 
+    barKod?: string,
     masa?: number,
     raspolozivaKolicina?: number,
     proizvodjac?: Proizvodjac,
     vrstaProizvoda?: VrstaProizvoda) {
     const dialogRef = this.dialog.open(ProizvodjacDialogComponent, {
       data: {
-        i: proizvodID, id: proizvodID, nazivProizvoda: nazivProizvoda, opisProizvoda: opisProizvoda, cena: cena,
+        i: proizvodID, proizvodID: proizvodID, nazivProizvoda: nazivProizvoda, opisProizvoda: opisProizvoda, cena: cena,
         tipPakovanja: tipPakovanja, velicinaPakovanja: velicinaPakovanja, masa: masa, raspolozivaKolicina: raspolozivaKolicina, proizvodjac: proizvodjac,
         vrstaProizvoda: vrstaProizvoda
       }
     });
+
     dialogRef.componentInstance.flag = flag;
     // if (flag == 1) dialogRef.componentInstance.data.tim = this.selektovanTim;
 

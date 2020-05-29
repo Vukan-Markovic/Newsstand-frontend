@@ -26,10 +26,11 @@ export class RegisterComponent implements OnInit {
     constructor(private formBuilder: FormBuilder, private router: Router, private authenticationService: AuthenticationService,
         private korisnikService: KorisnikService, private toastr: ToastrService, private prodavacService: ProdavacService,
         private menadzerService: MenadzerService, private dobavljacService: DobavljacService) {
-        if (this.authenticationService.currentUserValue) this.router.navigate(['/']);
     }
-   
+
     ngOnInit() {
+        if (this.authenticationService.isLoggedIn()) this.router.navigate(['/']);
+
         this.registerForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
             lozinka: ['', [Validators.required, Validators.minLength(8)]],
@@ -83,12 +84,12 @@ export class RegisterComponent implements OnInit {
                 this.registerForm.controls['JMBG'].updateValueAndValidity();
                 this.registerForm.controls['strucnaSprema'].setValidators([Validators.required]);
                 this.registerForm.controls['strucnaSprema'].updateValueAndValidity();
-                
-                if(val == 'menadžer') {
+
+                if (val == 'menadžer') {
                     this.registerForm.controls['adresaKancelarije'].setValidators([Validators.required]);
                     this.registerForm.controls['adresaKancelarije'].updateValueAndValidity();
                 }
-            } else {
+            } else if (val == 'dobavljač') {
                 this.registerForm.controls['ime'].clearValidators();
                 this.registerForm.controls['ime'].updateValueAndValidity();
                 this.registerForm.controls['prezime'].clearValidators();
@@ -103,7 +104,7 @@ export class RegisterComponent implements OnInit {
                 this.registerForm.controls['strucnaSprema'].updateValueAndValidity();
                 this.registerForm.controls['adresaKancelarije'].clearValidators();
                 this.registerForm.controls['adresaKancelarije'].updateValueAndValidity();
-                
+
                 this.registerForm.controls['skraceniNaziv'].setValidators([Validators.required]);
                 this.registerForm.controls['skraceniNaziv'].updateValueAndValidity();
                 this.registerForm.controls['kontaktDobavljaca'].setValidators([Validators.required]);
@@ -153,12 +154,15 @@ export class RegisterComponent implements OnInit {
 
         this.authenticationService.register(this.korisnik)
             .pipe(first())
-            .subscribe(               
+            .subscribe(
                 d => {
-                    console.log(d);
                     this.korisnikService.getKorisnikByEmail(this.korisnik.email).subscribe(data => {
-                        console.log(data);
                         if (this.korisnik.uloga == 'prodavac' || this.korisnik.uloga == 'menadžer') {
+                            if (this.registerForm.value.datumRodjenja >= this.registerForm.value.datumZaposlenja) {
+                                this.toastr.error("Datum rođenja mora biti pre datuma zaposlenja!", 'Registracija');
+                                return;
+                            }
+
                             this.prodavac.JMBG = this.registerForm.value.JMBG;
                             this.prodavac.adresaStanovanja = this.registerForm.value.adresaStanovanja;
                             this.prodavac.datumRodjenja = this.registerForm.value.datumRodjenja;
@@ -166,9 +170,10 @@ export class RegisterComponent implements OnInit {
                             this.prodavac.ime = this.registerForm.value.ime;
                             this.prodavac.pol = this.registerForm.value.pol;
                             this.prodavac.prezime = this.registerForm.value.prezime;
-                            this.prodavac.prodavacID = data.korisnikID;
+                            this.prodavac.prodavacID = data[0].korisnikID;
                             this.prodavac.strucnaSprema = this.registerForm.value.strucnaSprema;
                             this.prodavac.telefon = this.registerForm.value.telefon;
+
                             this.prodavacService.addProdavac(this.prodavac).subscribe(res => {
                                 if (this.korisnik.uloga == 'menadžer') {
                                     this.menadzer.adresaKancelarije = this.registerForm.value.adresaKancelarije;
@@ -181,6 +186,11 @@ export class RegisterComponent implements OnInit {
                                 this.router.navigate(['/login']);
                             });
                         } else {
+                            if (this.registerForm.value.PIB < 100000010 || this.registerForm.value.PIB > 999999999) {
+                                this.toastr.error("PIB mora bit između brojeva 100000010 i 999999999!", 'Registracija');
+                                return;
+                            }
+
                             this.dobavljac.PIB = this.registerForm.value.PIB;
                             this.dobavljac.adresaDobavljaca = this.registerForm.value.adresaDobavljaca;
                             this.dobavljac.brojZiroRacuna = this.registerForm.value.brojZiroRacuna;

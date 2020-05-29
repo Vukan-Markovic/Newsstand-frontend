@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Dobavljac } from 'src/app/_models/dobavljac';
 import { Menadzer } from 'src/app/_models/menadzer';
 import { Prodavac } from 'src/app/_models/prodavac';
-import { Porudzbina } from 'src/app/_models/porudzbina';
+import { PorudzbinaDO } from 'src/app/_models/porudzbinaDO';
 import { PorudzbinaService } from 'src/app/_services/porudzbina.service';
 import { DobavljacService } from 'src/app/_services/dobavljac.service';
 import { MenadzerService } from 'src/app/_services/menadzer.service';
@@ -23,10 +23,10 @@ export class PorudzbinaDialogComponent implements OnInit {
 
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<PorudzbinaDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Porudzbina,
+    @Inject(MAT_DIALOG_DATA) public data: PorudzbinaDO,
     public porudzbinaService: PorudzbinaService,
-    public dobavljacService: DobavljacService, 
-    public menadzerService: MenadzerService, 
+    public dobavljacService: DobavljacService,
+    public menadzerService: MenadzerService,
     public prodavacService: ProdavacService) { }
 
   ngOnInit() {
@@ -48,13 +48,12 @@ export class PorudzbinaDialogComponent implements OnInit {
   }
 
   onChange(dobavljac: Dobavljac, menadzer: Menadzer, prodavac: Prodavac) {
-    this.data.dobavljac = dobavljac;
-    this.data.menadzer = menadzer;
-    this.data.prodavac = prodavac;
+    this.data.dobavljacID = dobavljac.dobavljacID;
+    this.data.menadzerID = menadzer.menadzerID;
+    this.data.prodavacID = prodavac.prodavacID;
   }
 
   public add(): void {
-    this.data.porudzbinaID = -1;
     this.porudzbinaService.addPorudzbina(this.data);
     this.snackBar.open("Uspešno dodata porudžbina", "U redu", {
       duration: 2500,
@@ -62,7 +61,7 @@ export class PorudzbinaDialogComponent implements OnInit {
   }
 
   public update(): void {
-    this.porudzbinaService.updatePorudzbina(this.data);
+    this.porudzbinaService.updatePorudzbina(this.data.porudzbinaID, this.data);
     this.snackBar.open("Uspešno modifikovana porudžbina", "U redu", {
       duration: 2500,
     });

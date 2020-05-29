@@ -1,44 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Racun } from '../_models/racun';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { RacunDO } from '../_models/racunDO';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class RacunService {
     private readonly API_URL = 'http://localhost:8080/api/racun/';
-    dataChange: BehaviorSubject<Racun[]> = new BehaviorSubject<Racun[]>([]);
-    dataChangeRacun: BehaviorSubject<Racun> = new BehaviorSubject<Racun>(null);
 
     constructor(private httpClient: HttpClient) { }
 
-    public getRacuni(): Observable<Racun[]> {
-        this.httpClient.get<Racun[]>(this.API_URL).subscribe(data => {
-            this.dataChange.next(data);
-        },
-            (error: HttpErrorResponse) => {
-                console.log(error.name + ' ' + error.message);
-            });
-
-        return this.dataChange.asObservable();
+    public getRacuni() {
+        return this.httpClient.get<RacunDO[]>(this.API_URL);
     }
 
-    public getRacun(id: number): Observable<Racun> {
-        this.httpClient.get<Racun>(this.API_URL + id).subscribe(data => {
-            this.dataChangeRacun.next(data);
-        },
-            (error: HttpErrorResponse) => {
-                console.log(error.name + ' ' + error.message);
-            });
-
-        return this.dataChangeRacun.asObservable();
+    public getRacun(id: number) {
+        return this.httpClient.get<RacunDO>(this.API_URL + id);
     }
 
-    public addRacun(racun: Racun): void {
+    public addRacun(racun: RacunDO): void {
         this.httpClient.post(this.API_URL, racun).subscribe();
     }
 
-    public updateRacun(racun: Racun): void {
-        this.httpClient.put(this.API_URL, racun).subscribe();
+    public updateRacun(id: number, racun: RacunDO): void {
+        this.httpClient.put(this.API_URL + id, racun).subscribe();
     }
 
     public deleteRacun(id: number): void {

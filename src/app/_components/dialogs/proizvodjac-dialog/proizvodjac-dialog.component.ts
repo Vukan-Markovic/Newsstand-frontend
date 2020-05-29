@@ -20,7 +20,6 @@ export class ProizvodjacDialogComponent implements OnInit {
     public proizvodjacService: ProizvodjacService) { }
 
   public add(): void {
-    this.data.proizvodjacID = -1;
     this.proizvodjacService.addProizvodjac(this.data);
     this.snackBar.open("Uspešno dodat proizvođač", "U redu", {
       duration: 2500,
@@ -28,7 +27,7 @@ export class ProizvodjacDialogComponent implements OnInit {
   }
 
   public update(): void {
-    this.proizvodjacService.updateProizvodjac(this.data);
+    this.proizvodjacService.updateProizvodjac(this.data.proizvodjacID, this.data);
     this.snackBar.open("Uspešno modifikovan proizvođač", "U redu", {
       duration: 2500,
     });

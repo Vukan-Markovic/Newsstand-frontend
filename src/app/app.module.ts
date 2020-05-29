@@ -15,13 +15,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 // MatOptionModule
-// MatNativeDateModule
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -31,6 +30,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DobavljacComponent } from './_components/dobavljac/dobavljac.component';
 import { IzvestajComponent } from './_components/izvestaj/izvestaj.component';
@@ -66,7 +66,6 @@ import { RacunService } from './_services/racun.service';
 import { StavkaRacunaService } from './_services/stavkaRacuna.service';
 import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
 import { EmailInputComponent } from './_components/email-input/email-input.component';
-import { NavigationComponent } from './_components/navigation/navigation.component';
 
 @NgModule({
     imports: [
@@ -85,6 +84,7 @@ import { NavigationComponent } from './_components/navigation/navigation.compone
         MatSnackBarModule,
         MatDialogModule,
         MatInputModule,
+        MatNativeDateModule,
         FormsModule,
         MatDatepickerModule,
         MatCheckboxModule,
@@ -94,7 +94,7 @@ import { NavigationComponent } from './_components/navigation/navigation.compone
         MatStepperModule,
         ReactiveFormsModule,
         HttpClientModule,
-        AppRoutingModule, 
+        AppRoutingModule,
         ToastrModule.forRoot({
             positionClass: 'toast-top-right',
             preventDuplicates: true,
@@ -126,8 +126,7 @@ import { NavigationComponent } from './_components/navigation/navigation.compone
         ProdavacDialogComponent,
         MenadzerComponent,
         ResetPasswordComponent,
-        EmailInputComponent,
-        NavigationComponent
+        EmailInputComponent
     ],
     entryComponents: [
         DobavljacDialogComponent,
@@ -138,7 +137,7 @@ import { NavigationComponent } from './_components/navigation/navigation.compone
         RacunDialogComponent,
         VrstaProizvodaDialogComponent,
         ProdavacDialogComponent
-      ],
+    ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

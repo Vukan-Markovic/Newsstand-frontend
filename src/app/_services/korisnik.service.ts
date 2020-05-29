@@ -1,47 +1,23 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Korisnik } from '../_models/korisnik';
-import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class KorisnikService {
     private readonly API_URL = 'http://localhost:8080/api/korisnik/';
-    dataChange: BehaviorSubject<Korisnik[]> = new BehaviorSubject<Korisnik[]>([]);
-    dataChangeKorisnik: BehaviorSubject<Korisnik> = new BehaviorSubject<Korisnik>(null);
 
     constructor(private httpClient: HttpClient) { }
 
-    public getKorisnici(): Observable<Korisnik[]> {
-        this.httpClient.get<Korisnik[]>(this.API_URL).subscribe(data => {
-            this.dataChange.next(data);
-        },
-            (error: HttpErrorResponse) => {
-                console.log(error.name + ' ' + error.message);
-            });
-
-        return this.dataChange.asObservable();
+    public getKorisnici() {
+        return this.httpClient.get<Korisnik[]>(this.API_URL);
     }
 
-    public getKorisnik(id: number): Observable<Korisnik> {
-        this.httpClient.get<Korisnik>(this.API_URL + id).subscribe(data => {
-            this.dataChangeKorisnik.next(data);
-        },
-            (error: HttpErrorResponse) => {
-                console.log(error.name + ' ' + error.message);
-            });
-
-        return this.dataChangeKorisnik.asObservable();
+    public getKorisnik(id: number) {
+        return this.httpClient.get<Korisnik>(this.API_URL + id);
     }
 
-    public getKorisnikByEmail(email: String): Observable<Korisnik> {
-        this.httpClient.get<Korisnik>(this.API_URL + 'email/' + email).subscribe(data => {
-            this.dataChangeKorisnik.next(data);
-        },
-            (error: HttpErrorResponse) => {
-                console.log(error.name + ' ' + error.message);
-            });
-
-        return this.dataChangeKorisnik.asObservable();
+    public getKorisnikByEmail(email: String) {
+        return this.httpClient.get<Korisnik>(this.API_URL + 'email/' + email);
     }
 
     public addKorisnik(izvestaj: Korisnik): void {

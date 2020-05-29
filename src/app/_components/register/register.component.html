@@ -1,233 +1,232 @@
-﻿<h2>Register</h2>
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" formControlName="email" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-            <div *ngIf="f.email.errors.required">Email je obavezan</div>
+﻿<div class="container"> 
+    <div class="row justify-content-center">
+        <div class="card text-white bg-dark">
+            <h4 class="card-header text-center">Registracija</h4>
+            <div class="card-body">
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" maxlength="30" placeholder="Unesite email adresu" formControlName="email" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email je obavezan</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lozinka">Lozinka</label>
+                        <input type="password" required placeholder="Unesite lozinku" formControlName="lozinka" class="form-control" minlength="8"
+                            [ngClass]="{ 'is-invalid': submitted && f.lozinka.errors }" />
+                        <div *ngIf="submitted && f.lozinka.errors" class="invalid-feedback">
+                            <div *ngIf="f.lozinka.errors.required">Lozinka je obavezna</div>
+                            <div *ngIf="f.lozinka.errors.minlength">Lozinka mora sadržati bar 8 karaktera</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passwordRepeat">Potvrdite lozinku</label>
+                        <input type="password" required placeholder="Ponovite vašu lozinku" id="passwordRepeat" formControlName="passwordRepeat" class="form-control"
+                            minlength="8" [ngClass]="{ 'is-invalid': submitted && f.passwordRepeat.errors }" />
+                        <div *ngIf="submitted && f.passwordRepeat.errors" class="invalid-feedback">
+                            <div *ngIf="f.passwordRepeat.errors.required">Lozinka je obavezna</div>
+                            <div *ngIf="f.passwordRepeat.errors.minlength">Lozinka mora sadržati bar 8 karaktera</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="uloga">Uloga</label>
+                        <select id="uloga" required formControlName="uloga" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.uloga.errors }">
+                            <option value="" selected>Izaberite ulogu</option>
+                            <option value="prodavac">prodavac</option>
+                            <option value="menadžer">menadžer</option>
+                            <option value="dobavljač">dobavljač</option> 
+                        </select>
+                        <div *ngIf="submitted && f.uloga.errors" class="invalid-feedback">
+                            <div *ngIf="f.uloga.errors.required">Uloga je obavezna</div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="isDobavljac()">
+
+                        <div class="form-group">
+                            <label for="skraceniNaziv">Skraćeni naziv</label>
+                            <input type="text" maxlength="10" placeholder="Unesite skraćeni naziv" formControlName="skraceniNaziv" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.skraceniNaziv.errors }" />
+                            <div *ngIf="submitted && f.skraceniNaziv.errors" class="invalid-feedback">
+                                <div *ngIf="f.skraceniNaziv.errors.required">Skraćeni naziv je obavezan</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="punNaziv">punNaziv</label>
+                            <input type="text" maxlength="50" placeholder="Unesite pun naziv" formControlName="punNaziv" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="kontaktDobavljaca">Kontakt</label>
+                            <input type="text" maxlength="20" placeholder="Unesite broj telefona" formControlName="kontaktDobavljaca" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.kontaktDobavljaca.errors }" />
+                            <div *ngIf="submitted && f.kontaktDobavljaca.errors" class="invalid-feedback">
+                                <div *ngIf="f.kontaktDobavljaca.errors.required">Kontakt je obavezan</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adresaDobavljaca">Adresa</label>
+                            <input type="text" maxlength="50" placeholder="Unesite adresu" formControlName="adresaDobavljaca" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.adresaDobavljaca.errors }" />
+                            <div *ngIf="submitted && f.adresaDobavljaca.errors" class="invalid-feedback">
+                                <div *ngIf="f.adresaDobavljaca.errors.required">Adresa je obavezna</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="grad">Grad</label>
+                            <input type="text" maxlength="20" placeholder="Unesite grad" formControlName="grad" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="drzava">Država</label>
+                            <input type="text" maxlength="30" placeholder="Unesite državu" formControlName="drzava" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postanskiBroj">Poštanski broj</label>
+                            <input type="text" maxlength="20" placeholder="Unesite poštanski broj" formControlName="postanskiBroj" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.postanskiBroj.errors }" />
+                            <div *ngIf="submitted && f.postanskiBroj.errors" class="invalid-feedback">
+                                <div *ngIf="f.postanskiBroj.errors.required">Poštanski broj je obavezan</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="PIB">PIB</label>
+                            <input type="number" minlength="9" maxlength="9" placeholder="Unesite poreski identifikacioni broj" formControlName="PIB" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.PIB.errors }" />
+                            <div *ngIf="submitted && f.PIB.errors" class="invalid-feedback">
+                                <div *ngIf="f.PIB.errors.required">PIB je obavezan</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="kontaktOsoba">Kontakt osoba</label>
+                            <input type="text" maxlength="50" placeholder="Unesite osobu za kontakt" formControlName="kontaktOsoba" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="brojZiroRacuna">Broj žiro računa</label>
+                            <input type="text" maxlength="30" placeholder="Unesite broj žiro računa" formControlName="brojZiroRacuna" class="form-control" />
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="isProdavac() || isMenadzer()">
+
+                        <div class="form-group">
+                            <label for="ime">Ime</label>
+                            <input placeholder="Unesite vaše ime" maxlength="20" type="text" formControlName="ime" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.ime.errors }" />
+                            <div *ngIf="submitted && f.ime.errors" class="invalid-feedback">
+                                <div *ngIf="f.ime.errors.required">Ime je obavezno</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prezime">prezime</label>
+                            <input type="text" maxlength="30" placeholder="Unesite vaše prezime" formControlName="prezime" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.prezime.errors }" />
+                            <div *ngIf="submitted && f.prezime.errors" class="invalid-feedback">
+                                <div *ngIf="f.prezime.errors.required">Prezime je obavezno</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pol">Pol</label>
+                            <select id="pol" formControlName="pol" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.pol.errors }">
+                                <option value="muško" selected>muško</option>
+                                <option value="žensko">žensko</option>
+                            </select>
+                            <div *ngIf="submitted && f.pol.errors" class="invalid-feedback">
+                                <div *ngIf="f.pol.errors.required">Pol je obavezan</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="datumRodjenja">Datum rođenja</label>
+                            <input type="date" formControlName="datumRodjenja" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.datumRodjenja.errors }" />
+                            <div *ngIf="submitted && f.datumRodjenja.errors" class="invalid-feedback">
+                                <div *ngIf="f.datumRodjenja.errors.required">Datum rođenja je obavezan</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adresaStanovanja">Adresa</label>
+                            <input type="text" maxlength="50" placeholder="Unesite adresu stanovanja" formControlName="adresaStanovanja" class="form-control" />
+                            <div *ngIf="submitted && f.adresaStanovanja.errors" class="invalid-feedback">
+                                <div *ngIf="f.adresaStanovanja.errors.required">Adresa stanovanja je obavezna</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefon">Telefon</label>
+                            <input type="text" maxlength="20" placeholder="Unesite broj telefona" formControlName="telefon" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="JMBG">JMBG</label>
+                            <input type="text" minlength="13" maxlength="13" placeholder="Unesite jedinstveni matični broj građanina" formControlName="JMBG" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.JMBG.errors }" />
+                            <div *ngIf="submitted && f.JMBG.errors" class="invalid-feedback">
+                                <div *ngIf="f.JMBG.errors.required">JMBG je obavezan</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="datumZaposlenja">Datum zaposlenja</label>
+                            <input type="date" formControlName="datumZaposlenja" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="strucnaSprema">Stručna sprema</label>
+                            <input type="text" maxlength="20" placeholder="Unesite stepen stručne spreme" formControlName="strucnaSprema" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.strucnaSprema.errors }" />
+                            <div *ngIf="submitted && f.strucnaSprema.errors" class="invalid-feedback">
+                                <div *ngIf="f.strucnaSprema.errors.required">Stručna sprema je obavezna</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="isMenadzer()">
+
+                        <div class="form-group">
+                            <label for="adresaKancelarije">Adresa kancelarije</label>
+                            <input type="text" placeholder="Unesite adresu kancelarije" formControlName="adresaKancelarije" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.adresaKancelarije.errors }" />
+                            <div *ngIf="submitted && f.adresaKancelarije.errors" class="invalid-feedback">
+                                <div *ngIf="f.adresaKancelarije.errors.required">Adresa kancelarije je obavezna</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="brojKancelarije">Broj kancelarije</label>
+                            <input placeholder="Unesite broj kancelarije" type="text" formControlName="brojKancelarije" class="form-control" />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <button [disabled]="loading" class="btn btn-primary">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Registruj se
+                        </button>
+                        <a routerLink="/login" class="btn btn-link">Prijavi se</a>
+                        <a routerLink="/resetPassword" class="btn btn-link">Resetuj lozinku</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <label for="lozinka">Lozinka</label>
-        <input type="password" formControlName="lozinka" class="form-control" minlength="8"
-            [ngClass]="{ 'is-invalid': submitted && f.lozinka.errors }" />
-        <div *ngIf="submitted && f.lozinka.errors" class="invalid-feedback">
-            <div *ngIf="f.lozinka.errors.required">Lozinka je obavezna</div>
-            <div *ngIf="f.lozinka.errors.minlength">Lozinka mora sadržati bar 8 karaktera</div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="passwordRepeat">Ponovite vašu lozinku</label>
-        <input type="password" id="passwordRepeat" formControlName="passwordRepeat" class="form-control" minlength="8"
-            [ngClass]="{ 'is-invalid': submitted && f.passwordRepeat.errors }" />
-        <div *ngIf="submitted && f.passwordRepeat.errors" class="invalid-feedback">
-            <div *ngIf="f.passwordRepeat.errors.required">Lozinka je obavezna</div>
-            <div *ngIf="f.passwordRepeat.errors.minlength">Lozinka mora sadržati bar 8 karaktera</div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="uloga">Uloga</label>
-        <select id="uloga" formControlName="uloga" class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.uloga.errors }">
-            <option value="prodavac">prodavac</option>
-            <option value="menadžer">menadžer</option>
-            <option value="dobavljač">dobavljač</option>
-        </select>
-        <div *ngIf="submitted && f.uloga.errors" class="invalid-feedback">
-            <div *ngIf="f.uloga.errors.required">Uloga je obavezna</div>
-        </div>
-    </div>
-
-    <div *ngIf="isDobavljac()">
-
-        <div class="form-group">
-            <label for="skraceniNaziv">Skraćeni naziv</label>
-            <input type="text" formControlName="skraceniNaziv" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.skraceniNaziv.errors }" />
-            <div *ngIf="submitted && f.skraceniNaziv.errors" class="invalid-feedback">
-                <div *ngIf="f.skraceniNaziv.errors.required">Skraćeni naziv je obavezan</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="punNaziv">punNaziv</label>
-            <input type="text" formControlName="punNaziv" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="kontaktDobavljaca">Kontakt</label>
-            <input type="text" formControlName="kontaktDobavljaca" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.kontaktDobavljaca.errors }" />
-            <div *ngIf="submitted && f.kontaktDobavljaca.errors" class="invalid-feedback">
-                <div *ngIf="f.kontaktDobavljaca.errors.required">Kontakt je obavezan</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="adresaDobavljaca">Adresa</label>
-            <input type="text" formControlName="adresaDobavljaca" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.adresaDobavljaca.errors }" />
-            <div *ngIf="submitted && f.adresaDobavljaca.errors" class="invalid-feedback">
-                <div *ngIf="f.adresaDobavljaca.errors.required">Adresa je obavezna</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="grad">Grad</label>
-            <input type="text" formControlName="grad" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="drzava">Država</label>
-            <input type="text" formControlName="drzava" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="postanskiBroj">Poštanski broj</label>
-            <input type="text" formControlName="postanskiBroj" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.postanskiBroj.errors }" />
-            <div *ngIf="submitted && f.postanskiBroj.errors" class="invalid-feedback">
-                <div *ngIf="f.postanskiBroj.errors.required">Poštanski broj je obavezan</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="PIB">PIB</label>
-            <input type="number" formControlName="PIB" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.PIB.errors }" />
-            <div *ngIf="submitted && f.PIB.errors" class="invalid-feedback">
-                <div *ngIf="f.PIB.errors.required">PIB je obavezan</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="kontaktOsoba">Kontakt osoba</label>
-            <input type="text" formControlName="kontaktOsoba" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="brojZiroRacuna">Broj žiro računa</label>
-            <input type="text" formControlName="brojZiroRacuna" class="form-control" />
-        </div>
-
-    </div>
-
-    <div *ngIf="isProdavac() || isMenadzer()">
-
-        <div class="form-group">
-            <label for="ime">Ime</label>
-            <input type="text" formControlName="ime" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.ime.errors }" />
-            <div *ngIf="submitted && f.ime.errors" class="invalid-feedback">
-                <div *ngIf="f.ime.errors.required">Ime je obavezno</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="prezime">prezime</label>
-            <input type="text" formControlName="prezime" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.prezime.errors }" />
-            <div *ngIf="submitted && f.prezime.errors" class="invalid-feedback">
-                <div *ngIf="f.prezime.errors.required">Prezime je obavezno</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="pol">Pol</label>
-            <select id="pol" formControlName="pol" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.pol.errors }">
-                <option value="uloga">muško</option>
-                <option value="uloga">žensko</option>
-            </select>
-            <div *ngIf="submitted && f.pol.errors" class="invalid-feedback">
-                <div *ngIf="f.pol.errors.required">Pol je obavezan</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="datumRodjenja">Datum rođenja</label>
-            <input type="date" formControlName="datumRodjenja" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.datumRodjenja.errors }" />
-            <div *ngIf="submitted && f.datumRodjenja.errors" class="invalid-feedback">
-                <div *ngIf="f.datumRodjenja.errors.required">Datum rođenja je obavezan</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="adresaStanovanja">Adresa stanovanja</label>
-            <input type="text" formControlName="adresaStanovanja" class="form-control" />
-            <div *ngIf="submitted && f.adresaStanovanja.errors" class="invalid-feedback">
-                <div *ngIf="f.adresaStanovanja.errors.required">Adresa stanovanja je obavezna</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="telefon">Telefon</label>
-            <input type="text" formControlName="telefon" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="JMBG">JMBG</label>
-            <input type="text" formControlName="JMBG" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.JMBG.errors }" />
-            <div *ngIf="submitted && f.JMBG.errors" class="invalid-feedback">
-                <div *ngIf="f.JMBG.errors.required">JMBG je obavezan</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="datumZaposlenja">Datum zaposlenja</label>
-            <input type="text" formControlName="datumZaposlenja" class="form-control" />
-        </div>
-
-        <div class="form-group">
-            <label for="strucnaSprema">Stručna sprema</label>
-            <input type="text" formControlName="strucnaSprema" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.strucnaSprema.errors }" />
-            <div *ngIf="submitted && f.strucnaSprema.errors" class="invalid-feedback">
-                <div *ngIf="f.strucnaSprema.errors.required">Stručna sprema je obavezna</div>
-            </div>
-        </div>
-
-    </div>
-
-    <div *ngIf="isMenadzer()">
-
-        <div class="form-group">
-            <label for="adresaKancelarije">Adresa kancelarije</label>
-            <input type="text" formControlName="adresaKancelarije" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f.adresaKancelarije.errors }" />
-            <div *ngIf="submitted && f.adresaKancelarije.errors" class="invalid-feedback">
-                <div *ngIf="f.adresaKancelarije.errors.required">Adresa kancelarije je obavezna</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="brojKancelarije">Broj kancelarije</label>
-            <input type="text" formControlName="brojKancelarije" class="form-control" />
-        </div>
-
-    </div>
-
-    <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Registruj se
-        </button>
-        <a routerLink="/login" class="btn btn-link">Prijavi se</a>
-        <a routerLink="/resetPassword" class="btn btn-link">Resetuj lozinku</a>
-        <!-- <div class="row justify-content-center">
-            Don't have account?&nbsp;  <span class="badge badge-primary registration" (click)="register()"
-                data-toggle="tooltip" data-placement="top" title="Register">Register</span>
-        </div>
-        <br>
-        <div class="row justify-content-center">  
-            Forgot password?&nbsp; 
-            <span class="badge badge-primary registration" (click)="resetPassword()"
-            data-toggle="tooltip" data-placement="top" title="Register">Reset password</span>
-        </div> -->
-    </div>
-</form>
+</div>

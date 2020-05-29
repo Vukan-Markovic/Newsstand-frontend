@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -25,9 +24,10 @@ export class DobavljacComponent implements OnInit {
 
   public loadData() {
     this.dobavljacService.getDobavljaci().subscribe(data => {
+      if(!Array.isArray(data)) return;
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sortingDataAccessor = (data, property) => {
-        return data[property].toLocaleLowerCase();
+        if(data[property]) return data[property].toLocaleLowerCase();
       };
 
       this.dataSource.paginator = this.paginator;
@@ -49,7 +49,7 @@ export class DobavljacComponent implements OnInit {
     brojZiroRacuna?: string) {
     const dialogRef = this.dialog.open(DobavljacDialogComponent, {
       data: {
-        i: dobavljacID, id: dobavljacID, skraceniNaziv: skraceniNaziv, punNaziv: punNaziv, kontaktDobavljaca: kontaktDobavljaca,
+        i: dobavljacID, dobavljacID: dobavljacID, skraceniNaziv: skraceniNaziv, punNaziv: punNaziv, kontaktDobavljaca: kontaktDobavljaca,
         adresaDobavljaca: adresaDobavljaca, grad: grad, drzava: drzava, postanskiBroj: postanskiBroj, PIB: PIB,
         kontaktOsoba: kontaktOsoba, brojZiroRacuna: brojZiroRacuna
       }

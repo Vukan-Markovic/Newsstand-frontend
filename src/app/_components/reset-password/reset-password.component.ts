@@ -15,8 +15,8 @@ export class ResetPasswordComponent implements OnInit {
   token: string;
   submitted = false;
 
-  constructor(private route: ActivatedRoute, private router: Router,
-    private toastr: ToastrService, private authenticationService: AuthenticationService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private toastr: ToastrService,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.resetPasswordForm = new FormGroup({

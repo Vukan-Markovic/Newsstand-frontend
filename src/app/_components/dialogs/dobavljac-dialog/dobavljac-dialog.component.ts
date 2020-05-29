@@ -20,7 +20,7 @@ export class DobavljacDialogComponent implements OnInit {
     public dobavljacService: DobavljacService) { }
 
   public update(): void {
-    this.dobavljacService.updateDobavljac(this.data);
+    this.dobavljacService.updateDobavljac(this.data.dobavljacID, this.data);
     this.snackBar.open("Uspešno modifikovan dobavljač", "U redu", {
       duration: 2500,
     });

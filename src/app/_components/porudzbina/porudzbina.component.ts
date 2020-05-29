@@ -30,6 +30,7 @@ export class PorudzbinaComponent implements OnInit {
 
   public loadData() {
     this.porudzbinaService.getPorudzbine().subscribe(data => {
+      if (!Array.isArray(data)) return;
       this.dataSource = new MatTableDataSource(data);
 
       this.dataSource.filterPredicate = (data, filter: string) => {
@@ -59,13 +60,18 @@ export class PorudzbinaComponent implements OnInit {
     datumIsporuke?: Date,
     ukupanIznosPorudzbine?: number,
     statusPorudzbine?: string,
-    dobavljac?: Dobavljac, 
+    dobavljac?: Dobavljac,
     menadzer?: Menadzer,
     prodavac?: Prodavac) {
     const dialogRef = this.dialog.open(PorudzbinaDialogComponent,
-      { data: { id: porudzbinaID, datumPorucivanja: datumPorucivanja, datumIsporuke: datumIsporuke, ukupanIznosPorudzbine: ukupanIznosPorudzbine, statusPorudzbine: statusPorudzbine, 
-        dobavljac: dobavljac, menadzer: menadzer, prodavac: prodavac } }
+      {
+        data: {
+          porudzbinaID: porudzbinaID, datumPorucivanja: datumPorucivanja, datumIsporuke: datumIsporuke, ukupanIznosPorudzbine: ukupanIznosPorudzbine, statusPorudzbine: statusPorudzbine,
+          dobavljac: dobavljac, menadzer: menadzer, prodavac: prodavac
+        }
+      }
     );
+
     dialogRef.componentInstance.flag = flag;
     dialogRef.afterClosed().subscribe((result: number) => {
       if (result == 1) this.loadData();

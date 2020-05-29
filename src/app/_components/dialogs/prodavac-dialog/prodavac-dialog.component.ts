@@ -20,7 +20,7 @@ export class ProdavacDialogComponent implements OnInit {
     public prodavacService: ProdavacService) { }
 
   public update(): void {
-    this.prodavacService.updateProdavac(this.data);
+    this.prodavacService.updateProdavac(this.data.prodavacID, this.data);
     this.snackBar.open("Uspešno modifikovan prodavac", "U redu", {
       duration: 2500,
     });

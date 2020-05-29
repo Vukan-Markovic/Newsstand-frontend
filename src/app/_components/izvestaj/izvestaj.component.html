@@ -5,7 +5,7 @@
 <div class="container mat-elevation-z8">
 
   <mat-form-field class="search">
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite Izveštaje">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite izveštaje">
   </mat-form-field>
 
   <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">

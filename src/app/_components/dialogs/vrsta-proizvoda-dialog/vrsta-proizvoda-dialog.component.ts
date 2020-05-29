@@ -20,7 +20,6 @@ export class VrstaProizvodaDialogComponent implements OnInit {
   ngOnInit() { }
 
   public add(): void {
-    this.data.vrstaProizvodaID = -1;
     this.vrstaProizvodaService.addVrstaProizvoda(this.data);
     this.snackBar.open("Uspešno dodata vrsta proizvoda", "U redu", {
       duration: 2500,
@@ -28,7 +27,7 @@ export class VrstaProizvodaDialogComponent implements OnInit {
   }
 
   public update(): void {
-    this.vrstaProizvodaService.updateVrstaProizvoda(this.data);
+    this.vrstaProizvodaService.updateVrstaProizvoda(this.data.vrstaProizvodaID, this.data);
     this.snackBar.open("Uspešno modifikovana vrsta proizvoda", "U redu", {
       duration: 2500,
     });

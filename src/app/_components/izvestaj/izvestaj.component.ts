@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -26,9 +25,10 @@ export class IzvestajComponent implements OnInit {
 
   public loadData() {
     this.izvestajService.getIzvestaji().subscribe(data => {
+      if (!Array.isArray(data)) return;
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sortingDataAccessor = (data, property) => {
-        return data[property].toLocaleLowerCase();
+        if (data[property]) return data[property].toLocaleLowerCase();
       };
 
       this.dataSource.paginator = this.paginator;
@@ -45,15 +45,15 @@ export class IzvestajComponent implements OnInit {
     menadzer?: Menadzer) {
     const dialogRef = this.dialog.open(IzvestajDialogComponent, {
       data: {
-        i: izvestajID, id: izvestajID, promet: promet, brojKupovina: brojKupovina, datumOd: datumOd,
+        i: izvestajID, izvestajID: izvestajID, promet: promet, brojKupovina: brojKupovina, datumOd: datumOd,
         datumDo: datumDo, menadzer: menadzer
       }
     });
+
     dialogRef.componentInstance.flag = flag;
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result == 1)
-        this.loadData();
+      if (result == 1) this.loadData();
     });
   }
 

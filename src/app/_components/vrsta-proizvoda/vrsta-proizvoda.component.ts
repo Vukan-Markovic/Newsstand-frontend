@@ -20,13 +20,17 @@ export class VrstaProizvodaComponent implements OnInit {
 
   constructor(public vrstaProizvodaService: VrstaProizvodaService, public dialog: MatDialog) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadData();
+  }
 
   public loadData() {
     this.vrstaProizvodaService.getVrsteProizvoda().subscribe(data => {
+      if (!Array.isArray(data)) return;
       this.dataSource = new MatTableDataSource(data);
+
       this.dataSource.sortingDataAccessor = (data, property) => {
-        return data[property].toLocaleLowerCase();
+        if (data[property]) return data[property].toLocaleLowerCase();
       };
 
       this.dataSource.paginator = this.paginator;
@@ -38,7 +42,7 @@ export class VrstaProizvodaComponent implements OnInit {
   public openDialog(flag: number, vrstaProizvodaID?: number, nazivVrsteProizvoda?: string, opisVrsteProizvoda?: string) {
     const dialogRef = this.dialog.open(VrstaProizvodaDialogComponent, {
       data: {
-        i: vrstaProizvodaID, id: vrstaProizvodaID, nazivVrsteProizvoda: nazivVrsteProizvoda, opisVrsteProizvoda: opisVrsteProizvoda
+        i: vrstaProizvodaID, vrstaProizvodaID: vrstaProizvodaID, nazivVrsteProizvoda: nazivVrsteProizvoda, opisVrsteProizvoda: opisVrsteProizvoda
       }
     });
     dialogRef.componentInstance.flag = flag;

@@ -22,7 +22,7 @@
 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button color="primary" matTooltip="Dodajte novu vrste proizvoda"
+        <button mat-icon-button color="primary" matTooltip="Dodajte novu vrstu proizvoda"
           matTooltipClass="example-tooltip-blue" (click)="openDialog(1)">
           <mat-icon>add</mat-icon>
         </button>
@@ -33,8 +33,8 @@
           (click)="openDialog(2, row.vrstaProizvodaID, row.nazivVrsteProizvoda, row.opisVrsteProizvoda)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
-        <button mat-icon-button color="primary" matTooltip="Izbrišite igrača"
-          (click)="openDialog(2, row.vrstaProizvodaID, row.nazivVrsteProizvoda, row.opisVrsteProizvoda)">
+        <button mat-icon-button color="primary" matTooltip="Izbrišite vrstu proizvoda"
+          (click)="openDialog(3, row.vrstaProizvodaID, row.nazivVrsteProizvoda, row.opisVrsteProizvoda)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>

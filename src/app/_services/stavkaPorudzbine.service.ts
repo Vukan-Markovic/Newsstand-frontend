@@ -1,36 +1,19 @@
 import { Injectable } from '@angular/core';
 import { StavkaPorudzbine } from '../_models/stavkaPorudzbine';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class StavkaPorudzbineService {
     private readonly API_URL = 'http://localhost:8080/api/stavkaPorudzbine/';
-    dataChange: BehaviorSubject<StavkaPorudzbine[]> = new BehaviorSubject<StavkaPorudzbine[]>([]);
-    dataChangeStavkaPorudzbine: BehaviorSubject<StavkaPorudzbine> = new BehaviorSubject<StavkaPorudzbine>(null);
 
     constructor(private httpClient: HttpClient) { }
 
-    public getStavkePorudzbine(): Observable<StavkaPorudzbine[]> {
-        this.httpClient.get<StavkaPorudzbine[]>(this.API_URL).subscribe(data => {
-            this.dataChange.next(data);
-        },
-            (error: HttpErrorResponse) => {
-                console.log(error.name + ' ' + error.message);
-            });
-
-        return this.dataChange.asObservable();
+    public getStavkePorudzbine() {
+        return this.httpClient.get<StavkaPorudzbine[]>(this.API_URL);
     }
 
-    public getStavkaPorudzbine(porudzbinaID: number, proizvodID: number): Observable<StavkaPorudzbine> {
-        this.httpClient.get<StavkaPorudzbine>(this.API_URL + porudzbinaID + '/' + proizvodID).subscribe(data => {
-            this.dataChangeStavkaPorudzbine.next(data);
-        },
-            (error: HttpErrorResponse) => {
-                console.log(error.name + ' ' + error.message);
-            });
-
-        return this.dataChangeStavkaPorudzbine.asObservable();
+    public getStavkaPorudzbine(porudzbinaID: number, proizvodID: number) {
+        return this.httpClient.get<StavkaPorudzbine>(this.API_URL + porudzbinaID + '/' + proizvodID);
     }
 
     public addStavkaPorudzbine(stavkaPorudzbine: StavkaPorudzbine): void {

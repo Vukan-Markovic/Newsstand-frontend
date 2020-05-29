@@ -24,9 +24,10 @@ export class MenadzerComponent implements OnInit {
 
   public loadData() {
     this.menadzerService.getMenadzeri().subscribe(data => {
+      if (!Array.isArray(data)) return;
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sortingDataAccessor = (data, property) => {
-        return data[property].toLocaleLowerCase();
+        if (data[property]) return data[property].toLocaleLowerCase();
       };
 
       this.dataSource.paginator = this.paginator;
@@ -35,7 +36,7 @@ export class MenadzerComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number,   prodavacID: number,
+  public openDialog(flag: number, prodavacID: number,
     ime: string,
     prezime: string,
     pol: string,
@@ -47,11 +48,12 @@ export class MenadzerComponent implements OnInit {
     strucnaSprema: string) {
     const dialogRef = this.dialog.open(ProdavacDialogComponent, {
       data: {
-        i: prodavacID, id: prodavacID, ime: ime, prezime: prezime, pol: pol,
+        i: prodavacID, prodavacID: prodavacID, ime: ime, prezime: prezime, pol: pol,
         datumRodjenja: datumRodjenja, adresaStanovanja: adresaStanovanja, telefon: telefon, JMBG: JMBG
         , datumZaposlenja: datumZaposlenja, strucnaSprema: strucnaSprema
       }
     });
+
     dialogRef.componentInstance.flag = flag;
 
     dialogRef.afterClosed().subscribe(result => {

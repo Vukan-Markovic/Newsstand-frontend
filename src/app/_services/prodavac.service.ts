@@ -1,44 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Prodavac } from '../_models/prodavac';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ProdavacService {
     private readonly API_URL = 'http://localhost:8080/api/prodavac/';
-    dataChange: BehaviorSubject<Prodavac[]> = new BehaviorSubject<Prodavac[]>([]);
-    dataChangeProdavac: BehaviorSubject<Prodavac> = new BehaviorSubject<Prodavac>(null);
 
     constructor(private httpClient: HttpClient) { }
 
-    public getProdavci(): Observable<Prodavac[]> {
-        this.httpClient.get<Prodavac[]>(this.API_URL).subscribe(data => {
-            this.dataChange.next(data);
-        },
-            (error: HttpErrorResponse) => {
-                console.log(error.name + ' ' + error.message);
-            });
-
-        return this.dataChange.asObservable();
+    public getProdavci() {
+        return this.httpClient.get<Prodavac[]>(this.API_URL);
     }
 
-    public getProdavac(id: number): Observable<Prodavac> {
-        this.httpClient.get<Prodavac>(this.API_URL + id).subscribe(data => {
-            this.dataChangeProdavac.next(data);
-        },
-            (error: HttpErrorResponse) => {
-                console.log(error.name + ' ' + error.message);
-            });
-
-        return this.dataChangeProdavac.asObservable();
+    public getProdavac(id: number) {
+        return this.httpClient.get<Prodavac>(this.API_URL + id);
     }
 
     public addProdavac(prodavac: Prodavac) {
         return this.httpClient.post(this.API_URL, prodavac);
     }
 
-    public updateProdavac(prodavac: Prodavac): void {
-        this.httpClient.put(this.API_URL, prodavac).subscribe();
+    public updateProdavac(id: number, prodavac: Prodavac): void {
+        this.httpClient.put(this.API_URL + id, prodavac).subscribe();
     }
 
     public deleteProdavac(id: number): void {

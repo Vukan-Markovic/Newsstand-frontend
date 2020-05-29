@@ -1,51 +1,27 @@
-<!-- <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" routerLink="/">Home</a>
-        <a class="nav-item nav-link" (click)="logout()">Logout</a>
-    </div>
-</nav>
-
-<div class="jumbotron">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 offset-sm-3">
-                <alert></alert>
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="text-center">
-    <p>
-        <a href="https://jasonwatmore.com/post/2019/06/10/angular-8-user-registration-and-login-example-tutorial" target="_top">Angular 8 - User Registration and Login Example & Tutorial</a>
-    </p>
-    <p>
-        <a href="https://jasonwatmore.com" target="_top">JasonWatmore.com</a>
-    </p>
-</div> -->
 <mat-sidenav-container class="example-container">
     <mat-sidenav mode="over" [fixedInViewport]="true" opened mode="side">
         <mat-accordion>
-            <a mat-button style="text-align: center">
-                <mat-icon aria-hidden="false" aria-label="Example home icon" [routerLink]="['/home']">home</mat-icon>
-            </a>
+            <div align="center">
+                <a mat-button style="text-align: center">
+                    <mat-icon aria-hidden="false" aria-label="Home icon" [routerLink]="['/']">home</mat-icon>
+                </a>
+            </div>
             <mat-expansion-panel>
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header *ngIf="isLoggedIn()">
                     <mat-panel-title>
-                        Aplikacija
+                        Trafika
                     </mat-panel-title>
                     <mat-panel-description>
-                        Aplikacija za vođenje evidencije
+                        Aplikacija za vođenje trafike
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <mat-nav-list *ngIf="isMenadzer() || isProdavac()">
+                <mat-nav-list *ngIf="isZaposleni()">
                     <a mat-list-item routerLinkActive="active" [routerLink]="['/dobavljac']">Dobavljač</a>
                 </mat-nav-list>
                 <mat-nav-list *ngIf="isMenadzer()">
                     <a mat-list-item routerLinkActive="active" [routerLink]="['/izvestaj']">Izveštaj</a>
                 </mat-nav-list>
-                <mat-nav-list *ngIf="isMenadzer() || isProdavac()">
+                <mat-nav-list *ngIf="isZaposleni()">
                     <a mat-list-item routerLinkActive="active" [routerLink]="['/menadzer']">Menadžer</a>
                 </mat-nav-list>
                 <mat-nav-list *ngIf="isLoggedIn()">
@@ -54,26 +30,26 @@
                 <mat-nav-list *ngIf="isMenadzer()">
                     <a mat-list-item routerLinkActive="active" [routerLink]="['/prodavac']">Prodavac</a>
                 </mat-nav-list>
-                <mat-nav-list *ngIf="isMenadzer() || isProdavac()">
+                <mat-nav-list *ngIf="isZaposleni()">
                     <a mat-list-item routerLinkActive="active" [routerLink]="['/proizvod']">Proizvod</a>
                 </mat-nav-list>
-                <mat-nav-list *ngIf="isMenadzer() || isProdavac()">
+                <mat-nav-list *ngIf="isZaposleni()">
                     <a mat-list-item routerLinkActive="active" [routerLink]="['/proizvodjac']">Proizvođač</a>
                 </mat-nav-list>
-                <mat-nav-list *ngIf="isMenadzer() || isProdavac()">
+                <mat-nav-list *ngIf="isZaposleni()">
                     <a mat-list-item routerLinkActive="active" [routerLink]="['/racun']">Račun</a>
                 </mat-nav-list>
-                <mat-nav-list *ngIf="isMenadzer() || isProdavac()">
+                <mat-nav-list *ngIf="isZaposleni()">
                     <a mat-list-item routerLinkActive="active" [routerLink]="['/vrstaProizvoda']">Vrsta proizvoda</a>
                 </mat-nav-list>
             </mat-expansion-panel>
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Informacije
+                        Nalog
                     </mat-panel-title>
                     <mat-panel-description>
-                        Osnovne informacije o aplikaciji
+                        Kreiraj nalog ili se prijavi
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-nav-list *ngIf="isLoggedIn()">
@@ -92,7 +68,4 @@
         </mat-accordion>
     </mat-sidenav>
     <router-outlet></router-outlet>
-    <!-- <div align="center">
-        <router-outlet></router-outlet>
-    </div> -->
 </mat-sidenav-container>

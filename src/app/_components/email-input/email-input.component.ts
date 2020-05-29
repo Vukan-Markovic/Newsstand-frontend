@@ -12,7 +12,7 @@ import { AuthenticationService } from 'src/app/_services/authentication.service'
 export class EmailInputComponent implements OnInit {
   emailForm: FormGroup;
 
-  constructor( private authenticationService: AuthenticationService,
+  constructor(private authenticationService: AuthenticationService,
     private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {

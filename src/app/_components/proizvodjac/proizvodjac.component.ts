@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -21,13 +20,17 @@ export class ProizvodjacComponent implements OnInit {
 
   constructor(public proizvodjacService: ProizvodjacService, public dialog: MatDialog) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadData();
+  }
 
   public loadData() {
     this.proizvodjacService.getProizvodjaci().subscribe(data => {
+      if (!Array.isArray(data)) return;
       this.dataSource = new MatTableDataSource(data);
+
       this.dataSource.sortingDataAccessor = (data, property) => {
-        return data[property].toLocaleLowerCase();
+        if (data[property]) return data[property].toLocaleLowerCase();
       };
 
       this.dataSource.paginator = this.paginator;
@@ -42,10 +45,11 @@ export class ProizvodjacComponent implements OnInit {
     adresaProizvodjaca?: string) {
     const dialogRef = this.dialog.open(ProizvodjacDialogComponent, {
       data: {
-        i: proizvodjacID, id: proizvodjacID, nazivProizvodjaca: nazivProizvodjaca, kontaktProizvodjaca: kontaktProizvodjaca,
+        i: proizvodjacID, proizvodjacID: proizvodjacID, nazivProizvodjaca: nazivProizvodjaca, kontaktProizvodjaca: kontaktProizvodjaca,
         adresaProizvodjaca: adresaProizvodjaca
       }
     });
+
     dialogRef.componentInstance.flag = flag;
 
     dialogRef.afterClosed().subscribe(result => {

@@ -1,44 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Izvestaj } from '../_models/izvestaj';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { IzvestajDO } from '../_models/izvestajDO';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class IzvestajService {
     private readonly API_URL = 'http://localhost:8080/api/izvestaj/';
-    dataChange: BehaviorSubject<Izvestaj[]> = new BehaviorSubject<Izvestaj[]>([]);
-    dataChangeIzvestaj: BehaviorSubject<Izvestaj> = new BehaviorSubject<Izvestaj>(null);
 
     constructor(private httpClient: HttpClient) { }
 
-    public getIzvestaji(): Observable<Izvestaj[]> {
-        this.httpClient.get<Izvestaj[]>(this.API_URL).subscribe(data => {
-            this.dataChange.next(data);
-        },
-            (error: HttpErrorResponse) => {
-                console.log(error.name + ' ' + error.message);
-            });
-
-        return this.dataChange.asObservable();
+    public getIzvestaji() {
+        return this.httpClient.get<IzvestajDO[]>(this.API_URL);
     }
 
-    public getIzvestaj(id: number): Observable<Izvestaj> {
-        this.httpClient.get<Izvestaj>(this.API_URL + id).subscribe(data => {
-            this.dataChangeIzvestaj.next(data);
-        },
-            (error: HttpErrorResponse) => {
-                console.log(error.name + ' ' + error.message);
-            });
-
-        return this.dataChangeIzvestaj.asObservable();
+    public getIzvestaj(id: number): Observable<IzvestajDO> {
+        return this.httpClient.get<IzvestajDO>(this.API_URL + id);
     }
 
-    public addIzvestaj(izvestaj: Izvestaj): void {
+    public addIzvestaj(izvestaj: IzvestajDO): void {
         this.httpClient.post(this.API_URL, izvestaj).subscribe();
     }
 
-    public updateIzvestaj(izvestaj: Izvestaj): void {
-        this.httpClient.put(this.API_URL, izvestaj).subscribe();
+    public updateIzvestaj(id: number, izvestaj: IzvestajDO): void {
+        this.httpClient.put(this.API_URL + id, izvestaj).subscribe();
     }
 
     public deleteIzvestaj(id: number): void {

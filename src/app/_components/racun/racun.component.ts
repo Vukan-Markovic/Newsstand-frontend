@@ -28,12 +28,14 @@ export class RacunComponent implements OnInit {
 
   public loadData() {
     this.racunService.getRacuni().subscribe(data => {
+      if (!Array.isArray(data)) return;
       this.dataSource = new MatTableDataSource(data);
 
       this.dataSource.filterPredicate = (data, filter: string) => {
         const accumulator = (currentTerm, key: string) => {
           // return key === 'liga' ? currentTerm + data.liga.naziv : currentTerm + data[key];
         };
+
         const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
         const transformedFilter = filter.trim().toLowerCase();
         return dataStr.indexOf(transformedFilter) !== -1;
@@ -52,7 +54,7 @@ export class RacunComponent implements OnInit {
 
   }
 
-  public openDialog(flag: number,  racunID?: number,
+  public openDialog(flag: number, racunID?: number,
     vremeIzdavanja?: Date,
     mestoIzdavanja?: string,
     ukupanIznosRacuna?: number,
@@ -62,10 +64,15 @@ export class RacunComponent implements OnInit {
     tipRacuna?: string,
     prodavac?: Prodavac) {
     const dialogRef = this.dialog.open(RacunDialogComponent,
-      { data: { id: racunID, vremeIzdavanja: vremeIzdavanja, mestoIzdavanja: mestoIzdavanja, ukupanIznosRacuna: ukupanIznosRacuna, 
-        nazivProdavnice: nazivProdavnice, nacinPlacanja: nacinPlacanja, brojRacuna: brojRacuna, tipRacuna: tipRacuna
-        , prodavac: prodavac} }
+      {
+        data: {
+          racunID: racunID, vremeIzdavanja: vremeIzdavanja, mestoIzdavanja: mestoIzdavanja, ukupanIznosRacuna: ukupanIznosRacuna,
+          nazivProdavnice: nazivProdavnice, nacinPlacanja: nacinPlacanja, brojRacuna: brojRacuna, tipRacuna: tipRacuna
+          , prodavac: prodavac
+        }
+      }
     );
+
     dialogRef.componentInstance.flag = flag;
     dialogRef.afterClosed().subscribe((result: number) => {
       if (result == 1) this.loadData();
