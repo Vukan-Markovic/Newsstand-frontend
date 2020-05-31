@@ -66,6 +66,7 @@ import { RacunService } from './_services/racun.service';
 import { StavkaRacunaService } from './_services/stavkaRacuna.service';
 import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
 import { EmailInputComponent } from './_components/email-input/email-input.component';
+import { ZaposleniGuard } from './_helpers/zaposleni.guard';
 
 @NgModule({
     imports: [
@@ -141,6 +142,7 @@ import { EmailInputComponent } from './_components/email-input/email-input.compo
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        ZaposleniGuard,
         AuthenticationService,
         DobavljacService,
         IzvestajService,

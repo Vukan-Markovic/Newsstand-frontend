@@ -7,59 +7,67 @@
   <mat-form-field class="search">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite proizvode">
   </mat-form-field>
-
+  <!-- <div *ngIf="k==i && k==j" > -->
   <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+  
+      <ng-container matColumnDef="nazivProizvoda">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv proizvoda</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.nazivProizvoda}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="nazivProizvoda">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv proizvoda</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.nazivProizvoda}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="opisProizvoda">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Opis proizvoda</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.opisProizvoda}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="opisProizvoda">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Opis proizvoda</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.opisProizvoda}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="cena">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Cena</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.cena}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="cena">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Cena</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.cena}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="tipPakovanja">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Tip pakovanja</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.tipPakovanja}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="tipPakovanja">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Tip pakovanja</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.tipPakovanja}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="velicinaPakovanja">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Veličina pakovanja</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.velicinaPakovanja}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="velicinaPakovanja">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Veličina pakovanja</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.velicinaPakovanja}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="barKod">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Bar kod</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.barKod}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="barKod">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Bar kod</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.barKod}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="masa">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Masa</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.masa}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="masa">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Masa</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.masa}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="raspolozivaKolicina">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Raspoloživa količina</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.raspolozivaKolicina}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="raspolozivaKolicina">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Raspoloživa količina</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.raspolozivaKolicina}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="proizvodjac">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Proizvođač</mat-header-cell>
 
-    <ng-container matColumnDef="proizvodjac">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Proizvođač</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.proizvodjac.nazivProizvodjaca}}</mat-cell>
-    </ng-container>
+        <mat-cell *matCellDef="let row">
+          <div *ngIf="row.proizvodjac">{{row.proizvodjac.nazivProizvodjaca}}
+          </div>
+        </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="vrstaProizvoda">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Vrsta proizvoda</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.vrstaProizvoda.nazivVrsteProizvoda}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="vrstaProizvoda">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Vrsta proizvoda</mat-header-cell>
 
+        <mat-cell *matCellDef="let row">
+          <div *ngIf="row.vrstaProizvoda">{{row.vrstaProizvoda.nazivVrsteProizvoda}}
+          </div>
+        </mat-cell>
+      </ng-container>
+    
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>
         <button mat-icon-button color="primary" matTooltip="Dodajte novi proizvod"
@@ -74,7 +82,7 @@
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
         <button mat-icon-button color="primary" matTooltip="Izbrišite proizvod"
-          (click)="openDialog(2, row.proizvodID, row.nazivProizvoda, row.opisProizvoda, row.cena, row.tipPakovanja, row.velicinaPakovanja, row.barKod, row.masa, row.raspolozivaKolicina, row.proizvodjac, row.vrstaProizvoda)">
+          (click)="openDialog(3, row.proizvodID, row.nazivProizvoda, row.opisProizvoda, row.cena, row.tipPakovanja, row.velicinaPakovanja, row.barKod, row.masa, row.raspolozivaKolicina, row.proizvodjac, row.vrstaProizvoda)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>
@@ -83,5 +91,6 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
+<!-- </div> -->
   <mat-paginator [pageSize]="[5]" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
 </div>

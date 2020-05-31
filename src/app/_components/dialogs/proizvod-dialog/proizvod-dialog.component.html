@@ -11,7 +11,7 @@
       </mat-form-field>
     </div>
 
-    <div class="form">
+    <div class="form"> 
       <mat-form-field hintLabel="Maksimalno 100 karaktera">
         <input matInput #input2 maxlength="100" placeholder="Opis" [(ngModel)]="data.opisProizvoda" name="opisProizvoda"
           [disabled]="flag == 3">
@@ -21,8 +21,8 @@
 
     <div class="form">
       <mat-form-field hintLabel="Maksimalno 10 cifara">
-        <input matInput #input3 maxlength="10" type="number" placeholder="Cena" [(ngModel)]="data.cena" name="cena"
-          [disabled]="flag == 3">
+        <input matInput #input3 min="0" maxlength="10" type="number" placeholder="Cena" [(ngModel)]="data.cena" name="cena"
+          [disabled]="flag == 3" required>
         <mat-hint align="end">{{input3.value?.length || 0}}/10</mat-hint>
       </mat-form-field>
     </div>
@@ -46,7 +46,7 @@
     <div class="form">
       <mat-form-field hintLabel="Maksimalno 20 karaktera">
         <input matInput #input6 maxlength="20" placeholder="Bar kod" [(ngModel)]="data.barKod" name="barKod"
-          [disabled]="flag == 3">
+          [disabled]="flag == 3" required>
         <mat-hint align="end">{{input6.value?.length || 0}}/20</mat-hint>
       </mat-form-field>
     </div>
@@ -54,15 +54,23 @@
     <div class="form">
       <mat-form-field hintLabel="Maksimalno 10 cifara">
         <input matInput #input7 maxlength="10" type="number" placeholder="Masa" [(ngModel)]="data.masa" name="masa"
-          [disabled]="flag == 3">
+          [disabled]="flag == 3" min="0">
         <mat-hint align="end">{{input7.value?.length || 0}}/10</mat-hint>
+      </mat-form-field>
+    </div>
+    
+    <div class="form">
+      <mat-form-field hintLabel="Maksimalno 10 cifara">
+        <input matInput #input8 maxlength="10" type="number" placeholder="Raspoloživa količina" [(ngModel)]="data.raspolozivaKolicina" name="raspolozivaKolicina"
+          [disabled]="flag == 3" required min="0">
+        <mat-hint align="end">{{input8.value?.length || 0}}/10</mat-hint>
       </mat-form-field>
     </div>
 
     <div class="form">
       <mat-form-field>
         <mat-select [(ngModel)]="data.proizvodjac" placeholder="Proizvodjac" name="proizvodjac"
-          [compareWith]="compareTo" [disabled]="flag == 3" required>
+          [compareWith]="compareProizvodjac" [disabled]="flag == 3" required>
           <mat-option *ngFor="let proizvodjac of proizvodjaci" [value]="proizvodjac">
             {{ proizvodjac.nazivProizvodjaca }}
           </mat-option>
@@ -73,7 +81,7 @@
     <div class="form">
       <mat-form-field>
         <mat-select [(ngModel)]="data.vrstaProizvoda" placeholder="Vrsta proizvoda" name="vrstaProizvoda"
-          [compareWith]="compareTo" [disabled]="flag == 3" required>
+          [compareWith]="compareVrstaProizvoda" [disabled]="flag == 3" required>
           <mat-option *ngFor="let vrstaProizvoda of vrsteProizvoda" [value]="vrstaProizvoda">
             {{ vrstaProizvoda.nazivVrsteProizvoda }}
           </mat-option>

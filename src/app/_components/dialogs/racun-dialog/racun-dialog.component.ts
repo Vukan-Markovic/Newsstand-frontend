@@ -5,37 +5,63 @@ import { ProdavacService } from 'src/app/_services/prodavac.service';
 import { RacunService } from 'src/app/_services/racun.service';
 import { Prodavac } from 'src/app/_models/prodavac';
 import { RacunDO } from 'src/app/_models/racunDO';
+import { Racun } from 'src/app/_models/racun';
+// import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+// import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-racun-dialog',
   templateUrl: './racun-dialog.component.html',
-  styleUrls: ['./racun-dialog.component.css']
+  styleUrls: ['./racun-dialog.component.css'],
+  // providers: [
+  //   { provide: MAT_DATE_LOCALE, useValue: 'ja-JP' },
+  //   { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+  //   { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+  //   { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { strict: true } }
+  // ],
 })
 export class RacunDialogComponent implements OnInit {
   public flag: number;
-  prodavac: Prodavac;
+  racun: RacunDO = new RacunDO();
+  prodavci: Prodavac[];
 
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<RacunDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: RacunDO,
-    public racunService: RacunService,
+    @Inject(MAT_DIALOG_DATA) public data: Racun,
+    public racunService: RacunService, 
+    // private _adapter: DateAdapter<any>,
     public prodavacService: ProdavacService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // this._adapter.setLocale('en-GB');
 
-  compareTo(a: { id: any; }, b: { id: any; }) {
-    return a.id == b.id;
+    this.prodavacService.getProdavci().subscribe(prodavci => {
+      this.prodavci = prodavci;
+    });
+  }
+
+  compareTo(a: Prodavac, b: Prodavac) {
+    return a && b ? a.prodavacID === b.prodavacID : a === b;
+  }
+
+  onChange(prodavac: Prodavac) {
+    this.data.prodavac = prodavac;
+    this.racun.prodavacID = prodavac.prodavacID;
   }
 
   public add(): void {
-    this.racunService.addRacun(this.data);
+    this.setRacun();
+    console.log(this.racun.vremeIzdavanja);
+    this.racunService.addRacun(this.racun);
     this.snackBar.open("Uspešno dodat račun", "U redu", {
       duration: 2500,
     });
   }
 
   public update(): void {
-    this.racunService.updateRacun(this.data.racunID, this.data);
+    this.setRacun();
+    this.racun.vremeIzdavanja = new Date(this.racun.vremeIzdavanja.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    this.racunService.updateRacun(this.data.racunID, this.racun);
     this.snackBar.open("Uspešno modifikovan račun", "U redu", {
       duration: 2500,
     });
@@ -53,5 +79,17 @@ export class RacunDialogComponent implements OnInit {
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,
     });
+  }
+
+  setRacun() {
+    this.racun.brojRacuna = this.data.brojRacuna;
+    this.racun.mestoIzdavanja = this.data.mestoIzdavanja;
+    this.racun.nacinPlacanja = this.data.nacinPlacanja
+    this.racun.nazivProdavnice = this.data.nazivProdavnice
+    this.racun.prodavacID = this.data.prodavac.prodavacID;
+    this.racun.racunID = this.data.racunID;
+    this.racun.tipRacuna = this.data.tipRacuna;
+    this.racun.ukupanIznosRacuna = this.data.ukupanIznosRacuna;
+    this.racun.vremeIzdavanja = this.data.vremeIzdavanja;
   }
 }

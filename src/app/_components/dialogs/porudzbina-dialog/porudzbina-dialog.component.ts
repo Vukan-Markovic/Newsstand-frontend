@@ -43,41 +43,41 @@ export class PorudzbinaDialogComponent implements OnInit {
     );
   }
 
-  compareTo(a: { id: any; }, b: { id: any; }) {
-    return a.id == b.id;
-  }
+  // compareTo(a: { id: any; }, b: { id: any; }) {
+  //   return a.id == b.id;
+  // }
 
-  onChange(dobavljac: Dobavljac, menadzer: Menadzer, prodavac: Prodavac) {
-    this.data.dobavljacID = dobavljac.dobavljacID;
-    this.data.menadzerID = menadzer.menadzerID;
-    this.data.prodavacID = prodavac.prodavacID;
-  }
+  // onChange(dobavljac: Dobavljac, menadzer: Menadzer, prodavac: Prodavac) {
+  //   this.data.dobavljacID = dobavljac.dobavljacID;
+  //   this.data.menadzerID = menadzer.menadzerID;
+  //   this.data.prodavacID = prodavac.prodavacID;
+  // }
 
-  public add(): void {
-    this.porudzbinaService.addPorudzbina(this.data);
-    this.snackBar.open("Uspešno dodata porudžbina", "U redu", {
-      duration: 2500,
-    });
-  }
+  // public add(): void {
+  //   this.porudzbinaService.addPorudzbina(this.data);
+  //   this.snackBar.open("Uspešno dodata porudžbina", "U redu", {
+  //     duration: 2500,
+  //   });
+  // }
 
-  public update(): void {
-    this.porudzbinaService.updatePorudzbina(this.data.porudzbinaID, this.data);
-    this.snackBar.open("Uspešno modifikovana porudžbina", "U redu", {
-      duration: 2500,
-    });
-  }
+  // public update(): void {
+  //   this.porudzbinaService.updatePorudzbina(this.data.porudzbinaID, this.data);
+  //   this.snackBar.open("Uspešno modifikovana porudžbina", "U redu", {
+  //     duration: 2500,
+  //   });
+  // }
 
-  public delete(): void {
-    this.porudzbinaService.deletePorudzbina(this.data.porudzbinaID);
-    this.snackBar.open("Uspešno obrisana porudžbina", "U redu", {
-      duration: 2500,
-    });
-  }
+  // public delete(): void {
+  //   this.porudzbinaService.deletePorudzbina(this.data.porudzbinaID);
+  //   this.snackBar.open("Uspešno obrisana porudžbina", "U redu", {
+  //     duration: 2500,
+  //   });
+  // }
 
-  public cancel(): void {
-    this.dialogRef.close();
-    this.snackBar.open("Odustali ste", "U redu", {
-      duration: 1000,
-    });
-  }
+  // public cancel(): void { 
+  //   this.dialogRef.close();
+  //   this.snackBar.open("Odustali ste", "U redu", {
+  //     duration: 1000,
+  //   });
+  // }
 }

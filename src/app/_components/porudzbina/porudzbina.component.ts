@@ -31,7 +31,7 @@ export class PorudzbinaComponent implements OnInit {
   public loadData() {
     this.porudzbinaService.getPorudzbine().subscribe(data => {
       if (!Array.isArray(data)) return;
-      this.dataSource = new MatTableDataSource(data);
+      // this.dataSource = new MatTableDataSource(data);
 
       this.dataSource.filterPredicate = (data, filter: string) => {
         const accumulator = (currentTerm, key: string) => {

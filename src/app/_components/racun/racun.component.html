@@ -15,6 +15,11 @@
       <mat-cell *matCellDef="let row">{{row.vremeIzdavanja | date : "dd.MM.yyyy."}}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="mestoIzdavanja">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Mesto izdavanja</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.mestoIzdavanja}}</mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="ukupanIznosRacuna">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Ukupan iznos</mat-header-cell>
       <mat-cell *matCellDef="let row">{{row.ukupanIznosRacuna}}</mat-cell>
@@ -42,7 +47,7 @@
 
     <ng-container matColumnDef="prodavac">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Prodavac</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.prodavac.ime}} {{row.prodavac.ime}}</mat-cell>
+      <mat-cell *matCellDef="let row">{{row.prodavac.ime}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">
@@ -65,8 +70,8 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <!-- <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"
-      [ngClass]="{'selectRow': selektovanTim != null && selektovanTim.id == row.id}"></mat-row> -->
+    <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <!-- [ngClass]="{'selectRow': selektovanTim != null && selektovanTim.id == row.id}" (click)="selectRow(row) -->
   </mat-table>
   <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>

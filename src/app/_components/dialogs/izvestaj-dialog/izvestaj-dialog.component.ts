@@ -29,39 +29,39 @@ export class IzvestajDialogComponent implements OnInit {
     );
   }
 
-  compareTo(a: { id: any; }, b: { id: any; }) {
-    return a.id == b.id;
-  }
+  // compareTo(a: { id: any; }, b: { id: any; }) {
+  //   return a.id == b.id;
+  // }
 
-  onChange(menadzer: Menadzer) {
-    this.data.menadzerID = menadzer.menadzerID;
-  }
+  // onChange(menadzer: Menadzer) {
+  //   this.data.menadzerID = menadzer.menadzerID;
+  // }
 
-  public add(): void {
-    this.izvestajService.addIzvestaj(this.data);
-    this.snackBar.open("Uspešno dodat izveštaj", "U redu", {
-      duration: 2500,
-    });
-  }
+  // public add(): void {
+  //   this.izvestajService.addIzvestaj(this.data);
+  //   this.snackBar.open("Uspešno dodat izveštaj", "U redu", {
+  //     duration: 2500,
+  //   });
+  // }
 
-  public update(): void {
-    this.izvestajService.updateIzvestaj(this.data.izvestajID, this.data);
-    this.snackBar.open("Uspešno modifikovan izveštaj", "U redu", {
-      duration: 2500,
-    });
-  }
+  // public update(): void {
+  //   this.izvestajService.updateIzvestaj(this.data.izvestajID, this.data);
+  //   this.snackBar.open("Uspešno modifikovan izveštaj", "U redu", {
+  //     duration: 2500,
+  //   });
+  // }
 
-  public delete(): void {
-    this.izvestajService.deleteIzvestaj(this.data.izvestajID);
-    this.snackBar.open("Uspešno obrisan izveštaj", "U redu", {
-      duration: 2500,
-    });
-  }
+  // public delete(): void {
+  //   this.izvestajService.deleteIzvestaj(this.data.izvestajID);
+  //   this.snackBar.open("Uspešno obrisan izveštaj", "U redu", {
+  //     duration: 2500,
+  //   });
+  // }
 
-  public cancel(): void {
-    this.dialogRef.close();
-    this.snackBar.open("Odustali ste", "U redu", {
-      duration: 1000,
-    });
-  }
+  // public cancel(): void {
+  //   this.dialogRef.close();
+  //   this.snackBar.open("Odustali ste", "U redu", {
+  //     duration: 1000,
+  //   });
+  // }
 }

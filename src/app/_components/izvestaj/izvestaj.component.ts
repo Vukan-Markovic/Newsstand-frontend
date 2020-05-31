@@ -26,10 +26,10 @@ export class IzvestajComponent implements OnInit {
   public loadData() {
     this.izvestajService.getIzvestaji().subscribe(data => {
       if (!Array.isArray(data)) return;
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.sortingDataAccessor = (data, property) => {
-        if (data[property]) return data[property].toLocaleLowerCase();
-      };
+      // this.dataSource = new MatTableDataSource(data);
+      // this.dataSource.sortingDataAccessor = (data, property) => {
+      //   if (data[property]) return data[property].toLocaleLowerCase();
+      // };
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

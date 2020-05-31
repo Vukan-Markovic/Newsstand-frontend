@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Korisnik } from '../_models/korisnik';
 import { KorisnikService } from './korisnik.service';
-import { Login } from '../_models/login';
 
 @Injectable()
 export class AuthenticationService {
