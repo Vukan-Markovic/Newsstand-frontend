@@ -32,7 +32,7 @@
 
     <ng-container matColumnDef="menadzer">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Menadžer</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.menadzer.ime}} {{row.menadzer.prezime}}</mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.menadzer.adresaKancelarije}} {{row.menadzer.brojKancelarije}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">
@@ -49,7 +49,7 @@
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
         <button mat-icon-button color="primary" matTooltip="Izbrišite izveštaj"
-          (click)="openDialog(2, row.izvestajID, row.promet, row.brojKupovina, row.datumOd, row.datumDo, row.menadzer)">
+          (click)="openDialog(3, row.izvestajID, row.promet, row.brojKupovina, row.datumOd, row.datumDo, row.menadzer)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>

@@ -7,6 +7,7 @@ import { Izvestaj } from 'src/app/_models/izvestaj';
 import { IzvestajService } from 'src/app/_services/izvestaj.service';
 import { Menadzer } from 'src/app/_models/menadzer';
 import { IzvestajDialogComponent } from '../dialogs/izvestaj-dialog/izvestaj-dialog.component';
+import { MenadzerService } from 'src/app/_services/menadzer.service';
 
 @Component({
   selector: 'app-izvestaj',
@@ -18,23 +19,63 @@ export class IzvestajComponent implements OnInit {
   dataSource: MatTableDataSource<Izvestaj>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  i: number = 0;
+  k: number = 0;
+  izvestaji: Izvestaj[] = [];
 
-  constructor(public izvestajService: IzvestajService, public dialog: MatDialog) { }
+  constructor(public izvestajService: IzvestajService, public dialog: MatDialog,
+    public menadzerService: MenadzerService) { }
 
   ngOnInit() { }
 
   public loadData() {
+    this.i = 0;
+    this.izvestaji = [];
+
     this.izvestajService.getIzvestaji().subscribe(data => {
       if (!Array.isArray(data)) return;
-      // this.dataSource = new MatTableDataSource(data);
-      // this.dataSource.sortingDataAccessor = (data, property) => {
-      //   if (data[property]) return data[property].toLocaleLowerCase();
-      // };
+      this.k = data.length;
 
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      data.forEach(element => {
+        var izvestaj = new Izvestaj();
+        izvestaj.brojKupovina = element.brojKupovina;
+        izvestaj.datumDo = element.datumDo;
+        izvestaj.datumOd = element.datumOd;
+        izvestaj.izvestajID = element.izvestajID;
+        izvestaj.promet = element.promet;
+        this.izvestaji.push(izvestaj);
+
+        this.menadzerService.getMenadzer(element.menadzerID).subscribe(menadzer => {
+          this.izvestaji[this.i++].menadzer = menadzer[0];
+
+          if (this.k == this.i) {
+            this.dataSource = new MatTableDataSource(this.izvestaji);
+
+            this.dataSource.filterPredicate = (data, filter: string) => {
+              const accumulator = (currentTerm, key: string) => {
+                return key === 'menadzer' ? currentTerm + data.menadzer.adresaKancelarije : currentTerm + data[key];
+              };
+
+              const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+              const transformedFilter = filter.trim().toLowerCase();
+              return dataStr.indexOf(transformedFilter) !== -1;
+            };
+
+            this.dataSource.sortingDataAccessor = (data, property) => {
+              if (data[property]) {
+                switch (property) {
+                  case 'menadzer': return data.menadzer.adresaKancelarije.toLocaleLowerCase();
+                  default: return typeof data[property] == "string" ? data[property].toLocaleLowerCase() : data[property];
+                }
+              }
+            };
+
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          }
+        });
+      });
     });
-
   }
 
   public openDialog(flag: number, izvestajID?: number,

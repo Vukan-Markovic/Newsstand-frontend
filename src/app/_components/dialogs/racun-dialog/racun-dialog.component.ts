@@ -6,19 +6,11 @@ import { RacunService } from 'src/app/_services/racun.service';
 import { Prodavac } from 'src/app/_models/prodavac';
 import { RacunDO } from 'src/app/_models/racunDO';
 import { Racun } from 'src/app/_models/racun';
-// import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
-// import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-racun-dialog',
   templateUrl: './racun-dialog.component.html',
   styleUrls: ['./racun-dialog.component.css'],
-  // providers: [
-  //   { provide: MAT_DATE_LOCALE, useValue: 'ja-JP' },
-  //   { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-  //   { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-  //   { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { strict: true } }
-  // ],
 })
 export class RacunDialogComponent implements OnInit {
   public flag: number;
@@ -28,13 +20,10 @@ export class RacunDialogComponent implements OnInit {
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<RacunDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Racun,
-    public racunService: RacunService, 
-    // private _adapter: DateAdapter<any>,
+    public racunService: RacunService,
     public prodavacService: ProdavacService) { }
 
   ngOnInit() {
-    // this._adapter.setLocale('en-GB');
-
     this.prodavacService.getProdavci().subscribe(prodavci => {
       this.prodavci = prodavci;
     });
@@ -51,7 +40,6 @@ export class RacunDialogComponent implements OnInit {
 
   public add(): void {
     this.setRacun();
-    console.log(this.racun.vremeIzdavanja);
     this.racunService.addRacun(this.racun);
     this.snackBar.open("Uspešno dodat račun", "U redu", {
       duration: 2500,

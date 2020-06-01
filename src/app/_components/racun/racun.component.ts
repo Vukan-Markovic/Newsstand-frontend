@@ -53,7 +53,7 @@ export class RacunComponent implements OnInit {
 
         this.prodavacService.getProdavac(element.prodavacID).subscribe(prodavac => {
           this.racuni[this.i++].prodavac = prodavac[0];
-          console.log(this.racuni);
+
           if (this.k == this.i) {
             this.dataSource = new MatTableDataSource(this.racuni);
 
@@ -61,12 +61,12 @@ export class RacunComponent implements OnInit {
               const accumulator = (currentTerm, key: string) => {
                 return key === 'prodavac' ? currentTerm + data.prodavac.ime : currentTerm + data[key];
               };
-    
+
               const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
               const transformedFilter = filter.trim().toLowerCase();
               return dataStr.indexOf(transformedFilter) !== -1;
             };
-    
+
             this.dataSource.sortingDataAccessor = (data, property) => {
               if (data[property]) {
                 switch (property) {
@@ -75,13 +75,11 @@ export class RacunComponent implements OnInit {
                 }
               }
             };
-    
+
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }
         });
-
-     
       });
     });
   }

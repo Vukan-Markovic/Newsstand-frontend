@@ -1,4 +1,4 @@
-<!-- <div class="container">
+<div class="container">
   <h3 mat-dialog-title *ngIf="flag == 1">Dodavanje porudžbine</h3>
   <h3 mat-dialog-title *ngIf="flag == 2">Modifikacija porudžbine</h3>
   <h3 mat-dialog-title *ngIf="flag == 3">Brisanje porudžbine</h3>
@@ -24,14 +24,14 @@
     <div class="form">
       <mat-form-field>
         <mat-select [(ngModel)]="data.statusPorudzbine" placeholder="Status porudžbine" name="statusPorudzbine"
-          [compareWith]="compareTo" [disabled]="flag == 3" required>
-          <mat-option [value]="data.statusPorudzbine">
+          [disabled]="flag == 3" required>
+          <mat-option value="poručeno">
             poručeno
           </mat-option>
-          <mat-option [value]="data.statusPorudzbine">
+          <mat-option value="kompletirano">
             kompletirano
           </mat-option>
-          <mat-option [value]="data.statusPorudzbine">
+          <mat-option value="reklamacija">
             reklamacija
           </mat-option>
         </mat-select>
@@ -40,10 +40,10 @@
 
     <div class="form">
       <mat-form-field>
-        <mat-select [(ngModel)]="data.dobavljac" placeholder="Dobavljač" name="dobavljac" [compareWith]="compareTo"
-          [disabled]="flag == 3" required>
+        <mat-select [(ngModel)]="data.dobavljac" placeholder="Dobavljač" name="dobavljac"
+          [compareWith]="compareDobavljac" [disabled]="flag == 3" required>
           <mat-option *ngFor="let dobavljac of dobavljaci" [value]="dobavljac">
-            {{ dobavljac.punNaziv }}
+            {{ dobavljac.skraceniNaziv }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -51,10 +51,10 @@
 
     <div class="form">
       <mat-form-field>
-        <mat-select [(ngModel)]="data.menadzer" placeholder="Menadžer" name="menadzer" [compareWith]="compareTo"
+        <mat-select [(ngModel)]="data.menadzer" placeholder="Menadžer" name="menadzer" [compareWith]="compareMenadzer"
           [disabled]="flag == 3" required>
           <mat-option *ngFor="let menadzer of menadzeri" [value]="menadzer">
-            {{ menadzer.ime }} {{ menadzer.prezime }}
+            {{ menadzer.adresaKancelarije }} {{ menadzer.brojKancelarije }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -62,7 +62,7 @@
 
     <div class="form">
       <mat-form-field>
-        <mat-select [(ngModel)]="data.prodavac" placeholder="Prodavac" name="prodavac" [compareWith]="compareTo"
+        <mat-select [(ngModel)]="data.prodavac" placeholder="Prodavac" name="prodavac" [compareWith]="compareProdavac"
           [disabled]="flag == 3" required>
           <mat-option *ngFor="let prodavac of prodavci" [value]="prodavac">
             {{ prodavac.ime }} {{ prodavac.prezime }}
@@ -81,4 +81,4 @@
       <button mat-raised-button color="warn" (click)="cancel()" tabindex="-1">Poništi</button>
     </div>
   </form>
-</div> -->
+</div>

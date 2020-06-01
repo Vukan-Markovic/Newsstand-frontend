@@ -32,12 +32,12 @@
 
     <ng-container matColumnDef="dobavljac">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Dobavljač</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.dobavljac.punNaziv}}</mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.dobavljac.skraceniNaziv}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="menadzer">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Menadžer</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.menadzer.ime}} {{row.menadzer.prezime}}</mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.menadzer.adresaKancelarije}} {{row.menadzer.brojKancelarije}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="prodavac">
@@ -58,15 +58,14 @@
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
         <button mat-icon-button color="primary" matTooltip="Izbrišite porudžbinu"
-          (click)="openDialog(2, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
+          (click)="openDialog(3, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <!-- <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"
-      [ngClass]="{'selectRow': selektovanTim != null && selektovanTim.id == row.id}"></mat-row> -->
+    <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
   <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>

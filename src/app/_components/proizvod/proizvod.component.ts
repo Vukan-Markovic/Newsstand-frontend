@@ -68,7 +68,7 @@ export class ProizvodComponent implements OnInit {
     
               if (this.k == this.i && this.k == this.j) {
                 this.dataSource = new MatTableDataSource(this.proizvodi);
-console.log(this.proizvodi);
+
                 this.dataSource.filterPredicate = (data, filter: string) => {
                   const accumulator = (currentTerm: string, key: string) => {
                     if (key === 'vrstaProizvoda')
@@ -96,7 +96,6 @@ console.log(this.proizvodi);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
               }
-
             });
           });
         });
@@ -126,8 +125,7 @@ console.log(this.proizvodi);
     // if (flag == 1) dialogRef.componentInstance.data.tim = this.selektovanTim;
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result == 1)
-        this.loadData();
+      if (result == 1) this.loadData();
     });
   }
 
