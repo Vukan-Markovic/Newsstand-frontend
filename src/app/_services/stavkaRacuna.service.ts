@@ -8,23 +8,19 @@ export class StavkaRacunaService {
 
     constructor(private httpClient: HttpClient) { }
 
-    public getStavkeRacuna() {
-        return this.httpClient.get<StavkaRacuna[]>(this.API_URL);
+    public getStavkeRacuna(racunID: number) {
+        return this.httpClient.get<StavkaRacuna[]>(this.API_URL + racunID);
     }
 
-    public getStavkaRacuna(racunID: number, proizvodID: number) {
-        return this.httpClient.get<StavkaRacuna>(this.API_URL + racunID + '/' + proizvodID);
+    public addStavkaRacuna(stavkaRacuna: StavkaRacuna) {
+        return this.httpClient.post(this.API_URL, stavkaRacuna);
     }
 
-    public addStavkaRacuna(stavkaRacuna: StavkaRacuna): void {
-        this.httpClient.post(this.API_URL, stavkaRacuna).subscribe();
+    public updateStavkaRacuna(stavkaRacuna: StavkaRacuna) {
+        return this.httpClient.put(this.API_URL, stavkaRacuna);
     }
 
-    public updateStavkaRacuna(stavkaRacuna: StavkaRacuna): void {
-        this.httpClient.put(this.API_URL, stavkaRacuna).subscribe();
-    }
-
-    public deleteStavkaRacuna(id: number): void {
-        this.httpClient.delete(this.API_URL + id).subscribe();
+    public deleteStavkaRacuna(id: number) {
+        return this.httpClient.delete(this.API_URL + id);
     }
 }

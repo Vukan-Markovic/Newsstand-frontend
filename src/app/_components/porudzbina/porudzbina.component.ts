@@ -12,6 +12,7 @@ import { Prodavac } from 'src/app/_models/prodavac';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
 import { DobavljacService } from 'src/app/_services/dobavljac.service';
 import { MenadzerService } from 'src/app/_services/menadzer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-porudzbina',
@@ -26,13 +27,13 @@ export class PorudzbinaComponent implements OnInit {
   k: number = 0;
   l: number = 0;
   porudzbine: Porudzbina[] = [];
-  // selektovanTim: Tim;
+  selektovanaPorudzbina: Porudzbina;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public porudzbinaService: PorudzbinaService, public dialog: MatDialog,
     public prodavacService: ProdavacService, public dobavljacService: DobavljacService,
-    public menadzerService: MenadzerService) { }
+    public menadzerService: MenadzerService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.loadData();
@@ -89,7 +90,7 @@ export class PorudzbinaComponent implements OnInit {
                       case 'prodavac': return data.prodavac.ime.toLocaleLowerCase();
                       case 'dobavljac': return data.dobavljac.skraceniNaziv.toLocaleLowerCase();
                       case 'menadzer': return data.menadzer.adresaKancelarije.toLocaleLowerCase();
-                      default: return typeof data[property] == "string"? data[property].toLocaleLowerCase(): data[property];
+                      default: return typeof data[property] == "string" ? data[property].toLocaleLowerCase() : data[property];
                     }
                   }
                 };
@@ -97,13 +98,30 @@ export class PorudzbinaComponent implements OnInit {
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
               }
+            }, error => {
+              this.showError(error);
             });
+          },
+            error => {
+              this.showError(error);
+            });
+        },
+          error => {
+            this.showError(error);
           });
-        });
       });
-    });
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
+    });
+  }
 
   public openDialog(flag: number, porudzbinaID?: number,
     datumPorucivanja?: Date,
@@ -123,15 +141,15 @@ export class PorudzbinaComponent implements OnInit {
     );
 
     dialogRef.componentInstance.flag = flag;
-    
+
     dialogRef.afterClosed().subscribe((result: number) => {
       if (result == 1) this.loadData();
     });
   }
 
-  // selectRow(row: Tim) {
-  //   this.selektovanTim = row;
-  // }
+  selectRow(row: Porudzbina) {
+    this.selektovanaPorudzbina = row;
+  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { ProdavacDialogComponent } from '../dialogs/prodavac-dialog/prodavac-dialog.component';
 import { MenadzerService } from 'src/app/_services/menadzer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-menadzer',
@@ -13,12 +14,12 @@ import { MenadzerService } from 'src/app/_services/menadzer.service';
   styleUrls: ['./menadzer.component.css']
 })
 export class MenadzerComponent implements OnInit {
-  displayedColumns = ['ime', 'prezime', 'pol', 'datumRodjenja', 'adresaStanovanja', 'telefon', 'JMBG', 'datumZaposlenja', 'strucnaSprema', 'adresaKancelarije', 'brojKancelarije', 'actions'];
+  displayedColumns = ['ime', 'prezime', 'pol', 'datumRodjenja', 'adresaStanovanja', 'telefon', 'JMBG', 'datumZaposlenja', 'strucnaSprema', 'adresaKancelarije', 'brojKancelarije'];
   dataSource: MatTableDataSource<Menadzer>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public menadzerService: MenadzerService, public dialog: MatDialog) { }
+  constructor(public menadzerService: MenadzerService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
 
   ngOnInit() { }
 
@@ -32,8 +33,13 @@ export class MenadzerComponent implements OnInit {
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    });
-
+    },
+      error => {
+        this.snackBar.open(error, "U redu", {
+          duration: 2000,
+          panelClass: ['red-snackbar']
+        });
+      });
   }
 
   public openDialog(flag: number, prodavacID: number,

@@ -32,17 +32,29 @@ export class PorudzbinaDialogComponent implements OnInit {
     public prodavacService: ProdavacService) { }
 
   ngOnInit() {
-    this.dobavljacService.getDobavljaci().subscribe(dobavljaci =>
-      this.dobavljaci = dobavljaci
-    );
+    this.dobavljacService.getDobavljaci().subscribe(dobavljaci => {
+      this.dobavljaci = dobavljaci;
 
-    this.menadzerService.getMenadzeri().subscribe(menadzeri =>
-      this.menadzeri = menadzeri
-    );
+      this.menadzerService.getMenadzeri().subscribe(menadzeri => {
+        this.menadzeri = menadzeri;
 
-    this.prodavacService.getProdavci().subscribe(prodavci =>
-      this.prodavci = prodavci
-    );
+        this.prodavacService.getProdavci().subscribe(prodavci => {
+          this.prodavci = prodavci;
+          if (!Array.isArray(this.menadzeri) || !Array.isArray(this.dobavljaci) || !Array.isArray(this.prodavci)) {
+            this.snackBar.open("Da biste dodali novu porudžbinu prethodno mora postajati bar jedan menadžer, dobavljač i prodavac!", "U redu", {
+              duration: 2000,
+            });
+            this.dialogRef.close();
+          }
+        });
+      });
+    });
+  }
+
+  isArray() {
+    if (!Array.isArray(this.menadzeri) || !Array.isArray(this.dobavljaci) || !Array.isArray(this.prodavci))
+      return false;
+    return true;
   }
 
   compareProdavac(a: Prodavac, b: Prodavac) {
@@ -68,27 +80,31 @@ export class PorudzbinaDialogComponent implements OnInit {
 
   public add(): void {
     this.setPorudzbina();
-    this.porudzbinaService.addPorudzbina(this.porudzbina);
-    this.snackBar.open("Uspešno dodata porudžbina", "U redu", {
-      duration: 2500,
-    });
+    this.porudzbinaService.addPorudzbina(this.porudzbina).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public update(): void {
     this.setPorudzbina();
-    this.porudzbina.datumIsporuke = new Date(this.porudzbina.datumIsporuke.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-    this.porudzbina.datumPorucivanja = new Date(this.porudzbina.datumPorucivanja.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-    this.porudzbinaService.updatePorudzbina(this.data.porudzbinaID, this.porudzbina);
-    this.snackBar.open("Uspešno modifikovana porudžbina", "U redu", {
-      duration: 2500,
-    });
+    this.porudzbinaService.updatePorudzbina(this.data.porudzbinaID, this.porudzbina).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public delete(): void {
-    this.porudzbinaService.deletePorudzbina(this.data.porudzbinaID);
-    this.snackBar.open("Uspešno obrisana porudžbina", "U redu", {
-      duration: 2500,
-    });
+    this.porudzbinaService.deletePorudzbina(this.data.porudzbinaID).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public cancel(): void {
@@ -99,13 +115,33 @@ export class PorudzbinaDialogComponent implements OnInit {
   }
 
   setPorudzbina() {
-    this.porudzbina.datumIsporuke = this.data.datumIsporuke;
-    this.porudzbina.datumPorucivanja = this.data.datumPorucivanja;
+    if (this.data.datumIsporuke) {
+      var d1 = new Date(this.data.datumIsporuke);
+      d1.setHours(12, 0, 0);
+      this.porudzbina.datumIsporuke = d1;
+    }
+
+    var d2 = new Date(this.data.datumPorucivanja);
+    d2.setHours(12, 0, 0);
+    this.porudzbina.datumPorucivanja = d2;
     this.porudzbina.dobavljacID = this.data.dobavljac.dobavljacID;
     this.porudzbina.menadzerID = this.data.menadzer.menadzerID;
     this.porudzbina.porudzbinaID = this.data.porudzbinaID;
     this.porudzbina.prodavacID = this.data.prodavac.prodavacID;
     this.porudzbina.statusPorudzbine = this.data.statusPorudzbine;
     this.porudzbina.ukupanIznosPorudzbine = this.data.ukupanIznosPorudzbine;
+  }
+
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
+    });
+  }
+
+  showSuccess(data) {
+    this.snackBar.open(data['message'], "U redu", {
+      duration: 2500,
+    });
   }
 }

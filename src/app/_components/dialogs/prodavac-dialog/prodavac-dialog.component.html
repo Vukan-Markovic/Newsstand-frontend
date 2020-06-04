@@ -34,7 +34,7 @@
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
         <input matInput [matDatepicker]="datumRodjenja" placeholder="Datum rođenja" [(ngModel)]="data.datumRodjenja"
-          name="datumRodjenja" [disabled]="flag == 3">
+          name="datumRodjenja" [disabled]="flag == 3" required>
         <mat-datepicker-toggle matSuffix [for]="datumRodjenja"></mat-datepicker-toggle>
         <mat-datepicker touchUi #datumRodjenja></mat-datepicker>
       </mat-form-field>
@@ -43,7 +43,7 @@
     <div class="form">
       <mat-form-field hintLabel="Maksimalno 50 karaktera">
         <input matInput #input3 maxlength="50" placeholder="Adresa stanovanja" [(ngModel)]="data.adresaStanovanja"
-          name="adresaStanovanja" [disabled]="flag == 3" required>
+          name="adresaStanovanja" [disabled]="flag == 3">
         <mat-hint align="end">{{input3.value?.length || 0}}/50</mat-hint>
       </mat-form-field>
     </div>
@@ -51,7 +51,7 @@
     <div class="form">
       <mat-form-field hintLabel="Maksimalno 20 karaktera">
         <input matInput #input4 maxlength="20" placeholder="Telefon" [(ngModel)]="data.telefon" name="telefon"
-          [disabled]="flag == 3" required>
+          [disabled]="flag == 3">
         <mat-hint align="end">{{input4.value?.length || 0}}/20</mat-hint>
       </mat-form-field>
     </div>
@@ -66,7 +66,7 @@
 
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input matInput [matDatepicker]="datumZaposlenja" placeholder="Datum zaposlenja"
+        <input matInput [matDatepicker]="datumZaposlenja" placeholder="Datum zaposlenja" required
           [(ngModel)]="data.datumZaposlenja" name="datumZaposlenja" [disabled]="flag == 3">
         <mat-datepicker-toggle matSuffix [for]="datumZaposlenja"></mat-datepicker-toggle>
         <mat-datepicker touchUi #datumZaposlenja></mat-datepicker>
@@ -76,7 +76,7 @@
     <div class="form">
       <mat-form-field hintLabel="Maksimalno 20 karaktera">
         <input matInput #input6 maxlength="20" placeholder="Stručna sprema" [(ngModel)]="data.strucnaSprema"
-          name="strucnaSprema" [disabled]="flag == 3" required>
+          name="strucnaSprema" [disabled]="flag == 3">
         <mat-hint align="end">{{input6.value?.length || 0}}/20</mat-hint>
       </mat-form-field>
     </div>

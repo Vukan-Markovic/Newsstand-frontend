@@ -20,11 +20,11 @@ export class MenadzerService {
         return this.httpClient.post(this.API_URL, menadzer);
     }
 
-    public updateMenadzer(id: number, menadzer: Menadzer): void {
-        this.httpClient.put(this.API_URL + id, menadzer).subscribe();
+    public updateMenadzer(id: number, menadzer: Menadzer) {
+        return this.httpClient.put(this.API_URL + id, menadzer);
     }
 
-    public deleteMenadzer(id: number): void {
-        this.httpClient.delete(this.API_URL + id).subscribe();
+    public deleteMenadzer(id: number) {
+        return this.httpClient.delete(this.API_URL + id);
     }
 }

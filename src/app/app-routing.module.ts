@@ -14,11 +14,11 @@ import { PorudzbinaComponent } from './_components/porudzbina/porudzbina.compone
 import { IzvestajComponent } from './_components/izvestaj/izvestaj.component';
 import { DobavljacComponent } from './_components/dobavljac/dobavljac.component';
 import { KorisnikComponent } from './_components/korisnik/korisnik.component';
-import { Menadzer } from './_models/menadzer';
 import { ZaposleniGuard } from './_helpers/zaposleni.guard';
 import { MenadzerGuard } from './_helpers/menadzer.guard';
 import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
 import { EmailInputComponent } from './_components/email-input/email-input.component';
+import { MenadzerComponent } from './_components/menadzer/menadzer.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'dobavljac', component: DobavljacComponent, canActivate: [ZaposleniGuard] },
   { path: 'izvestaj', component: IzvestajComponent, canActivate: [MenadzerGuard] },
   { path: 'korisnik', component: KorisnikComponent, canActivate: [AuthGuard] },
-  { path: 'menadzer', component: Menadzer, canActivate: [ZaposleniGuard] },
+  { path: 'menadzer', component: MenadzerComponent, canActivate: [ZaposleniGuard] },
   { path: 'porudzbina', component: PorudzbinaComponent, canActivate: [AuthGuard] },
   { path: 'prodavac', component: ProdavacComponent, canActivate: [MenadzerGuard] },
   { path: 'proizvod', component: ProizvodComponent, canActivate: [ZaposleniGuard] },

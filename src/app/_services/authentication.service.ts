@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Korisnik } from '../_models/korisnik';
@@ -17,7 +17,7 @@ export class AuthenticationService {
     }
 
     public get currentUserValue(): Korisnik {
-        if(this.currentUserSubject.value) return this.currentUserSubject.value[0];
+        if (this.currentUserSubject.value) return this.currentUserSubject.value[0];
     }
 
     login(email, lozinka) {
@@ -37,11 +37,13 @@ export class AuthenticationService {
     }
 
     resetPassword(email: String) {
-        return this.httpClient.post(this.API_URL + 'resetPassword', email);
+        return this.httpClient.post(this.API_URL + 'resetPassword', { email });
     }
 
-    public updatePassword(password: String, token: String) {
-        return this.httpClient.put(this.API_URL + 'updatePassword' + token, password, { responseType: 'json' });
+    public updatePassword(lozinka: String, token: string) {
+        let params = new HttpParams();
+        params = params.append('code', token);
+        return this.httpClient.put(this.API_URL + 'updatePassword', { lozinka }, { params: params });
     }
 
     public setCurrentUserRole(uloga: string) {

@@ -16,15 +16,15 @@ export class PorudzbinaService {
         return this.httpClient.get<PorudzbinaDO>(this.API_URL + id);
     }
 
-    public addPorudzbina(porudzbina: PorudzbinaDO): void {
-        this.httpClient.post(this.API_URL, porudzbina).subscribe();
+    public addPorudzbina(porudzbina: PorudzbinaDO) {
+        return this.httpClient.post(this.API_URL, porudzbina);
     }
 
-    public updatePorudzbina(id: number, porudzbina: PorudzbinaDO): void {
-        this.httpClient.put(this.API_URL + id, porudzbina).subscribe();
+    public updatePorudzbina(id: number, porudzbina: PorudzbinaDO) {
+        return this.httpClient.put(this.API_URL + id, porudzbina);
     }
 
-    public deletePorudzbina(id: number): void {
-        this.httpClient.delete(this.API_URL + id).subscribe();
+    public deletePorudzbina(id: number) {
+        return this.httpClient.delete(this.API_URL + id);
     }
 }

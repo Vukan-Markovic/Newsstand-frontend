@@ -21,7 +21,7 @@ export class IzvestajDialogComponent implements OnInit {
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<IzvestajDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Izvestaj,
-    public izvestajService: IzvestajService,
+    public izvestajService: IzvestajService, 
     public authenticationService: AuthenticationService,
     public menadzerService: MenadzerService) { }
 
@@ -42,27 +42,31 @@ export class IzvestajDialogComponent implements OnInit {
 
   public add(): void {
     this.setIzvestaj();
-    this.izvestajService.addIzvestaj(this.izvestaj);
-    this.snackBar.open("Uspešno dodat izveštaj", "U redu", {
-      duration: 2500,
-    });
+    this.izvestajService.addIzvestaj(this.izvestaj).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public update(): void {
     this.setIzvestaj();
-    this.izvestaj.datumOd = new Date(this.izvestaj.datumOd.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-    this.izvestaj.datumDo = new Date(this.izvestaj.datumDo.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-    this.izvestajService.updateIzvestaj(this.data.izvestajID, this.izvestaj);
-    this.snackBar.open("Uspešno modifikovan izveštaj", "U redu", {
-      duration: 2500,
-    });
+    this.izvestajService.updateIzvestaj(this.data.izvestajID, this.izvestaj).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public delete(): void {
-    this.izvestajService.deleteIzvestaj(this.data.izvestajID);
-    this.snackBar.open("Uspešno obrisan izveštaj", "U redu", {
-      duration: 2500,
-    });
+    this.izvestajService.deleteIzvestaj(this.data.izvestajID).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public cancel(): void {
@@ -73,11 +77,26 @@ export class IzvestajDialogComponent implements OnInit {
   }
 
   setIzvestaj() {
-    this.izvestaj.brojKupovina = this.data.brojKupovina;
-    this.izvestaj.datumDo = this.data.datumDo;
-    this.izvestaj.datumOd = this.data.datumOd;
+    var d1 = new Date(this.data.datumDo);
+    var d2 = new Date(this.data.datumOd);
+    d1.setHours(12, 0, 0);
+    d2.setHours(12, 0, 0);
+    this.izvestaj.datumDo = d1;
+    this.izvestaj.datumOd = d2;
     this.izvestaj.izvestajID = this.data.izvestajID;
     this.izvestaj.menadzerID = this.data.menadzer.menadzerID;
-    this.izvestaj.promet = this.data.promet;
+  }
+
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
+    });
+  }
+
+  showSuccess(data) {
+    this.snackBar.open(data['message'], "U redu", {
+      duration: 2500,
+    });
   }
 }

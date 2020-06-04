@@ -5,19 +5,15 @@
   <form class="mat-dialog-content" ngSubmit="submit" #formControl="ngForm">
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input matInput [matDatepicker]="datumOd" placeholder="Od datuma" [(ngModel)]="data.datumOd" name="datumOd"
-          [disabled]="flag == 3">
-        <mat-datepicker-toggle matSuffix [for]="datumOd"></mat-datepicker-toggle>
-        <mat-datepicker touchUi #datumOd></mat-datepicker>
+        <input type="date" matInput placeholder="Od datuma" [ngModel]="data.datumOd | date : 'yyyy-MM-dd'" name="datumOd"
+        (ngModelChange)="data.datumOd=$event" [disabled]="flag == 3" required>
       </mat-form-field>
     </div>
 
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input matInput [matDatepicker]="datumDo" placeholder="Do datuma" [(ngModel)]="data.datumDo" name="datumDo"
-          [disabled]="flag == 3">
-        <mat-datepicker-toggle matSuffix [for]="datumDo"></mat-datepicker-toggle>
-        <mat-datepicker touchUi #datumDo></mat-datepicker>
+        <input type="date" matInput placeholder="Do datuma" [ngModel]="data.datumDo | date : 'yyyy-MM-dd'" name="datumDo"
+        (ngModelChange)="data.datumDo=$event" [disabled]="flag == 3" required>
       </mat-form-field>
     </div>
 

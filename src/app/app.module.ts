@@ -10,7 +10,6 @@ import { RegisterComponent } from './_components/register/register.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ToastrModule } from 'ngx-toastr';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -20,7 +19,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-// MatOptionModule
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -67,6 +65,10 @@ import { StavkaRacunaService } from './_services/stavkaRacuna.service';
 import { ResetPasswordComponent } from './_components/reset-password/reset-password.component';
 import { EmailInputComponent } from './_components/email-input/email-input.component';
 import { ZaposleniGuard } from './_helpers/zaposleni.guard';
+import { AuthGuard } from './_helpers/auth.guard';
+import { MenadzerGuard } from './_helpers/menadzer.guard';
+import { StavkaRacunaComponent } from './_components/dialogs/stavka-racuna/stavka-racuna.component';
+import { StavkaPorudzbineComponent } from './_components/dialogs/stavka-porudzbine/stavka-porudzbine.component';
 
 @NgModule({
     imports: [
@@ -95,12 +97,7 @@ import { ZaposleniGuard } from './_helpers/zaposleni.guard';
         MatStepperModule,
         ReactiveFormsModule,
         HttpClientModule,
-        AppRoutingModule,
-        ToastrModule.forRoot({
-            positionClass: 'toast-top-right',
-            preventDuplicates: true,
-            tapToDismiss: true
-        }),
+        AppRoutingModule
     ],
     declarations: [
         AppComponent,
@@ -127,7 +124,9 @@ import { ZaposleniGuard } from './_helpers/zaposleni.guard';
         ProdavacDialogComponent,
         MenadzerComponent,
         ResetPasswordComponent,
-        EmailInputComponent
+        EmailInputComponent,
+        StavkaRacunaComponent,
+        StavkaPorudzbineComponent
     ],
     entryComponents: [
         DobavljacDialogComponent,
@@ -143,6 +142,8 @@ import { ZaposleniGuard } from './_helpers/zaposleni.guard';
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         ZaposleniGuard,
+        AuthGuard, 
+        MenadzerGuard,
         AuthenticationService,
         DobavljacService,
         IzvestajService,

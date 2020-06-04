@@ -5,19 +5,15 @@
   <form class="mat-dialog-content" ngSubmit="submit" #formControl="ngForm">
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input matInput [matDatepicker]="datumPorucivanja" placeholder="Datum poručivanja"
-          [(ngModel)]="data.datumPorucivanja" name="datumPorucivanja" [disabled]="flag == 3">
-        <mat-datepicker-toggle matSuffix [for]="datumPorucivanja"></mat-datepicker-toggle>
-        <mat-datepicker touchUi #datumPorucivanja></mat-datepicker>
+        <input type="date" matInput placeholder="Datum poručivanja" (ngModelChange)="data.datumPorucivanja=$event"
+          [ngModel]="data.datumPorucivanja | date : 'yyyy-MM-dd'" name="datumPorucivanja" [disabled]="flag == 3" required>
       </mat-form-field>
     </div>
 
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input matInput [matDatepicker]="datumIsporuke" placeholder="Datum isporuke" [(ngModel)]="data.datumIsporuke"
-          name="datumIsporuke" [disabled]="flag == 3">
-        <mat-datepicker-toggle matSuffix [for]="datumIsporuke"></mat-datepicker-toggle>
-        <mat-datepicker touchUi #datumIsporuke></mat-datepicker>
+        <input type="date" matInput placeholder="Datum isporuke" [ngModel]="data.datumIsporuke | date : 'yyyy-MM-dd'"
+          (ngModelChange)="data.datumIsporuke=$event" name="datumIsporuke" [disabled]="flag == 3">
       </mat-form-field>
     </div>
 
@@ -25,7 +21,7 @@
       <mat-form-field>
         <mat-select [(ngModel)]="data.statusPorudzbine" placeholder="Status porudžbine" name="statusPorudzbine"
           [disabled]="flag == 3" required>
-          <mat-option value="poručeno">
+          <mat-option value="poruceno">
             poručeno
           </mat-option>
           <mat-option value="kompletirano">
@@ -38,7 +34,7 @@
       </mat-form-field>
     </div>
 
-    <div class="form">
+    <div class="form" *ngIf="isArray()">
       <mat-form-field>
         <mat-select [(ngModel)]="data.dobavljac" placeholder="Dobavljač" name="dobavljac"
           [compareWith]="compareDobavljac" [disabled]="flag == 3" required>
@@ -49,7 +45,7 @@
       </mat-form-field>
     </div>
 
-    <div class="form">
+    <div class="form" *ngIf="isArray()">
       <mat-form-field>
         <mat-select [(ngModel)]="data.menadzer" placeholder="Menadžer" name="menadzer" [compareWith]="compareMenadzer"
           [disabled]="flag == 3" required>
@@ -60,7 +56,7 @@
       </mat-form-field>
     </div>
 
-    <div class="form">
+    <div class="form" *ngIf="isArray()">
       <mat-form-field>
         <mat-select [(ngModel)]="data.prodavac" placeholder="Prodavac" name="prodavac" [compareWith]="compareProdavac"
           [disabled]="flag == 3" required>

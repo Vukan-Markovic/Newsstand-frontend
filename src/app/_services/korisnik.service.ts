@@ -20,15 +20,15 @@ export class KorisnikService {
         return this.httpClient.get<Korisnik>(this.API_URL + 'email/' + email);
     }
 
-    public addKorisnik(izvestaj: Korisnik): void {
-        this.httpClient.post(this.API_URL, izvestaj).subscribe();
+    public addKorisnik(izvestaj: Korisnik) {
+        return this.httpClient.post(this.API_URL, izvestaj);
     }
 
-    public updateKorisnik(izvestaj: Korisnik): void {
-        this.httpClient.put(this.API_URL, izvestaj).subscribe();
+    public updateKorisnik(izvestaj: Korisnik) {
+        return this.httpClient.put(this.API_URL, izvestaj);
     }
 
-    public deleteKorisnik(id: number): void {
-        this.httpClient.delete(this.API_URL + id).subscribe();
+    public deleteKorisnik(id: number) {
+        return this.httpClient.delete(this.API_URL + id);
     }
 }

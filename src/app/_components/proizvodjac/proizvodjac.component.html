@@ -1,52 +1,53 @@
 <mat-toolbar class="toolbarNew" color="primary">
   <span class="title-center">Proizvođač</span>
 </mat-toolbar>
+<div class="height">
+  <div class="container mat-elevation-z8">
 
-<div class="container mat-elevation-z8">
+    <mat-form-field class="search">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite proizvođače">
+    </mat-form-field>
 
-  <mat-form-field class="search">
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite proizvođače">
-  </mat-form-field>
+    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
 
-  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+      <ng-container matColumnDef="nazivProizvodjaca">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.nazivProizvodjaca}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="nazivProizvodjaca">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.nazivProizvodjaca}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="kontaktProizvodjaca">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Kontakt</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.kontaktProizvodjaca}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="kontaktProizvodjaca">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Kontakt</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.kontaktProizvodjaca}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="adresaProizvodjaca">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Adresa</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.adresaProizvodjaca}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="adresaProizvodjaca">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Adresa</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.adresaProizvodjaca}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="primary" matTooltip="Dodajte novog proizvođača"
+            matTooltipClass="example-tooltip-blue" (click)="openDialog(1)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-header-cell>
 
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button color="primary" matTooltip="Dodajte novog proizvođača"
-          matTooltipClass="example-tooltip-blue" (click)="openDialog(1)">
-          <mat-icon>add</mat-icon>
-        </button>
-      </mat-header-cell>
+        <mat-cell *matCellDef="let row; let i=index;">
+          <button mat-icon-button color="primary" matTooltip="Izmenite proizvođača"
+            (click)="openDialog(2, row.proizvodjacID, row.nazivProizvodjaca, row.kontaktProizvodjaca, row.adresaProizvodjaca)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" matTooltip="Izbrišite proizvođača"
+            (click)="openDialog(3, row.proizvodjacID, row.nazivProizvodjaca, row.kontaktProizvodjaca, row.adresaProizvodjaca)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
 
-      <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="primary" matTooltip="Izmenite proizvođača"
-          (click)="openDialog(2, row.proizvodjacID, row.nazivProizvodjaca, row.kontaktProizvodjaca, row.adresaProizvodjaca)">
-          <mat-icon aria-label="Edit">edit</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" matTooltip="Izbrišite proizvođača"
-          (click)="openDialog(2, row.proizvodjacID, row.nazivProizvodjaca, row.kontaktProizvodjaca, row.adresaProizvodjaca)">
-          <mat-icon aria-label="Delete">delete</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-  <mat-paginator [pageSize]="[5]" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSize]="[5]" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
+  </div>
 </div>

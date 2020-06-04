@@ -8,6 +8,7 @@ import { IzvestajService } from 'src/app/_services/izvestaj.service';
 import { Menadzer } from 'src/app/_models/menadzer';
 import { IzvestajDialogComponent } from '../dialogs/izvestaj-dialog/izvestaj-dialog.component';
 import { MenadzerService } from 'src/app/_services/menadzer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-izvestaj',
@@ -24,9 +25,11 @@ export class IzvestajComponent implements OnInit {
   izvestaji: Izvestaj[] = [];
 
   constructor(public izvestajService: IzvestajService, public dialog: MatDialog,
-    public menadzerService: MenadzerService) { }
+    public menadzerService: MenadzerService, public snackBar: MatSnackBar) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadData();
+  }
 
   public loadData() {
     this.i = 0;
@@ -37,6 +40,7 @@ export class IzvestajComponent implements OnInit {
       this.k = data.length;
 
       data.forEach(element => {
+        console.log(element.datumOd);
         var izvestaj = new Izvestaj();
         izvestaj.brojKupovina = element.brojKupovina;
         izvestaj.datumDo = element.datumDo;
@@ -73,20 +77,31 @@ export class IzvestajComponent implements OnInit {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }
-        });
+        },
+          error => {
+            this.showError(error);
+          });
       });
+    },
+      error => {
+        this.showError(error);
+      });
+  }
+
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
     });
   }
 
   public openDialog(flag: number, izvestajID?: number,
-    promet?: number,
-    brojKupovina?: number,
     datumOd?: Date,
     datumDo?: Date,
     menadzer?: Menadzer) {
     const dialogRef = this.dialog.open(IzvestajDialogComponent, {
       data: {
-        i: izvestajID, izvestajID: izvestajID, promet: promet, brojKupovina: brojKupovina, datumOd: datumOd,
+        i: izvestajID, izvestajID: izvestajID, datumOd: datumOd,
         datumDo: datumDo, menadzer: menadzer
       }
     });

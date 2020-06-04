@@ -1,74 +1,77 @@
 <mat-toolbar color="primary">
   <span class="title-center">Porudžbina</span>
 </mat-toolbar>
+<div class="height">
+  <div class="container mat-elevation-z8">
 
-<div class="container mat-elevation-z8">
+    <mat-form-field class="search">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite porudžbine">
+    </mat-form-field>
 
-  <mat-form-field class="search">
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite porudžbine">
-  </mat-form-field>
+    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
 
-  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+      <ng-container matColumnDef="datumPorucivanja">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Datum poručivanja</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.datumPorucivanja | date : "dd.MM.yyyy."}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="datumPorucivanja">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Datum poručivanja | date : "dd.MM.yyyy."</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.datumPorucivanja}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="datumIsporuke">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Datum isporuke</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.datumIsporuke | date : "dd.MM.yyyy."}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="datumIsporuke">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Datum isporuke | date : "dd.MM.yyyy."</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.datumIsporuke}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="ukupanIznosPorudzbine">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Ukupan iznos</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.ukupanIznosPorudzbine}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="ukupanIznosPorudzbine">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Ukupan iznos</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.ukupanIznosPorudzbine}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="statusPorudzbine">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.statusPorudzbine}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="statusPorudzbine">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.statusPorudzbine}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="dobavljac">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Dobavljač</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.dobavljac.skraceniNaziv}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="dobavljac">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Dobavljač</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.dobavljac.skraceniNaziv}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="menadzer">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Menadžer</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.menadzer.adresaKancelarije}} {{row.menadzer.brojKancelarije}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="menadzer">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Menadžer</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.menadzer.adresaKancelarije}} {{row.menadzer.brojKancelarije}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="prodavac">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Prodavac</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.prodavac.ime}} {{row.prodavac.prezime}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="prodavac">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Prodavac</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.prodavac.ime}} {{row.prodavac.prezime}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="primary" (click)="openDialog(1)" matTooltip="Dodajte novu porudžbinu">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-header-cell>
 
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button color="primary" (click)="openDialog(1)" matTooltip="Dodajte novu porudžbinu">
-          <mat-icon>add</mat-icon>
-        </button>
-      </mat-header-cell>
+        <mat-cell *matCellDef="let row; let i=index;">
+          <button mat-icon-button color="primary" matTooltip="Izmenite porudžbinu"
+            (click)="openDialog(2, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" matTooltip="Izbrišite porudžbinu"
+            (click)="openDialog(3, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
 
-      <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="primary" matTooltip="Izmenite porudžbinu"
-          (click)="openDialog(2, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
-          <mat-icon aria-label="Edit">edit</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" matTooltip="Izbrišite porudžbinu"
-          (click)="openDialog(3, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
-          <mat-icon aria-label="Delete">delete</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-</div>
-<div class="container mat-elevation-z8">
-  <!-- <app-igrac *ngIf="selektovanTim" [selektovanTim]="selektovanTim"></app-igrac> -->
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"
+        [ngClass]="{'selectRow': selektovanaPorudzbina != null && selektovanaPorudzbina.porudzbinaID == row.porudzbinaID}"
+        (click)="selectRow(row)"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+  <div class="container mat-elevation-z8">
+    <app-proizvod *ngIf="selektovanaPorudzbina" [selektovanaPorudzbina]="selektovanaPorudzbina"></app-proizvod>
+  </div>
 </div>

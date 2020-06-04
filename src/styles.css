@@ -8,16 +8,46 @@
   transform: translateX(-50%) translateY(-50%);
 }
 
+.red-snackbar {
+  background: red;
+  color: whitesmoke;
+}
+
+.required:after {
+  content:" *";
+  color: red;
+}
+
 html, body { 
     height: 100%;
     max-width: 100%;
     overflow-x: hidden; 
+    overflow-y: hidden; 
 }
 
 body { 
  /* padding: 2em; */
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+.centered {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh;
+}
+
+.registerCentered {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.height {
+  height: 100vh;
 }
 
 /* 

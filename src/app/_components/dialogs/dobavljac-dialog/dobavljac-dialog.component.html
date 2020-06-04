@@ -11,7 +11,7 @@
 
       <div class="form">
         <mat-form-field hintLabel="Maksimalno 50 karaktera">
-          <input matInput #input2 maxlength="50" placeholder="Pun naziv" [(ngModel)]="data.punNaziv" name="punNaziv" [disabled]="flag == 3" required>
+          <input matInput #input2 maxlength="50" placeholder="Pun naziv" [(ngModel)]="data.punNaziv" name="punNaziv" [disabled]="flag == 3">
           <mat-hint align="end">{{input2.value?.length || 0}}/50</mat-hint>
         </mat-form-field>
       </div>
@@ -32,14 +32,14 @@
 
       <div class="form">
         <mat-form-field hintLabel="Maksimalno 20 karaktera">
-          <input matInput #input5 maxlength="20" placeholder="Grad" [(ngModel)]="data.grad" name="grad" [disabled]="flag == 3" required>
+          <input matInput #input5 maxlength="20" placeholder="Grad" [(ngModel)]="data.grad" name="grad" [disabled]="flag == 3">
           <mat-hint align="end">{{input5.value?.length || 0}}/20</mat-hint>
         </mat-form-field>
       </div>
 
       <div class="form">
         <mat-form-field hintLabel="Maksimalno 30 karaktera">
-          <input matInput #input6 maxlength="30" placeholder="Država" [(ngModel)]="data.drzava" name="drzava" [disabled]="flag == 3" required>
+          <input matInput #input6 maxlength="30" placeholder="Država" [(ngModel)]="data.drzava" name="drzava" [disabled]="flag == 3">
           <mat-hint align="end">{{input6.value?.length || 0}}/30</mat-hint>
         </mat-form-field>
       </div>
@@ -60,7 +60,7 @@
 
       <div class="form">
         <mat-form-field hintLabel="Maksimalno 50 karaktera">
-          <input matInput #input9 maxlength="50" placeholder="Kontakt osoba" [(ngModel)]="data.kontaktOsoba" name="kontaktOsoba" [disabled]="flag == 3" required>
+          <input matInput #input9 maxlength="50" placeholder="Kontakt osoba" [(ngModel)]="data.kontaktOsoba" name="kontaktOsoba" [disabled]="flag == 3">
           <mat-hint align="end">{{input9.value?.length || 0}}/50</mat-hint>
         </mat-form-field>
       </div>

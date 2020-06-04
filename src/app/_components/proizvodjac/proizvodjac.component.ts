@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Proizvodjac } from 'src/app/_models/proizvodjac';
 import { ProizvodjacService } from 'src/app/_services/proizvodjac.service';
 import { ProizvodjacDialogComponent } from '../dialogs/proizvodjac-dialog/proizvodjac-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-proizvodjac',
@@ -18,7 +19,8 @@ export class ProizvodjacComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public proizvodjacService: ProizvodjacService, public dialog: MatDialog) { }
+  constructor(public proizvodjacService: ProizvodjacService, public dialog: MatDialog,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.loadData();
@@ -35,8 +37,12 @@ export class ProizvodjacComponent implements OnInit {
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+    }, error => {
+      this.snackBar.open(error, "U redu", {
+        duration: 2000,
+        panelClass: ['red-snackbar']
+      });
     });
-
   }
 
   public openDialog(flag: number, proizvodjacID?: number,

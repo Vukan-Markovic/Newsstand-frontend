@@ -1,10 +1,10 @@
-﻿<div class="container" style="display: flex; justify-content: center; align-items: center; height: 100vh">
+﻿<div class="container centered">
     <div class="card text-white bg-dark">
         <h4 class="card-header text-center">Prijavljivanje</h4>
         <div class="card-body">
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
-                    <label for="email">Email</label>
+                    <label class="required" for="email">Email</label>
                     <input type="email" required placeholder="Unesite email adresu" formControlName="email"
                         class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                     <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="lozinka">Lozinka</label>
+                    <label class="required" for="lozinka">Lozinka</label>
                     <input type="password" required placeholder="Unesite lozinku" minlength="8"
                         formControlName="lozinka" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.lozinka.errors }" />
@@ -27,6 +27,7 @@
                         Prijavi se
                     </button>
                     <a routerLink="/register" class="btn btn-link">Registruj se</a>
+                    <a routerLink="/emailInput" class="btn btn-link">Resetuj lozinku</a>
                 </div>
             </form>
         </div>

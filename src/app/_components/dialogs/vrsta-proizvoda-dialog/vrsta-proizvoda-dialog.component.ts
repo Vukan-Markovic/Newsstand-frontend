@@ -20,30 +20,49 @@ export class VrstaProizvodaDialogComponent implements OnInit {
   ngOnInit() { }
 
   public add(): void {
-    this.vrstaProizvodaService.addVrstaProizvoda(this.data);
-    this.snackBar.open("Uspešno dodata vrsta proizvoda", "U redu", {
-      duration: 2500,
-    });
+    this.vrstaProizvodaService.addVrstaProizvoda(this.data).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public update(): void {
-    this.vrstaProizvodaService.updateVrstaProizvoda(this.data.vrstaProizvodaID, this.data);
-    this.snackBar.open("Uspešno modifikovana vrsta proizvoda", "U redu", {
-      duration: 2500,
-    });
+    this.vrstaProizvodaService.updateVrstaProizvoda(this.data.vrstaProizvodaID, this.data).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public delete(): void {
-    this.vrstaProizvodaService.deleteVrstaProizvoda(this.data.vrstaProizvodaID);
-    this.snackBar.open("Uspešno obrisana vrsta proizvoda", "U redu", {
-      duration: 2500,
-    });
+    this.vrstaProizvodaService.deleteVrstaProizvoda(this.data.vrstaProizvodaID).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public cancel(): void {
     this.dialogRef.close();
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,
+    });
+  }
+
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
+    });
+  }
+
+  showSuccess(data) {
+    this.snackBar.open(data['message'], "U redu", {
+      duration: 2500,
     });
   }
 }

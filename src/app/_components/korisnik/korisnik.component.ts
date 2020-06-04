@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Korisnik } from 'src/app/_models/korisnik';
 import { KorisnikService } from 'src/app/_services/korisnik.service';
-import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 @Component({
@@ -18,7 +17,7 @@ export class KorisnikComponent implements OnInit {
   isEnabled: boolean;
 
   constructor(private korisnikService: KorisnikService, private router: Router, 
-    private authService: AuthenticationService, private toastr: ToastrService) { }
+    private authService: AuthenticationService) { }
 
   ngOnInit() {
 

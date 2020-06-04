@@ -20,11 +20,11 @@ export class ProdavacService {
         return this.httpClient.post(this.API_URL, prodavac);
     }
 
-    public updateProdavac(id: number, prodavac: Prodavac): void {
-        this.httpClient.put(this.API_URL + id, prodavac).subscribe();
+    public updateProdavac(id: number, prodavac: Prodavac) {
+        return this.httpClient.put(this.API_URL + id, prodavac);
     }
 
-    public deleteProdavac(id: number): void {
-        this.httpClient.delete(this.API_URL + id).subscribe();
+    public deleteProdavac(id: number) {
+        return this.httpClient.delete(this.API_URL + id);
     }
 }

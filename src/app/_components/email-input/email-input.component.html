@@ -1,11 +1,10 @@
-<br><br>
-<div class="container email-input">
-    <div class="card">
+<div class="container centered">
+    <div class="card text-white bg-dark">
         <h4 class="card-header">Unesite vašu email adresu</h4>
         <div class="card-body">
             <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
-                    <label for="email">Email</label>
+                    <label class="required" for="email">Email</label>
                     <input placeholder="Unesite email adresu" required type="email" id="email" formControlName="email"
                         class="form-control" />
                     <span *ngIf="!emailForm.get('email').valid && emailForm.get('email').touched" class="help-block">

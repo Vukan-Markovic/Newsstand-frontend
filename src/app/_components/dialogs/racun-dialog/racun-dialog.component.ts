@@ -26,7 +26,18 @@ export class RacunDialogComponent implements OnInit {
   ngOnInit() {
     this.prodavacService.getProdavci().subscribe(prodavci => {
       this.prodavci = prodavci;
+      if (!Array.isArray(this.prodavci)) {
+        this.snackBar.open("Da biste dodali novi račun prethodno mora postajati bar jedan zaposleni!", "U redu", {
+          duration: 2000,
+        });
+        this.dialogRef.close();
+      }
     });
+  }
+
+  isArray() {
+    if (!Array.isArray(this.prodavci)) return false;
+    return true;
   }
 
   compareTo(a: Prodavac, b: Prodavac) {
@@ -40,26 +51,31 @@ export class RacunDialogComponent implements OnInit {
 
   public add(): void {
     this.setRacun();
-    this.racunService.addRacun(this.racun);
-    this.snackBar.open("Uspešno dodat račun", "U redu", {
-      duration: 2500,
-    });
+    this.racunService.addRacun(this.racun).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public update(): void {
     this.setRacun();
-    this.racun.vremeIzdavanja = new Date(this.racun.vremeIzdavanja.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-    this.racunService.updateRacun(this.data.racunID, this.racun);
-    this.snackBar.open("Uspešno modifikovan račun", "U redu", {
-      duration: 2500,
-    });
+    this.racunService.updateRacun(this.data.racunID, this.racun).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public delete(): void {
-    this.racunService.deleteRacun(this.data.racunID);
-    this.snackBar.open("Uspešno obrisan račun", "U redu", {
-      duration: 2500,
-    });
+    this.racunService.deleteRacun(this.data.racunID).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public cancel(): void {
@@ -78,6 +94,22 @@ export class RacunDialogComponent implements OnInit {
     this.racun.racunID = this.data.racunID;
     this.racun.tipRacuna = this.data.tipRacuna;
     this.racun.ukupanIznosRacuna = this.data.ukupanIznosRacuna;
-    this.racun.vremeIzdavanja = this.data.vremeIzdavanja;
+    var d1 = new Date(this.data.vremeIzdavanja);
+    d1.setSeconds(0);
+    d1.setHours(d1.getHours() + 2);
+    this.racun.vremeIzdavanja = d1;
+  }
+
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
+    });
+  }
+
+  showSuccess(data) {
+    this.snackBar.open(data['message'], "U redu", {
+      duration: 2500,
+    });
   }
 }

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../../_services/authentication.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     templateUrl: 'login.component.html'
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
     returnUrl: string;
 
     constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
-        private authenticationService: AuthenticationService) {
+        private authenticationService: AuthenticationService, public snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -45,7 +46,10 @@ export class LoginComponent implements OnInit {
                 },
                 error => {
                     this.loading = false;
-                    console.log(error);
+                    this.snackBar.open(error, "U redu", {
+                        duration: 2000, 
+                        panelClass: ['red-snackbar']
+                    });
                 });
     }
 }

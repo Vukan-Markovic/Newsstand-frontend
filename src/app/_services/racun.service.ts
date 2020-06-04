@@ -16,15 +16,15 @@ export class RacunService {
         return this.httpClient.get<RacunDO>(this.API_URL + id);
     }
 
-    public addRacun(racun: RacunDO): void {
-        this.httpClient.post(this.API_URL, racun).subscribe();
+    public addRacun(racun: RacunDO) {
+        return this.httpClient.post(this.API_URL, racun);
     }
 
-    public updateRacun(id: number, racun: RacunDO): void {
-        this.httpClient.put(this.API_URL + id, racun).subscribe();
+    public updateRacun(id: number, racun: RacunDO) {
+        return this.httpClient.put(this.API_URL + id, racun);
     }
 
-    public deleteRacun(id: number): void {
-        this.httpClient.delete(this.API_URL + id).subscribe();
+    public deleteRacun(id: number) {
+        return this.httpClient.delete(this.API_URL + id);
     }
 }

@@ -1,20 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Proizvodjac } from 'src/app/_models/proizvodjac';
-import { VrstaProizvoda } from 'src/app/_models/vrstaProizvoda';
-import { ProizvodService } from 'src/app/_services/proizvod.service';
-import { ProizvodDO } from 'src/app/_models/proizvodDO';
-import { ProizvodjacService } from 'src/app/_services/proizvodjac.service';
-import { VrstaProizvodaService } from 'src/app/_services/vrstaProizvoda.service';
-import { Proizvod } from 'src/app/_models/proizvod';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-proizvod-dialog',
-  templateUrl: './proizvod-dialog.component.html',
-  styleUrls: ['./proizvod-dialog.component.css']
+  selector: 'app-stavka-porudzbine',
+  templateUrl: './stavka-porudzbine.component.html',
+  styleUrls: ['./stavka-porudzbine.component.css']
 })
-export class ProizvodDialogComponent implements OnInit {
+export class StavkaPorudzbineComponent implements OnInit {
   public flag: number;
   proizvod: ProizvodDO = new ProizvodDO();
   proizvodjaci: Proizvodjac[];

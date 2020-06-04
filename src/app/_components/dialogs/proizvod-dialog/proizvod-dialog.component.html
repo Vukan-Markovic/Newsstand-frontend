@@ -67,7 +67,7 @@
       </mat-form-field>
     </div>
 
-    <div class="form">
+    <div class="form" *ngIf="isArray()">
       <mat-form-field>
         <mat-select [(ngModel)]="data.proizvodjac" placeholder="Proizvodjac" name="proizvodjac"
           [compareWith]="compareProizvodjac" [disabled]="flag == 3" required>
@@ -78,7 +78,7 @@
       </mat-form-field>
     </div>
 
-    <div class="form">
+    <div class="form" *ngIf="isArray()">
       <mat-form-field>
         <mat-select [(ngModel)]="data.vrstaProizvoda" placeholder="Vrsta proizvoda" name="vrstaProizvoda"
           [compareWith]="compareVrstaProizvoda" [disabled]="flag == 3" required>

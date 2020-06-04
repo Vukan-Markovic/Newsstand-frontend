@@ -10,6 +10,11 @@ import { VrstaProizvoda } from 'src/app/_models/vrstaProizvoda';
 import { VrstaProizvodaService } from 'src/app/_services/vrstaProizvoda.service';
 import { ProizvodjacService } from 'src/app/_services/proizvodjac.service';
 import { ProizvodDialogComponent } from '../dialogs/proizvod-dialog/proizvod-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Porudzbina } from 'src/app/_models/porudzbina';
+import { Racun } from 'src/app/_models/racun';
+import { StavkaRacunaService } from 'src/app/_services/stavkaRacuna.service';
+import { StavkaPorudzbineService } from 'src/app/_services/stavkaPorudzbine.service';
 
 @Component({
   selector: 'app-proizvod',
@@ -23,20 +28,43 @@ export class ProizvodComponent implements OnInit {
   j: number = 0;
   k: number = 0;
   proizvodi: Proizvod[] = [];
-  // @Input() selektovanTim: Tim;
+  @Input() selektovanaPorudzbina: Porudzbina;
+  @Input() selektovanRacun: Racun;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public proizvodService: ProizvodService, public dialog: MatDialog,
-    public vrstaProizvodaService: VrstaProizvodaService, public proizvodjacService: ProizvodjacService) { }
+  constructor(public proizvodService: ProizvodService, public dialog: MatDialog, public snackBar: MatSnackBar,
+    public vrstaProizvodaService: VrstaProizvodaService, public proizvodjacService: ProizvodjacService,
+    public stavkaRacunaService: StavkaRacunaService, public stavkaPorudzbineService: StavkaPorudzbineService) { }
 
   ngOnInit() {
     this.loadData();
   }
 
-  // ngOnChanges() {
-  //   if (this.selektovanTim.id) this.loadData();
-  // }
+  ngOnChanges() {
+    if (this.selektovanaPorudzbina) this.loadProizvodPorudzbina();
+    else if (this.selektovanRacun) this.loadProizvodRacun();
+  }
+
+  loadProizvodPorudzbina() {
+    this.stavkaPorudzbineService.getStavkePorudzbine(this.selektovanaPorudzbina.porudzbinaID).subscribe(data => {
+      data.forEach(element => {
+        this.proizvodService.getProizvod(element.proizvodID).subscribe(proizvod => {
+
+        });
+      });
+    });
+  }
+
+  loadProizvodRacun() {
+    this.stavkaRacunaService.getStavkeRacuna(this.selektovanRacun.racunID).subscribe(data => {
+      data.forEach(element => {
+        this.proizvodService.getProizvod(element.proizvodID).subscribe(proizvod => {
+
+        });
+      });
+    });
+  }
 
   public loadData() {
     this.i = 0, this.j = 0;
@@ -65,7 +93,7 @@ export class ProizvodComponent implements OnInit {
 
             this.proizvodjacService.getProizvodjac(element.proizvodjacID).subscribe(proizvodjac => {
               this.proizvodi[this.i++].proizvodjac = proizvodjac[0];
-    
+
               if (this.k == this.i && this.k == this.j) {
                 this.dataSource = new MatTableDataSource(this.proizvodi);
 
@@ -88,7 +116,7 @@ export class ProizvodComponent implements OnInit {
                     switch (property) {
                       case 'vrstaProizvoda': return data.vrstaProizvoda.nazivVrsteProizvoda.toLocaleLowerCase();
                       case 'proizvodjac': return data.proizvodjac.nazivProizvodjaca.toLocaleLowerCase();
-                      default: return typeof data[property] == "string"? data[property].toLocaleLowerCase(): data[property];
+                      default: return typeof data[property] == "string" ? data[property].toLocaleLowerCase() : data[property];
                     }
                   }
                 };
@@ -96,10 +124,23 @@ export class ProizvodComponent implements OnInit {
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
               }
+            }, error => {
+              this.showError(error);
             });
+          }, error => {
+            this.showError(error);
           });
         });
+      }, error => {
+        this.showError(error)
       });
+  }
+
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
+    });
   }
 
   public openDialog(flag: number, proizvodID?: number,

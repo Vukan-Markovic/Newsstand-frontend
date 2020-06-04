@@ -8,6 +8,7 @@ import { RacunService } from 'src/app/_services/racun.service';
 import { Prodavac } from 'src/app/_models/prodavac';
 import { RacunDialogComponent } from '../dialogs/racun-dialog/racun-dialog.component';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-racun',
@@ -17,7 +18,7 @@ import { ProdavacService } from 'src/app/_services/prodavac.service';
 export class RacunComponent implements OnInit {
   displayedColumns = ['vremeIzdavanja', 'mestoIzdavanja', 'ukupanIznosRacuna', 'nazivProdavnice', 'nacinPlacanja', 'brojRacuna', 'tipRacuna', 'prodavac', 'actions'];
   dataSource: MatTableDataSource<Racun>;
-  // selektovanTim: Tim;
+  selektovanRacun: Racun;
   i: number = 0;
   k: number = 0;
   racuni: Racun[] = [];
@@ -25,7 +26,7 @@ export class RacunComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public racunService: RacunService, public dialog: MatDialog,
-    public prodavacService: ProdavacService) { }
+    public prodavacService: ProdavacService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.loadData();
@@ -79,8 +80,15 @@ export class RacunComponent implements OnInit {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }
-        });
+        }, error => this.showError(error));
       });
+    }, error => this.showError(error));
+  }
+
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
     });
   }
 
@@ -109,9 +117,9 @@ export class RacunComponent implements OnInit {
     });
   }
 
-  // selectRow(row: Tim) {
-  //   this.selektovanTim = row;
-  // }
+  selectRow(row: Racun) {
+    this.selektovanRacun = row;
+  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

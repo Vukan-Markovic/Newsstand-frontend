@@ -1,15 +1,15 @@
 <mat-toolbar class="toolbarNew" color="primary">
   <span class="title-center">Proizvod</span>
 </mat-toolbar>
+<div class="height">
+  <div class="container mat-elevation-z8">
 
-<div class="container mat-elevation-z8">
+    <mat-form-field class="search">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite proizvode">
+    </mat-form-field>
 
-  <mat-form-field class="search">
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite proizvode">
-  </mat-form-field>
-  <!-- <div *ngIf="k==i && k==j" > -->
-  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
-  
+    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+
       <ng-container matColumnDef="nazivProizvoda">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv proizvoda</mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.nazivProizvoda}}</mat-cell>
@@ -67,30 +67,31 @@
           </div>
         </mat-cell>
       </ng-container>
-    
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button color="primary" matTooltip="Dodajte novi proizvod"
-          matTooltipClass="example-tooltip-blue" (click)="openDialog(1)">
-          <mat-icon>add</mat-icon>
-        </button>
-      </mat-header-cell>
 
-      <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="primary" matTooltip="Izmenite proizvod"
-          (click)="openDialog(2, row.proizvodID, row.nazivProizvoda, row.opisProizvoda, row.cena, row.tipPakovanja, row.velicinaPakovanja, row.barKod, row.masa, row.raspolozivaKolicina, row.proizvodjac, row.vrstaProizvoda)">
-          <mat-icon aria-label="Edit">edit</mat-icon>
-        </button>
-        <button mat-icon-button color="primary" matTooltip="Izbrišite proizvod"
-          (click)="openDialog(3, row.proizvodID, row.nazivProizvoda, row.opisProizvoda, row.cena, row.tipPakovanja, row.velicinaPakovanja, row.barKod, row.masa, row.raspolozivaKolicina, row.proizvodjac, row.vrstaProizvoda)">
-          <mat-icon aria-label="Delete">delete</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="primary" matTooltip="Dodajte novi proizvod"
+            matTooltipClass="example-tooltip-blue" (click)="openDialog(1)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-header-cell>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-<!-- </div> -->
-  <mat-paginator [pageSize]="[5]" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
+        <mat-cell *matCellDef="let row; let i=index;">
+          <button mat-icon-button color="primary" matTooltip="Izmenite proizvod"
+            (click)="openDialog(2, row.proizvodID, row.nazivProizvoda, row.opisProizvoda, row.cena, row.tipPakovanja, row.velicinaPakovanja, row.barKod, row.masa, row.raspolozivaKolicina, row.proizvodjac, row.vrstaProizvoda)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" matTooltip="Izbrišite proizvod"
+            (click)="openDialog(3, row.proizvodID, row.nazivProizvoda, row.opisProizvoda, row.cena, row.tipPakovanja, row.velicinaPakovanja, row.barKod, row.masa, row.raspolozivaKolicina, row.proizvodjac, row.vrstaProizvoda)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row style="cursor: default" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSize]="[5]" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"></mat-paginator>
+  </div>
 </div>

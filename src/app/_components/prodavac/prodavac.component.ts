@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Prodavac } from 'src/app/_models/prodavac';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
 import { ProdavacDialogComponent } from '../dialogs/prodavac-dialog/prodavac-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-prodavac',
@@ -18,7 +19,7 @@ export class ProdavacComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public prodavacService: ProdavacService, public dialog: MatDialog) { }
+  constructor(public prodavacService: ProdavacService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.loadData();
@@ -32,11 +33,15 @@ export class ProdavacComponent implements OnInit {
       this.dataSource.sortingDataAccessor = (data, property) => {
         if (data[property]) return data[property].toLocaleLowerCase();
       };
-
+      
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+    }, error => {
+      this.snackBar.open(error, "U redu", {
+        duration: 2000,
+        panelClass: ['red-snackbar']
+      });
     });
-
   }
 
   public openDialog(flag: number, prodavacID: number,

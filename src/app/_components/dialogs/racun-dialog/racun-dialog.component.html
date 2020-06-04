@@ -6,17 +6,15 @@
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
 
-        <input matInput required [matDatepicker]="vremeIzdavanja" placeholder="Vreme izdavanja" [(ngModel)]="data.vremeIzdavanja"
+        <input type="datetime-local" matInput required  placeholder="Vreme izdavanja" [(ngModel)]="data.vremeIzdavanja"
           name="vremeIzdavanja" [disabled]="flag == 3">
-        <mat-datepicker-toggle matSuffix [for]="vremeIzdavanja"></mat-datepicker-toggle>
-        <mat-datepicker touchUi #vremeIzdavanja></mat-datepicker>
       </mat-form-field>
     </div>
 
     <div class="form">
       <mat-form-field hintLabel="Maksimalno 20 karaktera">
         <input matInput #input maxlength="20" placeholder="Mesto izdavanja" [(ngModel)]="data.mestoIzdavanja"
-          name="mestoIzdavanja" [disabled]="flag == 3" required>
+          name="mestoIzdavanja" [disabled]="flag == 3">
         <mat-hint align="end">{{input.value?.length || 0}}/20</mat-hint>
       </mat-form-field>
     </div>
@@ -43,7 +41,7 @@
       </mat-form-field>
     </div>
 
-    <div class="form">
+    <div class="form" *ngIf="isArray()">
       <mat-form-field>
         <mat-select [(ngModel)]="data.prodavac" placeholder="Prodavac" name="prodavac"
           [compareWith]="compareTo" [disabled]="flag == 3" required>

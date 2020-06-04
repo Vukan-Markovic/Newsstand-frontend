@@ -20,30 +20,49 @@ export class ProizvodjacDialogComponent implements OnInit {
     public proizvodjacService: ProizvodjacService) { }
 
   public add(): void {
-    this.proizvodjacService.addProizvodjac(this.data);
-    this.snackBar.open("Uspešno dodat proizvođač", "U redu", {
-      duration: 2500,
-    });
+    this.proizvodjacService.addProizvodjac(this.data).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public update(): void {
-    this.proizvodjacService.updateProizvodjac(this.data.proizvodjacID, this.data);
-    this.snackBar.open("Uspešno modifikovan proizvođač", "U redu", {
-      duration: 2500,
-    });
+    this.proizvodjacService.updateProizvodjac(this.data.proizvodjacID, this.data).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public delete(): void {
-    this.proizvodjacService.deleteProizvodjac(this.data.proizvodjacID);
-    this.snackBar.open("Uspešno obrisan proizvođač", "U redu", {
-      duration: 2500,
-    });
+    this.proizvodjacService.deleteProizvodjac(this.data.proizvodjacID).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public cancel(): void {
     this.dialogRef.close();
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,
+    });
+  }
+
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
+    });
+  }
+
+  showSuccess(data) {
+    this.snackBar.open(data['message'], "U redu", {
+      duration: 2500,
     });
   }
 }

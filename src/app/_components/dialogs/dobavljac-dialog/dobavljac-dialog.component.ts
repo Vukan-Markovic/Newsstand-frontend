@@ -14,29 +14,44 @@ export class DobavljacDialogComponent implements OnInit {
 
   ngOnInit() { }
 
-  constructor(public snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<DobavljacDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Dobavljac,
-    public dobavljacService: DobavljacService) { }
+  constructor(public snackBar: MatSnackBar, public dialogRef: MatDialogRef<DobavljacDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Dobavljac, public dobavljacService: DobavljacService) { }
 
   public update(): void {
-    this.dobavljacService.updateDobavljac(this.data.dobavljacID, this.data);
-    this.snackBar.open("Uspešno modifikovan dobavljač", "U redu", {
-      duration: 2500,
-    });
+    this.dobavljacService.updateDobavljac(this.data.dobavljacID, this.data).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public delete(): void {
-    this.dobavljacService.deleteDobavljac(this.data.dobavljacID);
-    this.snackBar.open("Uspešno obrisan dobavljač", "U redu", {
-      duration: 2500,
-    });
+    this.dobavljacService.deleteDobavljac(this.data.dobavljacID).subscribe(data => {
+      this.showSuccess(data);
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
   public cancel(): void {
     this.dialogRef.close();
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,
+    });
+  }
+
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
+    });
+  }
+
+  showSuccess(data) {
+    this.snackBar.open(data['message'], "U redu", {
+      duration: 2500,
     });
   }
 }

@@ -8,23 +8,19 @@ export class StavkaPorudzbineService {
 
     constructor(private httpClient: HttpClient) { }
 
-    public getStavkePorudzbine() {
-        return this.httpClient.get<StavkaPorudzbine[]>(this.API_URL);
+    public getStavkePorudzbine(porudzbinaID: number) {
+        return this.httpClient.get<StavkaPorudzbine[]>(this.API_URL + porudzbinaID);
     }
 
-    public getStavkaPorudzbine(porudzbinaID: number, proizvodID: number) {
-        return this.httpClient.get<StavkaPorudzbine>(this.API_URL + porudzbinaID + '/' + proizvodID);
+    public addStavkaPorudzbine(stavkaPorudzbine: StavkaPorudzbine) {
+        return this.httpClient.post(this.API_URL, stavkaPorudzbine);
     }
 
-    public addStavkaPorudzbine(stavkaPorudzbine: StavkaPorudzbine): void {
-        this.httpClient.post(this.API_URL, stavkaPorudzbine).subscribe();
+    public updateStavkaPorudzbine(stavkaPorudzbine: StavkaPorudzbine) {
+        return this.httpClient.put(this.API_URL, stavkaPorudzbine);
     }
 
-    public updateStavkaPorudzbine(stavkaPorudzbine: StavkaPorudzbine): void {
-        this.httpClient.put(this.API_URL, stavkaPorudzbine).subscribe();
-    }
-
-    public deleteStavkaPorudzbine(id: number): void {
-        this.httpClient.delete(this.API_URL + id).subscribe();
+    public deleteStavkaPorudzbine(id: number) {
+        return this.httpClient.delete(this.API_URL + id);
     }
 }

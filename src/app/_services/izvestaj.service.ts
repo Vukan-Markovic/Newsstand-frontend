@@ -17,15 +17,15 @@ export class IzvestajService {
         return this.httpClient.get<IzvestajDO>(this.API_URL + id);
     }
 
-    public addIzvestaj(izvestaj: IzvestajDO): void {
-        this.httpClient.post(this.API_URL, izvestaj).subscribe();
+    public addIzvestaj(izvestaj: IzvestajDO) {
+        return this.httpClient.post(this.API_URL, izvestaj);
     }
 
-    public updateIzvestaj(id: number, izvestaj: IzvestajDO): void {
-        this.httpClient.put(this.API_URL + id, izvestaj).subscribe();
+    public updateIzvestaj(id: number, izvestaj: IzvestajDO) {
+        return this.httpClient.put(this.API_URL + id, izvestaj);
     }
 
-    public deleteIzvestaj(id: number): void {
-        this.httpClient.delete(this.API_URL + id).subscribe();
+    public deleteIzvestaj(id: number) {
+        return this.httpClient.delete(this.API_URL + id);
     }
 }

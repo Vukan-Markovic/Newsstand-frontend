@@ -1,6 +1,5 @@
 import { Proizvodjac } from './proizvodjac';
 import { VrstaProizvoda } from './vrstaProizvoda';
-import { ProizvodDO } from './proizvodDO';
 
 export class Proizvod {
     proizvodID: number;

@@ -16,15 +16,15 @@ export class ProizvodjacService {
         return this.httpClient.get<Proizvodjac>(this.API_URL + id);
     }
 
-    public addProizvodjac(proizvodjac: Proizvodjac): void {
-        this.httpClient.post(this.API_URL, proizvodjac).subscribe();
+    public addProizvodjac(proizvodjac: Proizvodjac) {
+        return this.httpClient.post(this.API_URL, proizvodjac);
     }
 
-    public updateProizvodjac(id: number, proizvodjac: Proizvodjac): void {
-        this.httpClient.put(this.API_URL + id, proizvodjac).subscribe();
+    public updateProizvodjac(id: number, proizvodjac: Proizvodjac) {
+        return this.httpClient.put(this.API_URL + id, proizvodjac);
     }
 
-    public deleteProizvodjac(id: number): void {
-        this.httpClient.delete(this.API_URL + id).subscribe();
+    public deleteProizvodjac(id: number) {
+        return this.httpClient.delete(this.API_URL + id);
     }
 }

@@ -16,16 +16,15 @@ export class VrstaProizvodaService {
         return this.httpClient.get<VrstaProizvoda>(this.API_URL + id);
     }
 
-    public addVrstaProizvoda(vrstaProizvoda: VrstaProizvoda): void {
-        this.httpClient.post(this.API_URL, vrstaProizvoda).subscribe();
+    public addVrstaProizvoda(vrstaProizvoda: VrstaProizvoda) {
+        return this.httpClient.post(this.API_URL, vrstaProizvoda);
     }
 
-    public updateVrstaProizvoda(id: number, vrstaProizvoda: VrstaProizvoda): void {
-        this.httpClient.put(this.API_URL + id, vrstaProizvoda).subscribe();
+    public updateVrstaProizvoda(id: number, vrstaProizvoda: VrstaProizvoda) {
+        return this.httpClient.put(this.API_URL + id, vrstaProizvoda);
     }
 
-    public deleteVrstaProizvoda(id: number): void {
-        console.log(id);
-        this.httpClient.delete(this.API_URL + id).subscribe();
+    public deleteVrstaProizvoda(id: number) {
+        return this.httpClient.delete(this.API_URL + id);
     }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-email-input',
@@ -13,7 +13,7 @@ export class EmailInputComponent implements OnInit {
   emailForm: FormGroup;
 
   constructor(private authenticationService: AuthenticationService,
-    private router: Router, private toastr: ToastrService) { }
+    private router: Router, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.emailForm = new FormGroup({
@@ -22,15 +22,17 @@ export class EmailInputComponent implements OnInit {
   }
 
   onSubmit() {
-
     this.authenticationService.resetPassword(this.emailForm.value.email).subscribe(
       data => {
-        this.toastr.success(JSON.stringify(data), "Reset password");
+        this.snackBar.open(data['message'], "U redu", {
+          duration: 2000
+        });
         this.router.navigate(['/login']);
-      }, message => {
-        if (message.status != 200)
-          this.toastr.error(message.error, "Reset password");
-      }
-    );
+      }, error => {
+        this.snackBar.open(error, "U redu", {
+          duration: 2000,
+          panelClass: ['red-snackbar']
+        });
+      });
   }
 }

@@ -20,11 +20,11 @@ export class DobavljacService {
         return this.httpClient.post(this.API_URL, dobavljac);
     }
 
-    public updateDobavljac(id: number, dobavljac: Dobavljac): void {
-        this.httpClient.put(this.API_URL + id, dobavljac).subscribe();
+    public updateDobavljac(id: number, dobavljac: Dobavljac) {
+        return this.httpClient.put(this.API_URL + id, dobavljac);
     }
 
-    public deleteDobavljac(id: number): void {
-        this.httpClient.delete(this.API_URL + id).subscribe();
+    public deleteDobavljac(id: number) {
+        return this.httpClient.delete(this.API_URL + id);
     }
 }
