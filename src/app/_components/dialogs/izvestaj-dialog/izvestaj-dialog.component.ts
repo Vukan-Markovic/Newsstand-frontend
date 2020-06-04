@@ -15,19 +15,18 @@ import { Izvestaj } from 'src/app/_models/izvestaj';
 })
 export class IzvestajDialogComponent implements OnInit {
   public flag: number;
-  izvestaj: IzvestajDO = new IzvestajDO();
   menadzeri: Menadzer[];
 
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<IzvestajDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Izvestaj,
-    public izvestajService: IzvestajService, 
+    @Inject(MAT_DIALOG_DATA) public data: IzvestajDO,
+    public izvestajService: IzvestajService,
     public authenticationService: AuthenticationService,
     public menadzerService: MenadzerService) { }
 
   ngOnInit() {
-    this.menadzerService.getMenadzeri().subscribe(menadzeri =>
-      this.menadzeri = menadzeri
+    this.menadzerService.getMenadzer(this.authenticationService.currentUserValue.korisnikID).subscribe(menadzer =>
+      this.data.menadzerID = menadzer[0].menadzerID
     );
   }
 
@@ -35,14 +34,14 @@ export class IzvestajDialogComponent implements OnInit {
     return a && b ? a.izvestajID === b.izvestajID : a === b;
   }
 
-  onChange(menadzer: Menadzer) {
-    this.data.menadzer = menadzer;
-    this.izvestaj.menadzerID = menadzer.menadzerID;
-  }
-
-  public add(): void {
-    this.setIzvestaj();
-    this.izvestajService.addIzvestaj(this.izvestaj).subscribe(data => {
+  public add() {
+    var d1 = new Date(this.data.datumDo);
+    var d2 = new Date(this.data.datumOd);
+    d1.setHours(12, 0, 0);
+    d2.setHours(12, 0, 0);
+    this.data.datumDo = d1;
+    this.data.datumOd = d2;
+    this.izvestajService.addIzvestaj(this.data).subscribe(data => {
       this.showSuccess(data);
     },
       error => {
@@ -50,17 +49,7 @@ export class IzvestajDialogComponent implements OnInit {
       });
   }
 
-  public update(): void {
-    this.setIzvestaj();
-    this.izvestajService.updateIzvestaj(this.data.izvestajID, this.izvestaj).subscribe(data => {
-      this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
-  }
-
-  public delete(): void {
+  public delete() {
     this.izvestajService.deleteIzvestaj(this.data.izvestajID).subscribe(data => {
       this.showSuccess(data);
     },
@@ -69,22 +58,11 @@ export class IzvestajDialogComponent implements OnInit {
       });
   }
 
-  public cancel(): void {
+  public cancel() {
     this.dialogRef.close();
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,
     });
-  }
-
-  setIzvestaj() {
-    var d1 = new Date(this.data.datumDo);
-    var d2 = new Date(this.data.datumOd);
-    d1.setHours(12, 0, 0);
-    d2.setHours(12, 0, 0);
-    this.izvestaj.datumDo = d1;
-    this.izvestaj.datumOd = d2;
-    this.izvestaj.izvestajID = this.data.izvestajID;
-    this.izvestaj.menadzerID = this.data.menadzer.menadzerID;
   }
 
   showError(error) {

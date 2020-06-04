@@ -1,6 +1,4 @@
-import { Menadzer } from './menadzer';
-
-export class Prodavac {
+export class ProdavacDO {
     prodavacID: number;
     ime: string;
     prezime: string;
@@ -11,5 +9,4 @@ export class Prodavac {
     JMBG: string;
     datumZaposlenja: string;
     strucnaSprema: string;
-    menadzer: Menadzer;
 }

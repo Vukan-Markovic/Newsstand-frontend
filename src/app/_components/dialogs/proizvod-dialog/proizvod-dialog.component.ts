@@ -20,15 +20,11 @@ export class ProizvodDialogComponent implements OnInit {
   proizvodjaci: Proizvodjac[];
   vrsteProizvoda: VrstaProizvoda[];
 
-  constructor(public snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<ProizvodDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Proizvod,
-    public proizvodService: ProizvodService,
-    public proizvodjacService: ProizvodjacService,
-    public vrstaProizvodaService: VrstaProizvodaService) { }
+  constructor(public snackBar: MatSnackBar, public dialogRef: MatDialogRef<ProizvodDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Proizvod, public proizvodService: ProizvodService,
+    public proizvodjacService: ProizvodjacService, public vrstaProizvodaService: VrstaProizvodaService) { }
 
   ngOnInit() {
-
     this.proizvodjacService.getProizvodjaci().subscribe(proizvodjaci => {
       this.proizvodjaci = proizvodjaci;
 
@@ -59,7 +55,6 @@ export class ProizvodDialogComponent implements OnInit {
     return a && b ? a.proizvodjacID === b.proizvodjacID : a === b;
   }
 
-
   onChange(proizvodjac: Proizvodjac, vrstaProizvoda: VrstaProizvoda) {
     this.data.proizvodjac = proizvodjac;
     this.data.vrstaProizvoda = vrstaProizvoda;
@@ -67,7 +62,7 @@ export class ProizvodDialogComponent implements OnInit {
     this.proizvod.vrstaProizvodaID = vrstaProizvoda.vrstaProizvodaID;
   }
 
-  public add(): void {
+  public add() {
     this.setProizvod();
     this.proizvodService.addProizvod(this.proizvod).subscribe(data => {
       this.showSuccess(data);
@@ -77,7 +72,7 @@ export class ProizvodDialogComponent implements OnInit {
       });
   }
 
-  public update(): void {
+  public update() {
     this.setProizvod();
     this.proizvodService.updateProizvod(this.proizvod.proizvodID, this.proizvod).subscribe(data => {
       this.showSuccess(data);
@@ -87,16 +82,15 @@ export class ProizvodDialogComponent implements OnInit {
       });
   }
 
-  public delete(): void {
+  public delete() {
     this.proizvodService.deleteProizvod(this.data.proizvodID).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
-  public cancel(): void {
+  public cancel() {
     this.dialogRef.close();
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,

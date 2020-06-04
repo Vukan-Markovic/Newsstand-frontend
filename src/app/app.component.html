@@ -16,31 +16,28 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-nav-list *ngIf="isZaposleni()">
-                    <a mat-list-item routerLinkActive="active" [routerLink]="['/dobavljac']">Dobavljač</a>
+                    <a mat-list-item routerLinkActive="active" [routerLink]="['/dobavljac']">Dobavljači</a>
                 </mat-nav-list>
                 <mat-nav-list *ngIf="isMenadzer()">
-                    <a mat-list-item routerLinkActive="active" [routerLink]="['/izvestaj']">Izveštaj</a>
-                </mat-nav-list>
-                <mat-nav-list *ngIf="isZaposleni()">
-                    <a mat-list-item routerLinkActive="active" [routerLink]="['/menadzer']">Menadžer</a>
+                    <a mat-list-item routerLinkActive="active" [routerLink]="['/izvestaj']">Izveštaji</a>
                 </mat-nav-list>
                 <mat-nav-list *ngIf="isLoggedIn()">
-                    <a mat-list-item routerLinkActive="active" [routerLink]="['/porudzbina']">Porudžbina</a>
+                    <a mat-list-item routerLinkActive="active" [routerLink]="['/porudzbina']">Porudžbine</a>
                 </mat-nav-list>
                 <mat-nav-list *ngIf="isMenadzer()">
-                    <a mat-list-item routerLinkActive="active" [routerLink]="['/prodavac']">Prodavac</a>
+                    <a mat-list-item routerLinkActive="active" [routerLink]="['/prodavac']">Zaposleni</a>
                 </mat-nav-list>
                 <mat-nav-list *ngIf="isZaposleni()">
-                    <a mat-list-item routerLinkActive="active" [routerLink]="['/proizvod']">Proizvod</a>
+                    <a mat-list-item routerLinkActive="active" [routerLink]="['/proizvod']">Proizvodi</a>
                 </mat-nav-list>
                 <mat-nav-list *ngIf="isZaposleni()">
-                    <a mat-list-item routerLinkActive="active" [routerLink]="['/proizvodjac']">Proizvođač</a>
+                    <a mat-list-item routerLinkActive="active" [routerLink]="['/proizvodjac']">Proizvođači</a>
                 </mat-nav-list>
                 <mat-nav-list *ngIf="isZaposleni()">
-                    <a mat-list-item routerLinkActive="active" [routerLink]="['/racun']">Račun</a>
+                    <a mat-list-item routerLinkActive="active" [routerLink]="['/racun']">Računi</a>
                 </mat-nav-list>
                 <mat-nav-list *ngIf="isZaposleni()">
-                    <a mat-list-item routerLinkActive="active" [routerLink]="['/vrstaProizvoda']">Vrsta proizvoda</a>
+                    <a mat-list-item routerLinkActive="active" [routerLink]="['/vrstaProizvoda']">Vrste proizvoda</a>
                 </mat-nav-list>
             </mat-expansion-panel>
             <mat-expansion-panel>

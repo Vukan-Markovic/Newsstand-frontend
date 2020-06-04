@@ -19,34 +19,31 @@ export class ProizvodjacDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Proizvodjac,
     public proizvodjacService: ProizvodjacService) { }
 
-  public add(): void {
+  public add() {
     this.proizvodjacService.addProizvodjac(this.data).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
-  public update(): void {
+  public update() {
     this.proizvodjacService.updateProizvodjac(this.data.proizvodjacID, this.data).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
-  public delete(): void {
+  public delete() {
     this.proizvodjacService.deleteProizvodjac(this.data.proizvodjacID).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
-  public cancel(): void {
+  public cancel() {
     this.dialogRef.close();
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,

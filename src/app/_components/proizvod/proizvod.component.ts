@@ -15,6 +15,10 @@ import { Porudzbina } from 'src/app/_models/porudzbina';
 import { Racun } from 'src/app/_models/racun';
 import { StavkaRacunaService } from 'src/app/_services/stavkaRacuna.service';
 import { StavkaPorudzbineService } from 'src/app/_services/stavkaPorudzbine.service';
+import { StavkaPorudzbineDialogComponent } from '../dialogs/stavka-porudzbine-dialog/stavka-porudzbine-dialog.component';
+import { StavkaRacunaDialogComponent } from '../dialogs/stavka-racuna-dialog/stavka-racuna-dialog.component';
+import { StavkaPorudzbine } from 'src/app/_models/stavkaPorudzbine';
+import { StavkaRacuna } from 'src/app/_models/stavkaRacuna';
 
 @Component({
   selector: 'app-proizvod',
@@ -22,7 +26,7 @@ import { StavkaPorudzbineService } from 'src/app/_services/stavkaPorudzbine.serv
   styleUrls: ['./proizvod.component.css']
 })
 export class ProizvodComponent implements OnInit {
-  displayedColumns = ['nazivProizvoda', 'opisProizvoda', 'cena', 'tipPakovanja', 'velicinaPakovanja', 'barKod', 'masa', 'raspolozivaKolicina', 'proizvodjac', 'vrstaProizvoda', 'actions'];
+  displayedColumns = ['nazivProizvoda', 'opisProizvoda', 'cena', 'tipPakovanja', 'velicinaPakovanja', 'barKod', 'masa', 'raspolozivaKolicina', 'proizvodjac', 'vrstaProizvoda', 'stavkaRacuna', 'stavkaPorudzbine', 'actions'];
   dataSource: MatTableDataSource<Proizvod>;
   i: number = 0;
   j: number = 0;
@@ -38,102 +42,135 @@ export class ProizvodComponent implements OnInit {
     public stavkaRacunaService: StavkaRacunaService, public stavkaPorudzbineService: StavkaPorudzbineService) { }
 
   ngOnInit() {
-    this.loadData();
+    this.i = 0, this.j = 0;
+    this.proizvodi = [];
+    if (!this.selektovanaPorudzbina && !this.selektovanRacun) this.loadData();
   }
 
   ngOnChanges() {
+    this.i = 0, this.j = 0;
+    this.proizvodi = [];
     if (this.selektovanaPorudzbina) this.loadProizvodPorudzbina();
     else if (this.selektovanRacun) this.loadProizvodRacun();
   }
 
+  public loadData() {
+    this.proizvodService.getProizvodi().subscribe(data => {
+      if (!Array.isArray(data)) return;
+      this.k = data.length;
+
+      data.forEach(element => {
+        this.fillTable(element, null);
+      });
+    }, error => {
+      this.showError(error)
+    });
+  }
+
   loadProizvodPorudzbina() {
     this.stavkaPorudzbineService.getStavkePorudzbine(this.selektovanaPorudzbina.porudzbinaID).subscribe(data => {
-      data.forEach(element => {
-        this.proizvodService.getProizvod(element.proizvodID).subscribe(proizvod => {
+      if (!Array.isArray(data)) this.initializeTable();
+      else {
+        this.k = data.length;
 
+        data.forEach(element => {
+          this.proizvodService.getProizvod(element.proizvodID).subscribe(proizvod => {
+            this.fillTable(proizvod[0], element);
+          }, error => {
+            this.showError(error)
+          });
         });
-      });
+      }
+    }, error => {
+      this.showError(error)
     });
   }
 
   loadProizvodRacun() {
     this.stavkaRacunaService.getStavkeRacuna(this.selektovanRacun.racunID).subscribe(data => {
-      data.forEach(element => {
-        this.proizvodService.getProizvod(element.proizvodID).subscribe(proizvod => {
-
-        });
-      });
-    });
-  }
-
-  public loadData() {
-    this.i = 0, this.j = 0;
-    this.proizvodi = [];
-
-    this.proizvodService.getProizvodi()
-      .subscribe(data => {
-        if (!Array.isArray(data)) return;
+      if (!Array.isArray(data)) this.initializeTable();
+      else {
         this.k = data.length;
 
         data.forEach(element => {
-          var proizvod = new Proizvod();
-          proizvod.barKod = element.barKod;
-          proizvod.cena = element.cena;
-          proizvod.masa = element.masa;
-          proizvod.nazivProizvoda = element.nazivProizvoda;
-          proizvod.opisProizvoda = element.opisProizvoda;
-          proizvod.proizvodID = element.proizvodID;
-          proizvod.raspolozivaKolicina = element.raspolozivaKolicina;
-          proizvod.tipPakovanja = element.tipPakovanja;
-          proizvod.velicinaPakovanja = element.velicinaPakovanja;
-          this.proizvodi.push(proizvod);
-
-          this.vrstaProizvodaService.getVrstaProizvoda(element.vrstaProizvodaID).subscribe(vrstaProizvoda => {
-            this.proizvodi[this.j++].vrstaProizvoda = vrstaProizvoda[0];
-
-            this.proizvodjacService.getProizvodjac(element.proizvodjacID).subscribe(proizvodjac => {
-              this.proizvodi[this.i++].proizvodjac = proizvodjac[0];
-
-              if (this.k == this.i && this.k == this.j) {
-                this.dataSource = new MatTableDataSource(this.proizvodi);
-
-                this.dataSource.filterPredicate = (data, filter: string) => {
-                  const accumulator = (currentTerm: string, key: string) => {
-                    if (key === 'vrstaProizvoda')
-                      return currentTerm + data.vrstaProizvoda.nazivVrsteProizvoda;
-                    else if (key === 'proizvodjac')
-                      return currentTerm + data.proizvodjac.nazivProizvodjaca;
-                    return currentTerm + data[key];
-                  };
-
-                  const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
-                  const transformedFilter = filter.trim().toLowerCase();
-                  return dataStr.indexOf(transformedFilter) !== -1;
-                };
-
-                this.dataSource.sortingDataAccessor = (data, property) => {
-                  if (data[property]) {
-                    switch (property) {
-                      case 'vrstaProizvoda': return data.vrstaProizvoda.nazivVrsteProizvoda.toLocaleLowerCase();
-                      case 'proizvodjac': return data.proizvodjac.nazivProizvodjaca.toLocaleLowerCase();
-                      default: return typeof data[property] == "string" ? data[property].toLocaleLowerCase() : data[property];
-                    }
-                  }
-                };
-
-                this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
-              }
-            }, error => {
-              this.showError(error);
-            });
+          this.proizvodService.getProizvod(element.proizvodID).subscribe(proizvod => {
+            this.fillTable(proizvod[0], element);
           }, error => {
-            this.showError(error);
+            this.showError(error)
           });
         });
+      }
+    }, error => {
+      this.showError(error)
+    });
+  }
+
+  initializeTable() {
+    this.dataSource = new MatTableDataSource(this.proizvodi);
+
+    this.dataSource.filterPredicate = (data, filter: string) => {
+      const accumulator = (currentTerm: string, key: string) => {
+        if (key === 'vrstaProizvoda')
+          return currentTerm + data.vrstaProizvoda.nazivVrsteProizvoda;
+        else if (key === 'proizvodjac')
+          return currentTerm + data.proizvodjac.nazivProizvodjaca;
+        return currentTerm + data[key];
+      };
+
+      const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+      const transformedFilter = filter.trim().toLowerCase();
+      return dataStr.indexOf(transformedFilter) !== -1;
+    };
+
+    this.dataSource.sortingDataAccessor = (data, property) => {
+      if (data[property]) {
+        switch (property) {
+          case 'vrstaProizvoda': return data.vrstaProizvoda.nazivVrsteProizvoda.toLocaleLowerCase();
+          case 'proizvodjac': return data.proizvodjac.nazivProizvodjaca.toLocaleLowerCase();
+          default: return typeof data[property] == "string" ? data[property].toLocaleLowerCase() : data[property];
+        }
+      }
+    };
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  fillTable(element, stavka) {
+    var proizvod = new Proizvod();
+    proizvod.barKod = element.barKod;
+    proizvod.cena = element.cena;
+    proizvod.masa = element.masa;
+    proizvod.nazivProizvoda = element.nazivProizvoda;
+    proizvod.opisProizvoda = element.opisProizvoda;
+    proizvod.proizvodID = element.proizvodID;
+    proizvod.raspolozivaKolicina = element.raspolozivaKolicina;
+    proizvod.tipPakovanja = element.tipPakovanja;
+    proizvod.velicinaPakovanja = element.velicinaPakovanja;
+
+    if (stavka != null) {
+      if (stavka['porudzbinaID']) proizvod.stavkaPorudzbine = stavka;
+      else if (stavka['racunID']) proizvod.stavkaRacuna = stavka;
+      console.log(proizvod.stavkaRacuna);
+    }
+
+    this.proizvodi.push(proizvod);
+
+    this.vrstaProizvodaService.getVrstaProizvoda(element.vrstaProizvodaID).subscribe(vrstaProizvoda => {
+      this.proizvodi[this.j++].vrstaProizvoda = vrstaProizvoda[0];
+
+      this.proizvodjacService.getProizvodjac(element.proizvodjacID).subscribe(proizvodjac => {
+        this.proizvodi[this.i++].proizvodjac = proizvodjac[0];
+
+        if (this.k == this.i && this.k == this.j) {
+          this.initializeTable();
+        }
       }, error => {
-        this.showError(error)
+        this.showError(error);
       });
+    }, error => {
+      this.showError(error);
+    });
   }
 
   showError(error) {
@@ -163,10 +200,37 @@ export class ProizvodComponent implements OnInit {
     });
 
     dialogRef.componentInstance.flag = flag;
-    // if (flag == 1) dialogRef.componentInstance.data.tim = this.selektovanTim;
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == 1) this.loadData();
+    });
+  }
+
+  public openStavkaPorudzbineDialog(flag: number, proizvodID?: number) {
+    const dialogRef = this.dialog.open(StavkaPorudzbineDialogComponent, {
+      data: {
+        porudzbinaID: this.selektovanaPorudzbina.porudzbinaID, proizvodID: proizvodID
+      }
+    });
+
+    dialogRef.componentInstance.flag = flag;
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 1) this.loadProizvodPorudzbina();
+    });
+  }
+
+  public openStavkaRacunaDialog(flag: number, proizvodID?: number) {
+    const dialogRef = this.dialog.open(StavkaRacunaDialogComponent, {
+      data: {
+        racunID: this.selektovanRacun.racunID, proizvodID: proizvodID
+      }
+    });
+
+    dialogRef.componentInstance.flag = flag;
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 1) this.loadProizvodRacun();
     });
   }
 

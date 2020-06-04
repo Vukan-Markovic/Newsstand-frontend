@@ -17,7 +17,7 @@ export class DobavljacDialogComponent implements OnInit {
   constructor(public snackBar: MatSnackBar, public dialogRef: MatDialogRef<DobavljacDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Dobavljac, public dobavljacService: DobavljacService) { }
 
-  public update(): void {
+  public update() {
     this.dobavljacService.updateDobavljac(this.data.dobavljacID, this.data).subscribe(data => {
       this.showSuccess(data);
     },
@@ -26,7 +26,7 @@ export class DobavljacDialogComponent implements OnInit {
       });
   }
 
-  public delete(): void {
+  public delete() {
     this.dobavljacService.deleteDobavljac(this.data.dobavljacID).subscribe(data => {
       this.showSuccess(data);
     },
@@ -35,7 +35,7 @@ export class DobavljacDialogComponent implements OnInit {
       });
   }
 
-  public cancel(): void {
+  public cancel() {
     this.dialogRef.close();
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,

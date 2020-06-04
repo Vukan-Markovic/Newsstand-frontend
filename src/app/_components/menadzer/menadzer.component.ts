@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProdavacDialogComponent } from '../dialogs/prodavac-dialog/prodavac-dialog.component';
 import { MenadzerService } from 'src/app/_services/menadzer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProdavacService } from 'src/app/_services/prodavac.service';
 
 @Component({
   selector: 'app-menadzer',
@@ -16,30 +17,74 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class MenadzerComponent implements OnInit {
   displayedColumns = ['ime', 'prezime', 'pol', 'datumRodjenja', 'adresaStanovanja', 'telefon', 'JMBG', 'datumZaposlenja', 'strucnaSprema', 'adresaKancelarije', 'brojKancelarije'];
   dataSource: MatTableDataSource<Menadzer>;
+  i: number = 0;
+  k: number = 0;
+  menadzeri: Menadzer[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public menadzerService: MenadzerService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
+  constructor(public menadzerService: MenadzerService, public dialog: MatDialog, public snackBar: MatSnackBar,
+    public prodavacService: ProdavacService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loadData();
+  }
 
   public loadData() {
+    this.i = 0;
+    this.menadzeri = [];
+
     this.menadzerService.getMenadzeri().subscribe(data => {
       if (!Array.isArray(data)) return;
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.sortingDataAccessor = (data, property) => {
-        if (data[property]) return data[property].toLocaleLowerCase();
-      };
 
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    },
-      error => {
-        this.snackBar.open(error, "U redu", {
-          duration: 2000,
-          panelClass: ['red-snackbar']
-        });
+      this.k = data.length;
+
+      data.forEach(element => {
+        var menadzer = new Menadzer();
+        menadzer.adresaKancelarije = element.adresaKancelarije;
+        menadzer.brojKancelarije = element.brojKancelarije;
+
+        this.menadzeri.push(menadzer);
+
+        this.prodavacService.getProdavac(element.menadzerID).subscribe(prodavac => {
+          this.menadzeri[this.i++].prodavac = prodavac[0];
+
+          if (this.k == this.i) {
+            console.log(this.menadzeri);
+            this.dataSource = new MatTableDataSource(this.menadzeri);
+
+            this.dataSource.filterPredicate = (data, filter: string) => {
+              const accumulator = (currentTerm, key: string) => {
+                return key === 'prodavac' ? currentTerm + data.prodavac.ime : currentTerm + data[key];
+              };
+
+              const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+              const transformedFilter = filter.trim().toLowerCase();
+              return dataStr.indexOf(transformedFilter) !== -1;
+            };
+
+            this.dataSource.sortingDataAccessor = (data, property) => {
+              if (data[property]) {
+                switch (property) {
+                  case 'prodavac': return data.prodavac.ime.toLocaleLowerCase();
+                  default: return typeof data[property] == "string" ? data[property].toLocaleLowerCase() : data[property];
+                }
+              }
+            };
+
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          }
+        }, error => this.showError(error));
       });
+    }, error => this.showError(error));
+  }
+
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
+    });
   }
 
   public openDialog(flag: number, prodavacID: number,

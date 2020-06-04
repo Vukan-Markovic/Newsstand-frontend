@@ -67,8 +67,8 @@ import { EmailInputComponent } from './_components/email-input/email-input.compo
 import { ZaposleniGuard } from './_helpers/zaposleni.guard';
 import { AuthGuard } from './_helpers/auth.guard';
 import { MenadzerGuard } from './_helpers/menadzer.guard';
-import { StavkaRacunaComponent } from './_components/dialogs/stavka-racuna/stavka-racuna.component';
-import { StavkaPorudzbineComponent } from './_components/dialogs/stavka-porudzbine/stavka-porudzbine.component';
+import { StavkaRacunaDialogComponent } from './_components/dialogs/stavka-racuna-dialog/stavka-racuna-dialog.component';
+import { StavkaPorudzbineDialogComponent } from './_components/dialogs/stavka-porudzbine-dialog/stavka-porudzbine-dialog.component';
 
 @NgModule({
     imports: [
@@ -125,8 +125,8 @@ import { StavkaPorudzbineComponent } from './_components/dialogs/stavka-porudzbi
         MenadzerComponent,
         ResetPasswordComponent,
         EmailInputComponent,
-        StavkaRacunaComponent,
-        StavkaPorudzbineComponent
+        StavkaRacunaDialogComponent,
+        StavkaPorudzbineDialogComponent
     ],
     entryComponents: [
         DobavljacDialogComponent,

@@ -10,6 +10,7 @@ import { DobavljacService } from 'src/app/_services/dobavljac.service';
 import { MenadzerService } from 'src/app/_services/menadzer.service';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
 import { Porudzbina } from 'src/app/_models/porudzbina';
+import { ProdavacDO } from 'src/app/_models/prodavacDO';
 
 @Component({
   selector: 'app-porudzbina-dialog',
@@ -21,7 +22,10 @@ export class PorudzbinaDialogComponent implements OnInit {
   porudzbina: PorudzbinaDO = new PorudzbinaDO();
   dobavljaci: Dobavljac[];
   menadzeri: Menadzer[];
-  prodavci: Prodavac[];
+  prodavci: ProdavacDO[];
+  i: number = 0;
+  k: number = 0;
+  loaded=false;
 
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<PorudzbinaDialogComponent>,
@@ -32,20 +36,35 @@ export class PorudzbinaDialogComponent implements OnInit {
     public prodavacService: ProdavacService) { }
 
   ngOnInit() {
+    this.loaded=false;
+    
     this.dobavljacService.getDobavljaci().subscribe(dobavljaci => {
+      if (!Array.isArray(dobavljaci)) this.exit();
       this.dobavljaci = dobavljaci;
 
-      this.menadzerService.getMenadzeri().subscribe(menadzeri => {
-        this.menadzeri = menadzeri;
+      this.prodavacService.getProdavci().subscribe(prodavci => {
+        if (!Array.isArray(prodavci)) this.exit();
+        this.prodavci = prodavci;
 
-        this.prodavacService.getProdavci().subscribe(prodavci => {
-          this.prodavci = prodavci;
-          if (!Array.isArray(this.menadzeri) || !Array.isArray(this.dobavljaci) || !Array.isArray(this.prodavci)) {
-            this.snackBar.open("Da biste dodali novu porudžbinu prethodno mora postajati bar jedan menadžer, dobavljač i prodavac!", "U redu", {
-              duration: 2000,
+        this.menadzerService.getMenadzeri().subscribe(data => {
+          if (!Array.isArray(data)) this.exit();
+          this.k = data.length;
+          this.menadzeri=[];
+    
+          data.forEach(element => {
+            var menadzer = new Menadzer();
+            menadzer.adresaKancelarije = element.adresaKancelarije;
+            menadzer.brojKancelarije = element.brojKancelarije;
+            this.menadzeri.push(menadzer);
+
+            this.prodavacService.getProdavac(element.menadzerID).subscribe(prodavac => {
+              this.menadzeri[this.i++].prodavac = prodavac[0];
+
+              if (this.k == this.i) {
+                  this.loaded=true;
+              }
             });
-            this.dialogRef.close();
-          }
+          });
         });
       });
     });
@@ -78,40 +97,44 @@ export class PorudzbinaDialogComponent implements OnInit {
     this.porudzbina.prodavacID = prodavac.prodavacID;
   }
 
-  public add(): void {
+  public add() {
     this.setPorudzbina();
     this.porudzbinaService.addPorudzbina(this.porudzbina).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
-  public update(): void {
+  public update() {
     this.setPorudzbina();
     this.porudzbinaService.updatePorudzbina(this.data.porudzbinaID, this.porudzbina).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
-  public delete(): void {
+  public delete() {
     this.porudzbinaService.deletePorudzbina(this.data.porudzbinaID).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
-  public cancel(): void {
+  public cancel() {
     this.dialogRef.close();
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,
     });
+  }
+
+  exit() {
+    this.snackBar.open("Da biste dodali novu porudžbinu prethodno mora postajati bar jedan menadžer, dobavljač i prodavac!", "U redu", {
+      duration: 2000,
+    });
+    this.dialogRef.close();
   }
 
   setPorudzbina() {

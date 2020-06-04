@@ -62,9 +62,10 @@ export class PorudzbinaComponent implements OnInit {
           this.dobavljacService.getDobavljac(element.dobavljacID).subscribe(dobavljac => {
             this.porudzbine[this.j++].dobavljac = dobavljac[0];
 
-            this.menadzerService.getMenadzer(element.menadzerID).subscribe(menadzer => {
-              this.porudzbine[this.l++].menadzer = menadzer[0];
-
+            this.prodavacService.getProdavac(element.menadzerID).subscribe(menadzer => {
+              this.porudzbine[this.l].menadzer = new Menadzer();
+              this.porudzbine[this.l].menadzer.prodavac = menadzer[0];
+              this.l++;
               if (this.k == this.i && this.k == this.j && this.k == this.l) {
                 this.dataSource = new MatTableDataSource(this.porudzbine);
 

@@ -1,5 +1,5 @@
 <mat-toolbar class="toolbarNew" color="primary">
-  <span class="title-center">Izveštaj</span>
+  <span class="title-center">Izveštaji</span>
 </mat-toolbar>
 <div class="height">
   <div class="container mat-elevation-z8">
@@ -49,7 +49,7 @@
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
           <button mat-icon-button color="primary" matTooltip="Izbrišite izveštaj"
-            (click)="openDialog(3, row.izvestajID, row.datumOd, row.datumDo, row.menadzer)">
+            (click)="openDialog(3, row.izvestajID, row.datumOd, row.datumDo, row.menadzer.menadzerID)">
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </mat-cell>

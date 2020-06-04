@@ -1,5 +1,5 @@
 <mat-toolbar class="toolbarNew" color="primary">
-  <span class="title-center">Dobavljač</span>
+  <span class="title-center">Dobavljači</span>
 </mat-toolbar>
 <div class="height">
   <div class="container mat-elevation-z8">
@@ -21,12 +21,12 @@
       </ng-container>
 
       <ng-container matColumnDef="kontaktDobavljaca">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Kontakt dobavljača</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Kontakt</mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.kontaktDobavljaca}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="adresaDobavljaca">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Adresa dobavljača</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Adresa</mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.adresaDobavljaca}}</mat-cell>
       </ng-container>
 
@@ -58,19 +58,6 @@
       <ng-container matColumnDef="brojZiroRacuna">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Broj žiro računa</mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.brojZiroRacuna}}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="primary" matTooltip="Izmenite dobavljača"
-            (click)="openDialog(2, row.dobavljacID, row.skraceniNaziv, row.punNaziv, row.kontaktDobavljaca, row.adresaDobavljaca, row.grad, row.drzava, row.postanskiBroj, row.PIB, row.kontaktOsoba, row.brojZiroRacuna)">
-            <mat-icon aria-label="Edit">edit</mat-icon>
-          </button>
-          <button mat-icon-button color="primary" matTooltip="Izbrišite dobavljača"
-            (click)="openDialog(3, row.dobavljacID, row.skraceniNaziv, row.punNaziv, row.kontaktDobavljaca, row.adresaDobavljaca, row.grad, row.drzava, row.postanskiBroj, row.PIB, row.kontaktOsoba, row.brojZiroRacuna)">
-            <mat-icon aria-label="Delete">delete</mat-icon>
-          </button>
-        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -16,11 +16,11 @@ export class StavkaPorudzbineService {
         return this.httpClient.post(this.API_URL, stavkaPorudzbine);
     }
 
-    public updateStavkaPorudzbine(stavkaPorudzbine: StavkaPorudzbine) {
-        return this.httpClient.put(this.API_URL, stavkaPorudzbine);
+    public updateStavkaPorudzbine(porudzbinaID: number, proizvodID: number, stavkaPorudzbine: StavkaPorudzbine) {
+        return this.httpClient.put(this.API_URL + porudzbinaID + '/' + proizvodID, stavkaPorudzbine);
     }
 
-    public deleteStavkaPorudzbine(id: number) {
-        return this.httpClient.delete(this.API_URL + id);
+    public deleteStavkaPorudzbine(porudzbinaID: number, proizvodID: number) {
+        return this.httpClient.delete(this.API_URL + porudzbinaID + '/' + proizvodID);
     }
 }

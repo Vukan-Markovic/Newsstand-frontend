@@ -21,9 +21,7 @@ export class DobavljacComponent implements OnInit {
 
   constructor(public dobavljacService: DobavljacService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
 
-  ngOnInit() { }
-
-  public loadData() {
+  ngOnInit() {
     this.dobavljacService.getDobavljaci().subscribe(data => {
       if (!Array.isArray(data)) return;
       this.dataSource = new MatTableDataSource(data);
@@ -40,32 +38,6 @@ export class DobavljacComponent implements OnInit {
           panelClass: ['red-snackbar']
         });
       });
-  }
-
-  public openDialog(flag: number, dobavljacID?: number,
-    skraceniNaziv?: string,
-    punNaziv?: string,
-    kontaktDobavljaca?: string,
-    adresaDobavljaca?: string,
-    grad?: string,
-    drzava?: string,
-    postanskiBroj?: string,
-    PIB?: number,
-    kontaktOsoba?: number,
-    brojZiroRacuna?: string) {
-    const dialogRef = this.dialog.open(DobavljacDialogComponent, {
-      data: {
-        i: dobavljacID, dobavljacID: dobavljacID, skraceniNaziv: skraceniNaziv, punNaziv: punNaziv, kontaktDobavljaca: kontaktDobavljaca,
-        adresaDobavljaca: adresaDobavljaca, grad: grad, drzava: drzava, postanskiBroj: postanskiBroj, PIB: PIB,
-        kontaktOsoba: kontaktOsoba, brojZiroRacuna: brojZiroRacuna
-      }
-    });
-    dialogRef.componentInstance.flag = flag;
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == 1)
-        this.loadData();
-    });
   }
 
   applyFilter(filterValue: string) {

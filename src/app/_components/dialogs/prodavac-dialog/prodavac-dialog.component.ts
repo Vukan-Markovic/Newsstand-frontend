@@ -14,30 +14,26 @@ export class ProdavacDialogComponent implements OnInit {
 
   ngOnInit() { }
 
-  constructor(public snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<ProdavacDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Prodavac,
-    public prodavacService: ProdavacService) { }
+  constructor(public snackBar: MatSnackBar, public dialogRef: MatDialogRef<ProdavacDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Prodavac, public prodavacService: ProdavacService) { }
 
-  public update(): void {
+  public update() {
     this.prodavacService.updateProdavac(this.data.prodavacID, this.data).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
-  public delete(): void {
+  public delete() {
     this.prodavacService.deleteProdavac(this.data.prodavacID).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
-  public cancel(): void {
+  public cancel() {
     this.dialogRef.close();
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,

@@ -1,5 +1,7 @@
 import { Proizvodjac } from './proizvodjac';
 import { VrstaProizvoda } from './vrstaProizvoda';
+import { StavkaRacuna } from './stavkaRacuna';
+import { StavkaPorudzbine } from './stavkaPorudzbine';
 
 export class Proizvod {
     proizvodID: number;
@@ -13,4 +15,6 @@ export class Proizvod {
     raspolozivaKolicina: number;
     proizvodjac: Proizvodjac;
     vrstaProizvoda: VrstaProizvoda;
+    stavkaRacuna: StavkaRacuna; 
+    stavkaPorudzbine: StavkaPorudzbine;
 }

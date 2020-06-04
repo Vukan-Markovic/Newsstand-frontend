@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Prodavac } from '../_models/prodavac';
+import { ProdavacDO } from '../_models/prodavacDO';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
@@ -9,18 +9,18 @@ export class ProdavacService {
     constructor(private httpClient: HttpClient) { }
 
     public getProdavci() {
-        return this.httpClient.get<Prodavac[]>(this.API_URL);
+        return this.httpClient.get<ProdavacDO[]>(this.API_URL);
     }
 
     public getProdavac(id: number) {
-        return this.httpClient.get<Prodavac>(this.API_URL + id);
+        return this.httpClient.get<ProdavacDO>(this.API_URL + id);
     }
 
-    public addProdavac(prodavac: Prodavac) {
+    public addProdavac(prodavac: ProdavacDO) {
         return this.httpClient.post(this.API_URL, prodavac);
     }
 
-    public updateProdavac(id: number, prodavac: Prodavac) {
+    public updateProdavac(id: number, prodavac: ProdavacDO) {
         return this.httpClient.put(this.API_URL + id, prodavac);
     }
 

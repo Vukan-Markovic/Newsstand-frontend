@@ -1,5 +1,5 @@
 <mat-toolbar class="toolbarNew" color="primary">
-  <span class="title-center">Prodavac</span>
+  <span class="title-center">Zaposleni</span>
 </mat-toolbar>
 <div class="height">
   <div class="container mat-elevation-z8">
@@ -47,7 +47,7 @@
 
       <ng-container matColumnDef="datumZaposlenja">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Datum zaposlenja</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.datumZaposlenja}}</mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.datumZaposlenja | date : "dd.MM.yyyy."}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="strucnaSprema">
@@ -55,17 +55,9 @@
         <mat-cell *matCellDef="let row"> {{row.strucnaSprema}}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="primary" matTooltip="Izmenite prodavca"
-            (click)="openDialog(2, row.prodavacID, row.ime, row.prezime, row.pol, row.datumRodjenja, row.adresaStanovanja, row.telefon, row.JMBG, row.datumZaposlenja, row.strucnaSprema)">
-            <mat-icon aria-label="Edit">edit</mat-icon>
-          </button>
-          <button mat-icon-button color="primary" matTooltip="Izbrišite prodavca"
-            (click)="openDialog(2, row.prodavacID, row.ime, row.prezime, row.pol, row.datumRodjenja, row.adresaStanovanja, row.telefon, row.JMBG, row.datumZaposlenja, row.strucnaSprema)">
-            <mat-icon aria-label="Delete">delete</mat-icon>
-          </button>
-        </mat-cell>
+      <ng-container matColumnDef="menadzer">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Adresa i broj kancelarije</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.menadzer.adresaKancelarije}} {{row.menadzer.brojKancelarije}}</mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

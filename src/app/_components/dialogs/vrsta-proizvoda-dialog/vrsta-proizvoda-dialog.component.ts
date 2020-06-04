@@ -19,7 +19,7 @@ export class VrstaProizvodaDialogComponent implements OnInit {
 
   ngOnInit() { }
 
-  public add(): void {
+  public add() {
     this.vrstaProizvodaService.addVrstaProizvoda(this.data).subscribe(data => {
       this.showSuccess(data);
     },
@@ -28,7 +28,7 @@ export class VrstaProizvodaDialogComponent implements OnInit {
       });
   }
 
-  public update(): void {
+  public update() {
     this.vrstaProizvodaService.updateVrstaProizvoda(this.data.vrstaProizvodaID, this.data).subscribe(data => {
       this.showSuccess(data);
     },
@@ -37,7 +37,7 @@ export class VrstaProizvodaDialogComponent implements OnInit {
       });
   }
 
-  public delete(): void {
+  public delete() {
     this.vrstaProizvodaService.deleteVrstaProizvoda(this.data.vrstaProizvodaID).subscribe(data => {
       this.showSuccess(data);
     },
@@ -46,7 +46,7 @@ export class VrstaProizvodaDialogComponent implements OnInit {
       });
   }
 
-  public cancel(): void {
+  public cancel() {
     this.dialogRef.close();
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,

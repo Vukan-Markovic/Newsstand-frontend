@@ -1,5 +1,5 @@
 <mat-toolbar class="toolbarNew" color="primary">
-  <span class="title-center">Proizvod</span>
+  <span class="title-center">Proizvodi</span>
 </mat-toolbar>
 <div class="height">
   <div class="container mat-elevation-z8">
@@ -11,12 +11,12 @@
     <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
 
       <ng-container matColumnDef="nazivProizvoda">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv proizvoda</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv</mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.nazivProizvoda}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="opisProizvoda">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Opis proizvoda</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Opis</mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.opisProizvoda}}</mat-cell>
       </ng-container>
 
@@ -68,24 +68,76 @@
         </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>
-          <button mat-icon-button color="primary" matTooltip="Dodajte novi proizvod"
-            matTooltipClass="example-tooltip-blue" (click)="openDialog(1)">
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-header-cell>
+      <ng-container matColumnDef="stavkaPorudzbine">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Količina i cena</mat-header-cell>
 
-        <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="primary" matTooltip="Izmenite proizvod"
-            (click)="openDialog(2, row.proizvodID, row.nazivProizvoda, row.opisProizvoda, row.cena, row.tipPakovanja, row.velicinaPakovanja, row.barKod, row.masa, row.raspolozivaKolicina, row.proizvodjac, row.vrstaProizvoda)">
-            <mat-icon aria-label="Edit">edit</mat-icon>
-          </button>
-          <button mat-icon-button color="primary" matTooltip="Izbrišite proizvod"
-            (click)="openDialog(3, row.proizvodID, row.nazivProizvoda, row.opisProizvoda, row.cena, row.tipPakovanja, row.velicinaPakovanja, row.barKod, row.masa, row.raspolozivaKolicina, row.proizvodjac, row.vrstaProizvoda)">
-            <mat-icon aria-label="Delete">delete</mat-icon>
-          </button>
+        <mat-cell *matCellDef="let row">
+          <div *ngIf="row.stavkaPorudzbine">{{row.stavkaPorudzbine.kolicina}} {{row.stavkaPorudzbine.nabavnaCena}}
+          </div>
         </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="stavkaRacuna">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Količina i cena</mat-header-cell>
+
+        <mat-cell *matCellDef="let row">
+          <div *ngIf="row.stavkaRacuna">{{row.stavkaRacuna.kolicinaProizvoda}} {{row.stavkaRacuna.prodajnaCena}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <div *ngIf="!selektovanaPorudzbina && !selektovanRacun">
+          <mat-header-cell *matHeaderCellDef>
+            <button mat-icon-button color="primary" matTooltip="Dodajte novi proizvod"
+              matTooltipClass="example-tooltip-blue" (click)="openDialog(1)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-header-cell>
+
+          <mat-cell *matCellDef="let row; let i=index;">
+            <button mat-icon-button color="primary" matTooltip="Izmenite proizvod"
+              (click)="openDialog(2, row.proizvodID, row.nazivProizvoda, row.opisProizvoda, row.cena, row.tipPakovanja, row.velicinaPakovanja, row.barKod, row.masa, row.raspolozivaKolicina, row.proizvodjac, row.vrstaProizvoda)">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" matTooltip="Izbrišite proizvod"
+              (click)="openDialog(3, row.proizvodID, row.nazivProizvoda, row.opisProizvoda, row.cena, row.tipPakovanja, row.velicinaPakovanja, row.barKod, row.masa, row.raspolozivaKolicina, row.proizvodjac, row.vrstaProizvoda)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </div>
+
+        <div *ngIf="selektovanaPorudzbina">
+          <mat-header-cell *matHeaderCellDef>
+            <button mat-icon-button color="primary" matTooltip="Dodajte novu stavku porudžbine"
+              matTooltipClass="example-tooltip-blue" (click)="openStavkaPorudzbineDialog(1)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-header-cell>
+
+          <mat-cell *matCellDef="let row; let i=index;">
+            <button mat-icon-button color="primary" matTooltip="Izbrišite stavku porudzbine"
+              (click)="openStavkaPorudzbineDialog(3, row.proizvodID)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </div>
+
+        <div *ngIf="selektovanRacun">
+          <mat-header-cell *matHeaderCellDef>
+            <button mat-icon-button color="primary" matTooltip="Dodajte novu stavku računa"
+              matTooltipClass="example-tooltip-blue" (click)="openStavkaRacunaDialog(1)">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-header-cell>
+
+          <mat-cell *matCellDef="let row; let i=index;">
+            <button mat-icon-button color="primary" matTooltip="Izbrišite stavku računa"
+              (click)="openStavkaRacunaDialog(3, row.proizvodID)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </div>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

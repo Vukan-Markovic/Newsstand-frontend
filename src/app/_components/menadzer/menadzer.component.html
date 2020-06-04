@@ -12,47 +12,47 @@
 
       <ng-container matColumnDef="ime">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Ime</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.ime}}</mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.prodavac.ime}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="prezime">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Prezime</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.prezime}}</mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.prodavac.prezime}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="pol">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Pol</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.pol}}</mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.prodavac.pol}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="datumRodjenja">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Datum rođenja</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.datumRodjenja | date : "dd.MM.yyyy."}}</mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.prodavac.datumRodjenja | date : "dd.MM.yyyy."}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="adresaStanovanja">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Adresa stanovanja</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.adresaStanovanja}}</mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.prodavac.adresaStanovanja}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="telefon">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Telefon</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.telefon}}</mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.prodavac.telefon}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="JMBG">
         <mat-header-cell *matHeaderCellDef mat-sort-header>JMBG</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.JMBG}}</mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.prodavac.JMBG}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="datumZaposlenja">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Datum zaposlenja</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.datumZaposlenja}}</mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.prodavac.datumZaposlenja}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="strucnaSprema">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Stručna sprema</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.strucnaSprema}}</mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.prodavac.strucnaSprema}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="adresaKancelarije">

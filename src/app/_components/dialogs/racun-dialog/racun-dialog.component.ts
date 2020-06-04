@@ -6,6 +6,7 @@ import { RacunService } from 'src/app/_services/racun.service';
 import { Prodavac } from 'src/app/_models/prodavac';
 import { RacunDO } from 'src/app/_models/racunDO';
 import { Racun } from 'src/app/_models/racun';
+import { ProdavacDO } from 'src/app/_models/prodavacDO';
 
 @Component({
   selector: 'app-racun-dialog',
@@ -15,7 +16,7 @@ import { Racun } from 'src/app/_models/racun';
 export class RacunDialogComponent implements OnInit {
   public flag: number;
   racun: RacunDO = new RacunDO();
-  prodavci: Prodavac[];
+  prodavci: ProdavacDO[];
 
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<RacunDialogComponent>,
@@ -49,36 +50,33 @@ export class RacunDialogComponent implements OnInit {
     this.racun.prodavacID = prodavac.prodavacID;
   }
 
-  public add(): void {
+  public add() {
     this.setRacun();
     this.racunService.addRacun(this.racun).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
+    }, error => {
         this.showError(error);
       });
   }
 
-  public update(): void {
+  public update() {
     this.setRacun();
     this.racunService.updateRacun(this.data.racunID, this.racun).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
-  public delete(): void {
+  public delete() {
     this.racunService.deleteRacun(this.data.racunID).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
-  public cancel(): void {
+  public cancel() {
     this.dialogRef.close();
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,

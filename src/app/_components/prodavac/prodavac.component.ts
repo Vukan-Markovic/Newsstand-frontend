@@ -7,6 +7,7 @@ import { Prodavac } from 'src/app/_models/prodavac';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
 import { ProdavacDialogComponent } from '../dialogs/prodavac-dialog/prodavac-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MenadzerService } from 'src/app/_services/menadzer.service';
 
 @Component({
   selector: 'app-prodavac',
@@ -14,59 +15,81 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./prodavac.component.css']
 })
 export class ProdavacComponent implements OnInit {
-  displayedColumns = ['ime', 'prezime', 'pol', 'datumRodjenja', 'adresaStanovanja', 'telefon', 'JMBG', 'datumZaposlenja', 'strucnaSprema', 'actions'];
+  displayedColumns = ['ime', 'prezime', 'pol', 'datumRodjenja', 'adresaStanovanja', 'telefon', 'JMBG', 'datumZaposlenja', 'strucnaSprema', 'menadzer'];
   dataSource: MatTableDataSource<Prodavac>;
+  i: number = 0;
+  k: number = 0;
+  prodavci: Prodavac[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public prodavacService: ProdavacService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
+  constructor(public prodavacService: ProdavacService, public dialog: MatDialog, public snackBar: MatSnackBar,
+    public menadzerService: MenadzerService) { }
 
   ngOnInit() {
     this.loadData();
   }
 
   public loadData() {
+    this.i = 0;
+    this.prodavci = [];
+
     this.prodavacService.getProdavci().subscribe(data => {
       if (!Array.isArray(data)) return;
-      this.dataSource = new MatTableDataSource(data);
+      this.k = data.length;
 
-      this.dataSource.sortingDataAccessor = (data, property) => {
-        if (data[property]) return data[property].toLocaleLowerCase();
-      };
-      
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }, error => {
-      this.snackBar.open(error, "U redu", {
-        duration: 2000,
-        panelClass: ['red-snackbar']
+      data.forEach(element => {
+        var prodavac = new Prodavac();
+        prodavac.JMBG = element.JMBG;
+        prodavac.adresaStanovanja = element.adresaStanovanja;
+        prodavac.datumRodjenja = element.datumRodjenja;
+        prodavac.datumZaposlenja = element.datumZaposlenja;
+        prodavac.ime = element.ime;
+        prodavac.pol = element.pol;
+        prodavac.prezime = element.prezime;
+        prodavac.prodavacID = element.prodavacID;
+        prodavac.strucnaSprema = element.strucnaSprema;
+        prodavac.telefon = element.telefon;
+        this.prodavci.push(prodavac);
+
+        this.menadzerService.getMenadzer(element.prodavacID).subscribe(menadzer => {
+          this.prodavci[this.i++].menadzer = menadzer[0];
+
+          if (this.k == this.i) {
+
+            this.dataSource = new MatTableDataSource(this.prodavci);
+
+            this.dataSource.filterPredicate = (data, filter: string) => {
+              const accumulator = (currentTerm, key: string) => {
+                return key === 'menadzer' ? currentTerm + data.menadzer.adresaKancelarije : currentTerm + data[key];
+              };
+
+              const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+              const transformedFilter = filter.trim().toLowerCase();
+              return dataStr.indexOf(transformedFilter) !== -1;
+            };
+
+            this.dataSource.sortingDataAccessor = (data, property) => {
+              if (data[property]) {
+                switch (property) {
+                  case 'menadzer': return data.menadzer.adresaKancelarije.toLocaleLowerCase();
+                  default: return typeof data[property] == "string" ? data[property].toLocaleLowerCase() : data[property];
+                }
+              }
+            };
+
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          }
+        }, error => this.showError(error));
       });
-    });
+    }, error => this.showError(error));
   }
 
-  public openDialog(flag: number, prodavacID: number,
-    ime: string,
-    prezime: string,
-    pol: string,
-    datumRodjenja: string,
-    adresaStanovanja: string,
-    telefon: string,
-    JMBG: string,
-    datumZaposlenja: string,
-    strucnaSprema: string) {
-    const dialogRef = this.dialog.open(ProdavacDialogComponent, {
-      data: {
-        i: prodavacID, prodavacID: prodavacID, ime: ime, prezime: prezime, pol: pol,
-        datumRodjenja: datumRodjenja, adresaStanovanja: adresaStanovanja, telefon: telefon, JMBG: JMBG
-        , datumZaposlenja: datumZaposlenja, strucnaSprema: strucnaSprema
-      }
-    });
-
-    dialogRef.componentInstance.flag = flag;
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == 1)
-        this.loadData();
+  showError(error) {
+    this.snackBar.open(error, "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
     });
   }
 

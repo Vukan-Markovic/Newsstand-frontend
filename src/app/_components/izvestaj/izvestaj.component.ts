@@ -98,11 +98,11 @@ export class IzvestajComponent implements OnInit {
   public openDialog(flag: number, izvestajID?: number,
     datumOd?: Date,
     datumDo?: Date,
-    menadzer?: Menadzer) {
+    menadzerID?: number) {
     const dialogRef = this.dialog.open(IzvestajDialogComponent, {
       data: {
         i: izvestajID, izvestajID: izvestajID, datumOd: datumOd,
-        datumDo: datumDo, menadzer: menadzer
+        datumDo: datumDo, menadzerID: menadzerID
       }
     });
 
