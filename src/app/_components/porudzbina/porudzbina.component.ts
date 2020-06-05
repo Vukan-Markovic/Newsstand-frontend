@@ -66,6 +66,7 @@ export class PorudzbinaComponent implements OnInit {
               this.porudzbine[this.l].menadzer = new Menadzer();
               this.porudzbine[this.l].menadzer.prodavac = menadzer[0];
               this.l++;
+
               if (this.k == this.i && this.k == this.j && this.k == this.l) {
                 this.dataSource = new MatTableDataSource(this.porudzbine);
 

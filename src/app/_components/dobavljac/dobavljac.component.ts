@@ -5,7 +5,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Dobavljac } from 'src/app/_models/dobavljac';
 import { DobavljacService } from 'src/app/_services/dobavljac.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DobavljacDialogComponent } from '../dialogs/dobavljac-dialog/dobavljac-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -31,13 +30,12 @@ export class DobavljacComponent implements OnInit {
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    },
-      error => {
-        this.snackBar.open(error, "U redu", {
-          duration: 2000,
-          panelClass: ['red-snackbar']
-        });
+    }, error => {
+      this.snackBar.open(error, "U redu", {
+        duration: 2000,
+        panelClass: ['red-snackbar']
       });
+    });
   }
 
   applyFilter(filterValue: string) {

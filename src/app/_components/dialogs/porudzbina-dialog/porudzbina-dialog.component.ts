@@ -25,7 +25,7 @@ export class PorudzbinaDialogComponent implements OnInit {
   prodavci: ProdavacDO[];
   i: number = 0;
   k: number = 0;
-  loaded=false;
+  loaded = false;
 
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<PorudzbinaDialogComponent>,
@@ -36,8 +36,8 @@ export class PorudzbinaDialogComponent implements OnInit {
     public prodavacService: ProdavacService) { }
 
   ngOnInit() {
-    this.loaded=false;
-    
+    this.loaded = false;
+
     this.dobavljacService.getDobavljaci().subscribe(dobavljaci => {
       if (!Array.isArray(dobavljaci)) this.exit();
       this.dobavljaci = dobavljaci;
@@ -49,8 +49,8 @@ export class PorudzbinaDialogComponent implements OnInit {
         this.menadzerService.getMenadzeri().subscribe(data => {
           if (!Array.isArray(data)) this.exit();
           this.k = data.length;
-          this.menadzeri=[];
-    
+          this.menadzeri = [];
+
           data.forEach(element => {
             var menadzer = new Menadzer();
             menadzer.adresaKancelarije = element.adresaKancelarije;
@@ -59,10 +59,7 @@ export class PorudzbinaDialogComponent implements OnInit {
 
             this.prodavacService.getProdavac(element.menadzerID).subscribe(prodavac => {
               this.menadzeri[this.i++].prodavac = prodavac[0];
-
-              if (this.k == this.i) {
-                  this.loaded=true;
-              }
+              if (this.k == this.i) this.loaded = true;
             });
           });
         });
@@ -98,21 +95,25 @@ export class PorudzbinaDialogComponent implements OnInit {
   }
 
   public add() {
-    this.setPorudzbina();
-    this.porudzbinaService.addPorudzbina(this.porudzbina).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    if (this.checkDates) {
+      this.setPorudzbina();
+      this.porudzbinaService.addPorudzbina(this.porudzbina).subscribe(data => {
+        this.showSuccess(data);
+      }, error => {
+        this.showError(error);
+      });
+    }
   }
 
   public update() {
-    this.setPorudzbina();
-    this.porudzbinaService.updatePorudzbina(this.data.porudzbinaID, this.porudzbina).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    if (this.checkDates) {
+      this.setPorudzbina();
+      this.porudzbinaService.updatePorudzbina(this.data.porudzbinaID, this.porudzbina).subscribe(data => {
+        this.showSuccess(data);
+      }, error => {
+        this.showError(error);
+      });
+    }
   }
 
   public delete() {
@@ -128,6 +129,17 @@ export class PorudzbinaDialogComponent implements OnInit {
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,
     });
+  }
+
+  checkDates() {
+    if (this.data.datumIsporuke && (this.data.datumIsporuke < this.data.datumPorucivanja)) {
+      this.snackBar.open("Datum isporuke mora biti pre ili na dan datuma poručivanja!", "U redu", {
+        duration: 2000,
+        panelClass: ['red-snackbar']
+      });
+      return false;
+    }
+    return true;
   }
 
   exit() {

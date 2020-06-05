@@ -15,8 +15,7 @@ export class LoginComponent implements OnInit {
     returnUrl: string;
 
     constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
-        private authenticationService: AuthenticationService, public snackBar: MatSnackBar) {
-    }
+        private authenticationService: AuthenticationService, public snackBar: MatSnackBar) { }
 
     ngOnInit() {
         if (this.authenticationService.isLoggedIn()) this.router.navigate(['/']);
@@ -47,7 +46,7 @@ export class LoginComponent implements OnInit {
                 error => {
                     this.loading = false;
                     this.snackBar.open(error, "U redu", {
-                        duration: 2000, 
+                        duration: 2000,
                         panelClass: ['red-snackbar']
                     });
                 });

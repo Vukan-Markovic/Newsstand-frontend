@@ -3,10 +3,10 @@ export class ProdavacDO {
     ime: string;
     prezime: string;
     pol: string;
-    datumRodjenja: string;
+    datumRodjenja: Date;
     adresaStanovanja: string;
     telefon: string;
     JMBG: string;
-    datumZaposlenja: string;
+    datumZaposlenja: Date;
     strucnaSprema: string;
 }

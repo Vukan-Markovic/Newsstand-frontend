@@ -9,7 +9,7 @@ import { RacunComponent } from './_components/racun/racun.component';
 import { VrstaProizvodaComponent } from './_components/vrsta-proizvoda/vrsta-proizvoda.component';
 import { ProizvodjacComponent } from './_components/proizvodjac/proizvodjac.component';
 import { ProizvodComponent } from './_components/proizvod/proizvod.component';
-import { ProdavacComponent } from './_components/prodavac/prodavac.component';
+import { ZaposleniComponent } from './_components/zaposleni/zaposleni.component';
 import { PorudzbinaComponent } from './_components/porudzbina/porudzbina.component';
 import { IzvestajComponent } from './_components/izvestaj/izvestaj.component';
 import { DobavljacComponent } from './_components/dobavljac/dobavljac.component';
@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'korisnik', component: KorisnikComponent, canActivate: [AuthGuard] },
   { path: 'menadzer', component: MenadzerComponent, canActivate: [ZaposleniGuard] },
   { path: 'porudzbina', component: PorudzbinaComponent, canActivate: [AuthGuard] },
-  { path: 'prodavac', component: ProdavacComponent, canActivate: [MenadzerGuard] },
+  { path: 'zaposleni', component: ZaposleniComponent, canActivate: [MenadzerGuard] },
   { path: 'proizvod', component: ProizvodComponent, canActivate: [ZaposleniGuard] },
   { path: 'proizvodjac', component: ProizvodjacComponent, canActivate: [ZaposleniGuard] },
   { path: 'racun', component: RacunComponent, canActivate: [ZaposleniGuard] },

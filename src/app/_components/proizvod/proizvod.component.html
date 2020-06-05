@@ -69,7 +69,7 @@
       </ng-container>
 
       <ng-container matColumnDef="stavkaPorudzbine">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Količina i cena</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header><div *ngIf="selektovanaPorudzbina">Količina i cena</div></mat-header-cell>
 
         <mat-cell *matCellDef="let row">
           <div *ngIf="row.stavkaPorudzbine">{{row.stavkaPorudzbine.kolicina}} {{row.stavkaPorudzbine.nabavnaCena}}
@@ -78,7 +78,7 @@
       </ng-container>
 
       <ng-container matColumnDef="stavkaRacuna">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Količina i cena</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header><div *ngIf="selektovanRacun">Količina i cena</div></mat-header-cell>
 
         <mat-cell *matCellDef="let row">
           <div *ngIf="row.stavkaRacuna">{{row.stavkaRacuna.kolicinaProizvoda}} {{row.stavkaRacuna.prodajnaCena}}

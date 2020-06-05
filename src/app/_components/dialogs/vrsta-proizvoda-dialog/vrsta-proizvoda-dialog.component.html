@@ -4,7 +4,7 @@
   <h3 mat-dialog-title *ngIf="flag == 3">Brisanje vrste proizvoda</h3>
   <form class="mat-dialog-content" ngSubmit="submit" #formControl="ngForm">
     <div class="form">
-      <mat-form-field hintLabel="Maksimalno 30 karaktera">
+      <mat-form-field hintLabel="Maksimalno 30 karaktera, mora biti jedinstven.">
         <input matInput #input maxlength="30" placeholder="Naziv" [(ngModel)]="data.nazivVrsteProizvoda" name="naziv"
           [disabled]="flag == 3" required>
         <mat-hint align="end">{{input.value?.length || 0}}/30</mat-hint>
@@ -28,5 +28,6 @@
         (click)="delete()">Obriši</button>
       <button mat-raised-button color="warn" (click)="cancel()" tabindex="-1">Poništi</button>
     </div>
+    <br>
   </form>
 </div>

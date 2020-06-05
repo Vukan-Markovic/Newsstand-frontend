@@ -55,18 +55,15 @@ export class AuthenticationService {
     }
 
     isZaposleni() {
-        if (this.isLoggedIn())
-            return this.currentUserSubject.value[0].uloga == "prodavac" || this.currentUserSubject.value[0].uloga == "menadžer";
+        if (this.isLoggedIn()) return this.currentUserSubject.value[0].uloga == "prodavac" || this.currentUserSubject.value[0].uloga == "menadžer";
     }
 
     isDobavljac() {
-        if (this.isLoggedIn())
-            return this.currentUserSubject.value[0].uloga == "dobavljač";
+        if (this.isLoggedIn()) return this.currentUserSubject.value[0].uloga == "dobavljač";
     }
 
     isMenadzer() {
-        if (this.isLoggedIn())
-            return this.currentUserSubject.value[0].uloga == "menadžer";
+        if (this.isLoggedIn()) return this.currentUserSubject.value[0].uloga == "menadžer";
     }
 
     logout() {

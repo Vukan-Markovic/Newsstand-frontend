@@ -5,16 +5,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { Prodavac } from 'src/app/_models/prodavac';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
-import { ProdavacDialogComponent } from '../dialogs/prodavac-dialog/prodavac-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MenadzerService } from 'src/app/_services/menadzer.service';
 
 @Component({
-  selector: 'app-prodavac',
-  templateUrl: './prodavac.component.html',
-  styleUrls: ['./prodavac.component.css']
+  selector: 'app-zaposleni',
+  templateUrl: './zaposleni.component.html',
+  styleUrls: ['./zaposleni.component.css']
 })
-export class ProdavacComponent implements OnInit {
+export class ZaposleniComponent implements OnInit {
   displayedColumns = ['ime', 'prezime', 'pol', 'datumRodjenja', 'adresaStanovanja', 'telefon', 'JMBG', 'datumZaposlenja', 'strucnaSprema', 'menadzer'];
   dataSource: MatTableDataSource<Prodavac>;
   i: number = 0;
@@ -56,7 +55,6 @@ export class ProdavacComponent implements OnInit {
           this.prodavci[this.i++].menadzer = menadzer[0];
 
           if (this.k == this.i) {
-
             this.dataSource = new MatTableDataSource(this.prodavci);
 
             this.dataSource.filterPredicate = (data, filter: string) => {

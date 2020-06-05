@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { ProdavacDialogComponent } from '../dialogs/prodavac-dialog/prodavac-dialog.component';
+import { ZaposleniDialogComponent } from '../dialogs/zaposleni-dialog/zaposleni-dialog.component';
 import { MenadzerService } from 'src/app/_services/menadzer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
@@ -36,21 +36,18 @@ export class MenadzerComponent implements OnInit {
 
     this.menadzerService.getMenadzeri().subscribe(data => {
       if (!Array.isArray(data)) return;
-
       this.k = data.length;
 
       data.forEach(element => {
         var menadzer = new Menadzer();
         menadzer.adresaKancelarije = element.adresaKancelarije;
         menadzer.brojKancelarije = element.brojKancelarije;
-
         this.menadzeri.push(menadzer);
 
         this.prodavacService.getProdavac(element.menadzerID).subscribe(prodavac => {
           this.menadzeri[this.i++].prodavac = prodavac[0];
 
           if (this.k == this.i) {
-            console.log(this.menadzeri);
             this.dataSource = new MatTableDataSource(this.menadzeri);
 
             this.dataSource.filterPredicate = (data, filter: string) => {
@@ -97,7 +94,7 @@ export class MenadzerComponent implements OnInit {
     JMBG: string,
     datumZaposlenja: string,
     strucnaSprema: string) {
-    const dialogRef = this.dialog.open(ProdavacDialogComponent, {
+    const dialogRef = this.dialog.open(ZaposleniDialogComponent, {
       data: {
         i: prodavacID, prodavacID: prodavacID, ime: ime, prezime: prezime, pol: pol,
         datumRodjenja: datumRodjenja, adresaStanovanja: adresaStanovanja, telefon: telefon, JMBG: JMBG
@@ -108,8 +105,7 @@ export class MenadzerComponent implements OnInit {
     dialogRef.componentInstance.flag = flag;
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result == 1)
-        this.loadData();
+      if (result == 1) this.loadData();
     });
   }
 

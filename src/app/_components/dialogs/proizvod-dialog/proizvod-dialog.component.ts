@@ -8,6 +8,7 @@ import { ProizvodDO } from 'src/app/_models/proizvodDO';
 import { ProizvodjacService } from 'src/app/_services/proizvodjac.service';
 import { VrstaProizvodaService } from 'src/app/_services/vrstaProizvoda.service';
 import { Proizvod } from 'src/app/_models/proizvod';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-proizvod-dialog',
@@ -19,6 +20,9 @@ export class ProizvodDialogComponent implements OnInit {
   proizvod: ProizvodDO = new ProizvodDO();
   proizvodjaci: Proizvodjac[];
   vrsteProizvoda: VrstaProizvoda[];
+  cena = new FormControl('', [Validators.min(1), Validators.max(99999999)]);
+  masa = new FormControl('', [Validators.min(1), Validators.max(99999999)]);
+  raspolozivaKolicina = new FormControl('', [Validators.min(1), Validators.max(2147483647)]);
 
   constructor(public snackBar: MatSnackBar, public dialogRef: MatDialogRef<ProizvodDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Proizvod, public proizvodService: ProizvodService,
@@ -66,20 +70,18 @@ export class ProizvodDialogComponent implements OnInit {
     this.setProizvod();
     this.proizvodService.addProizvod(this.proizvod).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
   public update() {
     this.setProizvod();
     this.proizvodService.updateProizvod(this.proizvod.proizvodID, this.proizvod).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
   public delete() {

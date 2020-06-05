@@ -22,28 +22,25 @@ export class VrstaProizvodaDialogComponent implements OnInit {
   public add() {
     this.vrstaProizvodaService.addVrstaProizvoda(this.data).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
   public update() {
     this.vrstaProizvodaService.updateVrstaProizvoda(this.data.vrstaProizvodaID, this.data).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
   public delete() {
     this.vrstaProizvodaService.deleteVrstaProizvoda(this.data.vrstaProizvodaID).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
   public cancel() {

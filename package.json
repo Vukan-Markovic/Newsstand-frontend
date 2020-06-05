@@ -1,9 +1,8 @@
 {
   "name": "trafika-frontend",
-  "description": "Veb aplikacija za vođenje trafike.",
+  "description": "Veb aplikacija za vođenje trafike",
   "author": "Vukan Marković",
   "license": "MIT",
-  "homepage": "https://bookclubtrading.herokuapp.com/",
   "repository": {
     "trafika-frontend": "https://github.com/Vukan-Markovic/trafika-frontend.git"
   },
@@ -31,7 +30,6 @@
     "@angular/router": "~9.1.9",
     "http": "0.0.1-security",
     "moment": "^2.26.0",
-    "ngx-toastr": "^12.0.1",
     "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.3"

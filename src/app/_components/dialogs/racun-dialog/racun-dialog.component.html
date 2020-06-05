@@ -5,8 +5,7 @@
   <form class="mat-dialog-content" ngSubmit="submit" #formControl="ngForm">
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-
-        <input type="datetime-local" matInput required  placeholder="Vreme izdavanja" [(ngModel)]="data.vremeIzdavanja"
+        <input type="datetime-local" matInput required placeholder="Vreme izdavanja" [(ngModel)]="data.vremeIzdavanja"
           name="vremeIzdavanja" [disabled]="flag == 3">
       </mat-form-field>
     </div>
@@ -21,8 +20,8 @@
 
     <div class="form">
       <mat-form-field hintLabel="Maksimalno 50 karaktera">
-        <input required matInput #input2 maxlength="50" placeholder="Naziv prodavnice" [(ngModel)]="data.nazivProdavnice"
-          name="nazivProdavnice" [disabled]="flag == 3">
+        <input required matInput #input2 maxlength="50" placeholder="Naziv prodavnice"
+          [(ngModel)]="data.nazivProdavnice" name="nazivProdavnice" [disabled]="flag == 3">
         <mat-hint align="end">{{input2.value?.length || 0}}/50</mat-hint>
       </mat-form-field>
     </div>
@@ -30,7 +29,7 @@
     <div class="form">
       <mat-form-field>
         <mat-select [(ngModel)]="data.nacinPlacanja" placeholder="Način plaćanja" name="nacinPlacanja"
-         [disabled]="flag == 3" required>
+          [disabled]="flag == 3" required>
           <mat-option value="gotovina">
             gotovina
           </mat-option>
@@ -43,8 +42,8 @@
 
     <div class="form" *ngIf="isArray()">
       <mat-form-field>
-        <mat-select [(ngModel)]="data.prodavac" placeholder="Prodavac" name="prodavac"
-          [compareWith]="compareTo" [disabled]="flag == 3" required>
+        <mat-select [(ngModel)]="data.prodavac" placeholder="Prodavac" name="prodavac" [compareWith]="compareTo"
+          [disabled]="flag == 3" required>
           <mat-option *ngFor="let prodavac of prodavci" [value]="prodavac">
             {{ prodavac.ime }} {{ prodavac.prezime }}
           </mat-option>
@@ -53,9 +52,9 @@
     </div>
 
     <div class="form">
-      <mat-form-field hintLabel="Maksimalno 20 karaktera">
-        <input matInput required #input3 maxlength="20" placeholder="Broj računa" [(ngModel)]="data.brojRacuna" name="brojRacuna"
-          [disabled]="flag == 3">
+      <mat-form-field hintLabel="Maksimalno 20 karaktera, mora biti jedinstven.">
+        <input matInput required #input3 maxlength="20" placeholder="Broj računa" [(ngModel)]="data.brojRacuna"
+          name="brojRacuna" [disabled]="flag == 3">
         <mat-hint align="end">{{input3.value?.length || 0}}/20</mat-hint>
       </mat-form-field>
     </div>

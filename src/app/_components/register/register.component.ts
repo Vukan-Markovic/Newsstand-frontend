@@ -115,7 +115,7 @@ export class RegisterComponent implements OnInit {
                 this.registerForm.controls['adresaDobavljaca'].updateValueAndValidity();
                 this.registerForm.controls['postanskiBroj'].setValidators([Validators.required]);
                 this.registerForm.controls['postanskiBroj'].updateValueAndValidity();
-                this.registerForm.controls['PIB'].setValidators([Validators.required]);
+                this.registerForm.controls['PIB'].setValidators([Validators.required, Validators.min(100000010), Validators.max(999999999)]);
                 this.registerForm.controls['PIB'].updateValueAndValidity();
                 this.registerForm.controls['brojZiroRacuna'].setValidators([Validators.required]);
                 this.registerForm.controls['brojZiroRacuna'].updateValueAndValidity();
@@ -128,6 +128,7 @@ export class RegisterComponent implements OnInit {
             this.removeClass();
             return true;
         }
+
         return false;
     }
 
@@ -136,6 +137,7 @@ export class RegisterComponent implements OnInit {
             this.removeClass();
             return true;
         }
+
         return false;
     }
 
@@ -144,6 +146,7 @@ export class RegisterComponent implements OnInit {
             this.removeClass();
             return true;
         }
+
         return false;
     }
 
@@ -165,88 +168,102 @@ export class RegisterComponent implements OnInit {
                 duration: 2000,
                 panelClass: ['red-snackbar']
             });
+
             return;
         }
 
-        this.loading = true;
-        this.korisnik.email = this.registerForm.value.email;
-        this.korisnik.lozinka = this.registerForm.value.lozinka;
-        this.korisnik.uloga = this.registerForm.value.uloga;
-        console.log(this.korisnik.uloga);
-        this.authenticationService.register(this.korisnik)
-            .pipe(first())
-            .subscribe(
-                d => {
-                    this.snackBar.open(d['message'], "U redu", {
-                        duration: 2000
-                    });
-                    this.korisnikService.getKorisnikByEmail(this.korisnik.email).subscribe(data => {
-                        if (this.korisnik.uloga == 'prodavac' || this.korisnik.uloga == 'menadžer') {
-                            // if (this.registerForm.value.datumZaposlenja != null && this.registerForm.value.datumRodjenja >= this.registerForm.value.datumZaposlenja) {
-                            //     this.toastr.error("Datum rođenja mora biti pre datuma zaposlenja!", 'Registracija');
-                            //     return;
-                            // } 
+        if ((this.registerForm.value.uloga == 'prodavac' || this.registerForm.value.uloga == 'menadžer') && (this.registerForm.value.datumRodjenja >= this.registerForm.value.datumZaposlenja)) {
+            this.snackBar.open("Datum rođenja mora biti pre datuma zaposlenja!", "U redu", {
+                duration: 2000,
+                panelClass: ['red-snackbar']
+            });
 
-                            this.prodavac.JMBG = this.registerForm.value.JMBG;
-                            this.prodavac.adresaStanovanja = this.registerForm.value.adresaStanovanja;
-                            this.prodavac.datumRodjenja = this.registerForm.value.datumRodjenja;
-                            this.prodavac.datumZaposlenja = this.registerForm.value.datumZaposlenja;
-                            this.prodavac.ime = this.registerForm.value.ime;
-                            this.prodavac.pol = this.registerForm.value.pol;
-                            this.prodavac.prezime = this.registerForm.value.prezime;
-                            this.prodavac.prodavacID = data[0].korisnikID;
-                            this.prodavac.strucnaSprema = this.registerForm.value.strucnaSprema;
-                            this.prodavac.telefon = this.registerForm.value.telefon;
+            return;
+        }
 
-                            this.prodavacService.addProdavac(this.prodavac).subscribe(res => {
-                                if (this.korisnik.uloga == 'menadžer') {
-                                    this.menadzer.adresaKancelarije = this.registerForm.value.adresaKancelarije;
-                                    this.menadzer.brojKancelarije = this.registerForm.value.brojKancelarije;
-                                    this.menadzer.menadzerID = data[0].korisnikID;
-                                    this.menadzerService.addMenadzer(this.menadzer).subscribe(r => {
-                                        this.router.navigate(['/login']);
-                                    }, error => {
-                                        this.loading = false;
-                                        this.showError(error);
-                                    });
-                                }
-                                this.router.navigate(['/login']);
-                            }, error => {
-                                this.loading = false;
-                                this.showError(error);
-                            });
-                        } else {
-                            // if (this.registerForm.value.PIB < 100000010 || this.registerForm.value.PIB > 999999999) {
-                            //     this.toastr.error("PIB mora bit između brojeva 100000010 i 999999999!", 'Registracija');
-                            //     return;
-                            // }
+        this.korisnikService.getKorisnikByEmail(this.registerForm.value.email).subscribe(data => {
+            if (data != null) {
+                this.snackBar.open("Već postoji kreiran nalog sa datom email adresom!", "U redu", {
+                    duration: 2000,
+                    panelClass: ['red-snackbar']
+                });
 
-                            this.dobavljac.PIB = this.registerForm.value.PIB;
-                            this.dobavljac.adresaDobavljaca = this.registerForm.value.adresaDobavljaca;
-                            this.dobavljac.brojZiroRacuna = this.registerForm.value.brojZiroRacuna;
-                            this.dobavljac.dobavljacID = data[0].korisnikID;
-                            this.dobavljac.drzava = this.registerForm.value.drzava;
-                            this.dobavljac.grad = this.registerForm.value.grad;
-                            this.dobavljac.kontaktDobavljaca = this.registerForm.value.kontaktDobavljaca;
-                            this.dobavljac.kontaktOsoba = this.registerForm.value.kontaktOsoba;
-                            this.dobavljac.postanskiBroj = this.registerForm.value.postanskiBroj;
-                            this.dobavljac.punNaziv = this.registerForm.value.punNaziv;
-                            this.dobavljac.skraceniNaziv = this.registerForm.value.skraceniNaziv;
-                            this.dobavljacService.addDobavljac(this.dobavljac).subscribe(result => {
-                                this.router.navigate(['/login']);
-                            }, error => {
-                                this.loading = false;
-                                this.showError(error);
-                            });
-                        }
+                return
+            }
+
+            this.loading = true;
+            this.korisnik.email = this.registerForm.value.email;
+            this.korisnik.lozinka = this.registerForm.value.lozinka;
+            this.korisnik.uloga = this.registerForm.value.uloga;
+
+            this.authenticationService.register(this.korisnik)
+                .pipe(first())
+                .subscribe(
+                    d => {
+                        this.snackBar.open(d['message'], "U redu", {
+                            duration: 2000
+                        });
+                        this.korisnikService.getKorisnikByEmail(this.korisnik.email).subscribe(data => {
+                            if (this.korisnik.uloga == 'prodavac' || this.korisnik.uloga == 'menadžer') {
+                                this.prodavac.JMBG = this.registerForm.value.JMBG;
+                                this.prodavac.adresaStanovanja = this.registerForm.value.adresaStanovanja;
+                                this.prodavac.datumRodjenja = this.registerForm.value.datumRodjenja;
+                                this.prodavac.datumZaposlenja = this.registerForm.value.datumZaposlenja;
+                                this.prodavac.ime = this.registerForm.value.ime;
+                                this.prodavac.pol = this.registerForm.value.pol;
+                                this.prodavac.prezime = this.registerForm.value.prezime;
+                                this.prodavac.prodavacID = data[0].korisnikID;
+                                this.prodavac.strucnaSprema = this.registerForm.value.strucnaSprema;
+                                this.prodavac.telefon = this.registerForm.value.telefon;
+
+                                this.prodavacService.addProdavac(this.prodavac).subscribe(res => {
+                                    if (this.korisnik.uloga == 'menadžer') {
+                                        this.menadzer.adresaKancelarije = this.registerForm.value.adresaKancelarije;
+                                        this.menadzer.brojKancelarije = this.registerForm.value.brojKancelarije;
+                                        this.menadzer.menadzerID = data[0].korisnikID;
+                                        this.menadzerService.addMenadzer(this.menadzer).subscribe(r => {
+                                            this.router.navigate(['/login']);
+                                        }, error => {
+                                            this.loading = false;
+                                            this.showError(error);
+                                        });
+                                    }
+                                    this.router.navigate(['/login']);
+                                }, error => {
+                                    this.loading = false;
+                                    this.showError(error);
+                                });
+                            } else {
+                                this.dobavljac.PIB = this.registerForm.value.PIB;
+                                this.dobavljac.adresaDobavljaca = this.registerForm.value.adresaDobavljaca;
+                                this.dobavljac.brojZiroRacuna = this.registerForm.value.brojZiroRacuna;
+                                this.dobavljac.dobavljacID = data[0].korisnikID;
+                                this.dobavljac.drzava = this.registerForm.value.drzava;
+                                this.dobavljac.grad = this.registerForm.value.grad;
+                                this.dobavljac.kontaktDobavljaca = this.registerForm.value.kontaktDobavljaca;
+                                this.dobavljac.kontaktOsoba = this.registerForm.value.kontaktOsoba;
+                                this.dobavljac.postanskiBroj = this.registerForm.value.postanskiBroj;
+                                this.dobavljac.punNaziv = this.registerForm.value.punNaziv;
+                                this.dobavljac.skraceniNaziv = this.registerForm.value.skraceniNaziv;
+                                this.dobavljacService.addDobavljac(this.dobavljac).subscribe(result => {
+                                    this.router.navigate(['/login']);
+                                }, error => {
+                                    this.loading = false;
+                                    this.showError(error);
+                                });
+                            }
+                        }, error => {
+                            this.loading = false;
+                            this.showError(error);
+                        });
                     }, error => {
                         this.loading = false;
                         this.showError(error);
                     });
-                }, error => {
-                    this.loading = false;
-                    this.showError(error);
-                });
+        }, error => {
+            this.loading = false;
+            this.showError(error);
+        });
     }
 
     showError(error) {

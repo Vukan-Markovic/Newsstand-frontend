@@ -17,17 +17,17 @@
                         formControlName="lozinka" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.lozinka.errors }" />
                     <div *ngIf="submitted && f.lozinka.errors" class="invalid-feedback">
-                        <div *ngIf="f.lozinka.errors.required">Lozinka je obavezna. Lozinka mora da sadrži najmanje
-                            8 karaktera.</div>
+                        <div *ngIf="f.lozinka.errors.required">Lozinka je obavezna</div>
+                        <div *ngIf="f.lozinka.errors.minlength">Lozinka mora sadržati najmanje 8 karaktera</div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button [disabled]="loading" class="btn btn-primary">
+                    <button [disabled]="loading" class="btn btn-success btn-block">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         Prijavi se
-                    </button>
-                    <a routerLink="/register" class="btn btn-link">Registruj se</a>
-                    <a routerLink="/emailInput" class="btn btn-link">Resetuj lozinku</a>
+                    </button><br />
+                    <button routerLink="/register" class="btn btn-primary">Registruj se</button>&nbsp;
+                    <button routerLink="/emailInput" class="btn btn-info">Resetuj lozinku</button>
                 </div>
             </form>
         </div>

@@ -17,8 +17,6 @@ import { StavkaRacunaService } from 'src/app/_services/stavkaRacuna.service';
 import { StavkaPorudzbineService } from 'src/app/_services/stavkaPorudzbine.service';
 import { StavkaPorudzbineDialogComponent } from '../dialogs/stavka-porudzbine-dialog/stavka-porudzbine-dialog.component';
 import { StavkaRacunaDialogComponent } from '../dialogs/stavka-racuna-dialog/stavka-racuna-dialog.component';
-import { StavkaPorudzbine } from 'src/app/_models/stavkaPorudzbine';
-import { StavkaRacuna } from 'src/app/_models/stavkaRacuna';
 
 @Component({
   selector: 'app-proizvod',
@@ -151,7 +149,6 @@ export class ProizvodComponent implements OnInit {
     if (stavka != null) {
       if (stavka['porudzbinaID']) proizvod.stavkaPorudzbine = stavka;
       else if (stavka['racunID']) proizvod.stavkaRacuna = stavka;
-      console.log(proizvod.stavkaRacuna);
     }
 
     this.proizvodi.push(proizvod);
@@ -161,10 +158,7 @@ export class ProizvodComponent implements OnInit {
 
       this.proizvodjacService.getProizvodjac(element.proizvodjacID).subscribe(proizvodjac => {
         this.proizvodi[this.i++].proizvodjac = proizvodjac[0];
-
-        if (this.k == this.i && this.k == this.j) {
-          this.initializeTable();
-        }
+        if (this.k == this.i && this.k == this.j) this.initializeTable();
       }, error => {
         this.showError(error);
       });

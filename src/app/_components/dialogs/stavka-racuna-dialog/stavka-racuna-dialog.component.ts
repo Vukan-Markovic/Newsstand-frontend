@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProizvodService } from 'src/app/_services/proizvod.service';
 import { ProizvodDO } from 'src/app/_models/proizvodDO';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-stavka-racuna-dialog',
@@ -15,6 +16,7 @@ export class StavkaRacunaDialogComponent implements OnInit {
   public flag: number;
   proizvodi: ProizvodDO[];
   proizvodDO: ProizvodDO = new ProizvodDO();
+  kolicinaProizvoda = new FormControl('', [Validators.min(1), Validators.max(2147483647)]);
 
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<StavkaRacunaDialogComponent>,
@@ -23,7 +25,6 @@ export class StavkaRacunaDialogComponent implements OnInit {
     public stavkaRacunaService: StavkaRacunaService) { }
 
   ngOnInit() {
-
     this.proizvodService.getProizvodi().subscribe(proizvodi => {
       this.proizvodi = proizvodi;
 

@@ -35,6 +35,14 @@ export class IzvestajDialogComponent implements OnInit {
   }
 
   public add() {
+    if (this.data.datumOd > this.data.datumDo) {
+      this.snackBar.open("Datum od mora biti manji od datuma do!", "U redu", {
+        duration: 2000,
+        panelClass: ['red-snackbar']
+      });
+      return;
+    }
+
     var d1 = new Date(this.data.datumDo);
     var d2 = new Date(this.data.datumOd);
     d1.setHours(12, 0, 0);
@@ -43,19 +51,17 @@ export class IzvestajDialogComponent implements OnInit {
     this.data.datumOd = d2;
     this.izvestajService.addIzvestaj(this.data).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
   public delete() {
     this.izvestajService.deleteIzvestaj(this.data.izvestajID).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
   public cancel() {

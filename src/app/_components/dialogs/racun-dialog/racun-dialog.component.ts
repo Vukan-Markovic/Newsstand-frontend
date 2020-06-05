@@ -55,8 +55,8 @@ export class RacunDialogComponent implements OnInit {
     this.racunService.addRacun(this.racun).subscribe(data => {
       this.showSuccess(data);
     }, error => {
-        this.showError(error);
-      });
+      this.showError(error);
+    });
   }
 
   public update() {

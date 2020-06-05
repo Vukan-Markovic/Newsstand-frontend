@@ -26,6 +26,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatCardModule} from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -34,7 +35,7 @@ import { DobavljacComponent } from './_components/dobavljac/dobavljac.component'
 import { IzvestajComponent } from './_components/izvestaj/izvestaj.component';
 import { PorudzbinaComponent } from './_components/porudzbina/porudzbina.component';
 import { ProizvodComponent } from './_components/proizvod/proizvod.component';
-import { ProdavacComponent } from './_components/prodavac/prodavac.component';
+import { ZaposleniComponent } from './_components/zaposleni/zaposleni.component';
 import { ProizvodjacComponent } from './_components/proizvodjac/proizvodjac.component';
 import { RacunComponent } from './_components/racun/racun.component';
 import { VrstaProizvodaComponent } from './_components/vrsta-proizvoda/vrsta-proizvoda.component';
@@ -47,7 +48,7 @@ import { ProizvodjacDialogComponent } from './_components/dialogs/proizvodjac-di
 import { RacunDialogComponent } from './_components/dialogs/racun-dialog/racun-dialog.component';
 import { VrstaProizvodaDialogComponent } from './_components/dialogs/vrsta-proizvoda-dialog/vrsta-proizvoda-dialog.component';
 import { KorisnikComponent } from './_components/korisnik/korisnik.component';
-import { ProdavacDialogComponent } from './_components/dialogs/prodavac-dialog/prodavac-dialog.component';
+import { ZaposleniDialogComponent } from './_components/dialogs/zaposleni-dialog/zaposleni-dialog.component';
 import { MenadzerComponent } from './_components/menadzer/menadzer.component';
 import { DobavljacService } from './_services/dobavljac.service';
 import { IzvestajService } from './_services/izvestaj.service';
@@ -77,6 +78,7 @@ import { StavkaPorudzbineDialogComponent } from './_components/dialogs/stavka-po
         MatButtonModule,
         MatIconModule,
         MatFormFieldModule,
+        MatCardModule,
         MatSidenavModule,
         MatListModule,
         MatGridListModule,
@@ -97,7 +99,8 @@ import { StavkaPorudzbineDialogComponent } from './_components/dialogs/stavka-po
         MatStepperModule,
         ReactiveFormsModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
+        ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' })
     ],
     declarations: [
         AppComponent,
@@ -108,7 +111,7 @@ import { StavkaPorudzbineDialogComponent } from './_components/dialogs/stavka-po
         IzvestajComponent,
         PorudzbinaComponent,
         ProizvodComponent,
-        ProdavacComponent,
+        ZaposleniComponent,
         ProizvodjacComponent,
         RacunComponent,
         VrstaProizvodaComponent,
@@ -121,7 +124,7 @@ import { StavkaPorudzbineDialogComponent } from './_components/dialogs/stavka-po
         RacunDialogComponent,
         VrstaProizvodaDialogComponent,
         KorisnikComponent,
-        ProdavacDialogComponent,
+        ZaposleniDialogComponent,
         MenadzerComponent,
         ResetPasswordComponent,
         EmailInputComponent,
@@ -136,13 +139,13 @@ import { StavkaPorudzbineDialogComponent } from './_components/dialogs/stavka-po
         ProizvodjacDialogComponent,
         RacunDialogComponent,
         VrstaProizvodaDialogComponent,
-        ProdavacDialogComponent
+        ZaposleniDialogComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         ZaposleniGuard,
-        AuthGuard, 
+        AuthGuard,
         MenadzerGuard,
         AuthenticationService,
         DobavljacService,

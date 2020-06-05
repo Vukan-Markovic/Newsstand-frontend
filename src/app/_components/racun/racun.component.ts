@@ -25,8 +25,8 @@ export class RacunComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public racunService: RacunService, public dialog: MatDialog,
-    public prodavacService: ProdavacService, public snackBar: MatSnackBar) { }
+  constructor(public racunService: RacunService, public dialog: MatDialog, public prodavacService: ProdavacService,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.loadData();
@@ -112,6 +112,7 @@ export class RacunComponent implements OnInit {
     );
 
     dialogRef.componentInstance.flag = flag;
+
     dialogRef.afterClosed().subscribe((result: number) => {
       if (result == 1) this.loadData();
     });

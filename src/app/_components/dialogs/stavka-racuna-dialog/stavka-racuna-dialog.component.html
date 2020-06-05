@@ -5,13 +5,14 @@
         <div class="form" *ngIf="flag == 1">
             <mat-form-field>
                 <input type="number" min="1" matInput #input placeholder="Količina" [(ngModel)]="data.kolicinaProizvoda"
-                    name="kolicinaProizvoda" required>
+                    name="kolicinaProizvoda" [formControl]="kolicinaProizvoda" required>
             </mat-form-field>
         </div>
 
         <div class="form" *ngIf="isArray() && flag == 1">
             <mat-form-field>
-                <mat-select [(ngModel)]="proizvodDO" placeholder="Proizvod" name="proizvod" [compareWith]="compareTo" required>
+                <mat-select [(ngModel)]="proizvodDO" placeholder="Proizvod" name="proizvod" [compareWith]="compareTo"
+                    required>
                     <mat-option *ngFor="let proizvod of proizvodi" [value]="proizvod">
                         {{ proizvod.nazivProizvoda }}
                     </mat-option>
@@ -30,5 +31,6 @@
                 (click)="delete()">Obriši</button>
             <button mat-raised-button color="warn" (click)="cancel()" tabindex="-1">Poništi</button>
         </div>
+        <br>
     </form>
 </div>

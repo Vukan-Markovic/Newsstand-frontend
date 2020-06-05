@@ -1,6 +1,6 @@
 <div class="container">
-  <h3 mat-dialog-title *ngIf="flag == 2">Modifikacija prodavca</h3>
-  <h3 mat-dialog-title *ngIf="flag == 3">Brisanje prodavca</h3>
+  <h3 mat-dialog-title *ngIf="flag == 2">Modifikacija naloga</h3>
+  <h3 mat-dialog-title *ngIf="flag == 3">Brisanje naloga</h3>
   <form class="mat-dialog-content" ngSubmit="submit" #formControl="ngForm">
     <div class="form">
       <mat-form-field hintLabel="Maksimalno 20 karaktera">
@@ -33,10 +33,9 @@
 
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input matInput [matDatepicker]="datumRodjenja" placeholder="Datum rođenja" [(ngModel)]="data.datumRodjenja"
+        <input onkeydown="return false" type="date" matInput placeholder="Datum rođenja"
+          [ngModel]="data.datumRodjenja | date : 'yyyy-MM-dd'" (ngModelChange)="data.datumRodjenja=$event"
           name="datumRodjenja" [disabled]="flag == 3" required>
-        <mat-datepicker-toggle matSuffix [for]="datumRodjenja"></mat-datepicker-toggle>
-        <mat-datepicker touchUi #datumRodjenja></mat-datepicker>
       </mat-form-field>
     </div>
 
@@ -66,10 +65,9 @@
 
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input matInput [matDatepicker]="datumZaposlenja" placeholder="Datum zaposlenja" required
-          [(ngModel)]="data.datumZaposlenja" name="datumZaposlenja" [disabled]="flag == 3">
-        <mat-datepicker-toggle matSuffix [for]="datumZaposlenja"></mat-datepicker-toggle>
-        <mat-datepicker touchUi #datumZaposlenja></mat-datepicker>
+        <input onkeydown="return false" type="date" matInput placeholder="Datum zaposlenja" required
+          (ngModelChange)="data.datumZaposlenja=$event" [ngModel]="data.datumZaposlenja | date : 'yyyy-MM-dd'"
+          name="datumZaposlenja" [disabled]="flag == 3">
       </mat-form-field>
     </div>
 
@@ -78,6 +76,22 @@
         <input matInput #input6 maxlength="20" placeholder="Stručna sprema" [(ngModel)]="data.strucnaSprema"
           name="strucnaSprema" [disabled]="flag == 3">
         <mat-hint align="end">{{input6.value?.length || 0}}/20</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="form" *ngIf="data.menadzer">
+      <mat-form-field hintLabel="Maksimalno 50 karaktera">
+        <input matInput #input7 maxlength="50" placeholder="Adresa kancelarije"
+          [(ngModel)]="data.menadzer.adresaKancelarije" name="adresaKancelarije" [disabled]="flag == 3" required>
+        <mat-hint align="end">{{input7.value?.length || 0}}/50</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="form" *ngIf="data.menadzer">
+      <mat-form-field hintLabel="Maksimalno 5 karaktera">
+        <input matInput #input8 maxlength="5" placeholder="Broj kancelarije" [(ngModel)]="data.menadzer.brojKancelarije"
+          name="brojKancelarije" [disabled]="flag == 3">
+        <mat-hint align="end">{{input8.value?.length || 0}}/5</mat-hint>
       </mat-form-field>
     </div>
 

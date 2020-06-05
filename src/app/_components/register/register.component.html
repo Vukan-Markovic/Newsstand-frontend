@@ -7,7 +7,7 @@
                     <div class="form-group">
                         <label class="required" for="email">Email</label>
                         <input type="email" maxlength="30" placeholder="Unesite email adresu" formControlName="email"
-                            class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                            class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required />
                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                             <div *ngIf="f.email.errors.required">Email je obavezan</div>
                         </div>
@@ -19,7 +19,7 @@
                             [ngClass]="{ 'is-invalid': submitted && f.lozinka.errors }" />
                         <div *ngIf="submitted && f.lozinka.errors" class="invalid-feedback">
                             <div *ngIf="f.lozinka.errors.required">Lozinka je obavezna</div>
-                            <div *ngIf="f.lozinka.errors.minlength">Lozinka mora sadržati bar 8 karaktera</div>
+                            <div *ngIf="f.lozinka.errors.minlength">Lozinka mora sadržati najmanje 8 karaktera</div>
                         </div>
                     </div>
 
@@ -29,8 +29,9 @@
                             formControlName="passwordRepeat" class="form-control" minlength="8"
                             [ngClass]="{ 'is-invalid': submitted && f.passwordRepeat.errors }" />
                         <div *ngIf="submitted && f.passwordRepeat.errors" class="invalid-feedback">
-                            <div *ngIf="f.passwordRepeat.errors.required">Lozinka je obavezna</div>
-                            <div *ngIf="f.passwordRepeat.errors.minlength">Lozinka mora sadržati bar 8 karaktera</div>
+                            <div *ngIf="f.passwordRepeat.errors.required">Morate potvrditi lozinku</div>
+                            <div *ngIf="f.passwordRepeat.errors.minlength">Lozinka mora sadržati najmanje 8 karaktera
+                            </div>
                         </div>
                     </div>
 
@@ -49,7 +50,6 @@
                     </div>
 
                     <div *ngIf="isDobavljac()">
-
                         <div class="form-group">
                             <label class="required" for="skraceniNaziv">Skraćeni naziv</label>
                             <input type="text" maxlength="10" placeholder="Unesite skraćeni naziv"
@@ -67,7 +67,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="required" for="kontaktDobavljaca">Kontakt</label>
+                            <label class="required" for="kontaktDobavljaca">Kontakt</label>&nbsp;<small>Mora biti jedinstven</small>
                             <input type="text" maxlength="20" placeholder="Unesite broj telefona"
                                 formControlName="kontaktDobavljaca" class="form-control" required
                                 [ngClass]="{ 'is-invalid': submitted && f.kontaktDobavljaca.errors }" />
@@ -109,12 +109,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="required" for="PIB">PIB</label>
-                            <input type="number" min="1" max="9" required
+                            <label class="required" for="PIB">PIB</label>&nbsp;<small>Mora biti jedinstven</small>
+                            <input type="number" min="100000010" max="999999999" required
                                 placeholder="Unesite poreski identifikacioni broj" formControlName="PIB"
                                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.PIB.errors }" />
                             <div *ngIf="submitted && f.PIB.errors" class="invalid-feedback">
                                 <div *ngIf="f.PIB.errors.required">PIB je obavezan</div>
+                                <div *ngIf="f.PIB.errors.minlength">PIB mora biti između brojeva 100000010 i 999999999!
+                                </div>
+                                <div *ngIf="f.PIB.errors.maxlength">PIB mora biti između brojeva 100000010 i 999999999!
+                                </div>
                             </div>
                         </div>
 
@@ -125,7 +129,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="required" for="brojZiroRacuna">Broj žiro računa</label>
+                            <label class="required" for="brojZiroRacuna">Broj žiro računa</label>&nbsp;<small>Mora biti jedinstven</small>
                             <input required type="text" maxlength="30" placeholder="Unesite broj žiro računa"
                                 [ngClass]="{ 'is-invalid': submitted && f.brojZiroRacuna.errors }"
                                 formControlName="brojZiroRacuna" class="form-control" />
@@ -133,11 +137,9 @@
                                 <div *ngIf="f.brojZiroRacuna.errors.required">Broj žiro računa je obavezan</div>
                             </div>
                         </div>
-
                     </div>
 
                     <div *ngIf="isProdavac() || isMenadzer()">
-
                         <div class="form-group">
                             <label class="required" for="ime">Ime</label>
                             <input placeholder="Unesite vaše ime" maxlength="20" type="text" formControlName="ime"
@@ -191,12 +193,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="required" for="JMBG">JMBG</label>
-                            <input type="text" minlength="13" maxlength="13" required
+                            <label class="required" for="JMBG">JMBG</label>&nbsp;<small>Mora biti jedinstven</small>
+                            <input type="text" pattern="[0-9]+" minlength="13" maxlength="13" required
                                 placeholder="Unesite jedinstveni matični broj građanina" formControlName="JMBG"
                                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.JMBG.errors }" />
                             <div *ngIf="submitted && f.JMBG.errors" class="invalid-feedback">
                                 <div *ngIf="f.JMBG.errors.required">JMBG je obavezan</div>
+                                <div *ngIf="f.JMBG.errors.minlength">JMBG mora imati 13 cifara!</div>
+                                <div *ngIf="f.JMBG.errors.maxlength">JMBG mora imati 13 cifara!</div>
+                                <div *ngIf="f.JMBG.errors.pattern">JMBG sme da sadrži samo cifre!</div>
                             </div>
                         </div>
 
@@ -214,11 +219,9 @@
                             <input type="text" maxlength="20" placeholder="Unesite stepen stručne spreme"
                                 formControlName="strucnaSprema" class="form-control" />
                         </div>
-
                     </div>
 
                     <div *ngIf="isMenadzer()">
-
                         <div class="form-group">
                             <label class="required" for="adresaKancelarije">Adresa kancelarije</label>
                             <input type="text" placeholder="Unesite adresu kancelarije" required
@@ -234,15 +237,13 @@
                             <input placeholder="Unesite broj kancelarije" type="text" formControlName="brojKancelarije"
                                 class="form-control" />
                         </div>
-
                     </div>
 
                     <div class="form-group">
-                        <button [disabled]="loading" class="btn btn-primary">
+                        <button [disabled]="loading" class="btn btn-success btn-block">
                             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                             Registruj se
                         </button>
-                        <a routerLink="/login" class="btn btn-link">Prijavi se</a>
                     </div>
                 </form>
             </div>

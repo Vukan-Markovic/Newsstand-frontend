@@ -1,11 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Proizvod } from 'src/app/_models/proizvod';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { StavkaPorudzbineService } from 'src/app/_services/stavkaPorudzbine.service';
 import { ProizvodService } from 'src/app/_services/proizvod.service';
 import { StavkaPorudzbine } from 'src/app/_models/stavkaPorudzbine';
 import { ProizvodDO } from 'src/app/_models/proizvodDO';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-stavka-porudzbine-dialog',
@@ -16,6 +16,7 @@ export class StavkaPorudzbineDialogComponent implements OnInit {
   public flag: number;
   proizvodi: ProizvodDO[];
   proizvodDO: ProizvodDO = new ProizvodDO();
+  kolicina = new FormControl('', [Validators.min(1), Validators.max(2147483647)]);
 
   constructor(public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<StavkaPorudzbineDialogComponent>,
@@ -24,7 +25,6 @@ export class StavkaPorudzbineDialogComponent implements OnInit {
     public stavkaPorudzbineService: StavkaPorudzbineService) { }
 
   ngOnInit() {
-
     this.proizvodService.getProizvodi().subscribe(proizvodi => {
       this.proizvodi = proizvodi;
 
@@ -55,19 +55,17 @@ export class StavkaPorudzbineDialogComponent implements OnInit {
     this.data.proizvodID = this.proizvodDO.proizvodID;
     this.stavkaPorudzbineService.addStavkaPorudzbine(this.data).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
   public delete() {
     this.stavkaPorudzbineService.deleteStavkaPorudzbine(this.data.porudzbinaID, this.data.proizvodID).subscribe(data => {
       this.showSuccess(data);
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => {
+      this.showError(error);
+    });
   }
 
   public cancel() {

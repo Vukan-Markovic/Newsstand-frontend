@@ -54,8 +54,7 @@ export class VrstaProizvodaComponent implements OnInit {
     dialogRef.componentInstance.flag = flag;
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result == 1)
-        this.loadData();
+      if (result == 1) this.loadData();
     });
   }
 

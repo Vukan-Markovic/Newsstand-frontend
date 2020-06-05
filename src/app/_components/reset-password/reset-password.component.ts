@@ -6,53 +6,49 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  templateUrl: './reset-password.component.html'
 })
 export class ResetPasswordComponent implements OnInit {
   resetPasswordForm: FormGroup;
-  errorMessage: string = null;
   token: string;
   submitted = false;
+  loading = false;
 
   constructor(private route: ActivatedRoute, private router: Router,
     private authenticationService: AuthenticationService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.resetPasswordForm = new FormGroup({
-      'password': new FormControl('', [Validators.required, Validators.minLength(8)]),
+      'lozinka': new FormControl('', [Validators.required, Validators.minLength(8)]),
       'passwordRepeat': new FormControl('', [Validators.required, Validators.minLength(8)])
     });
 
-    this.route.queryParams.subscribe(
-      (queyParams: Params) => {
-        this.token = queyParams['code'];
-        if (this.token == null) this.router.navigate(['/']);
-      }
-    );
+    // this.route.queryParams.subscribe(
+    //   (queyParams: Params) => {
+    //     this.token = queyParams['code'];
+    //     if (this.token == null) this.router.navigate(['/']);
+    //   }
+    // );
+  }
+
+  get f() {
+    return this.resetPasswordForm.controls;
   }
 
   onSubmit() {
     this.submitted = true;
-
-    if (this.resetPasswordForm.invalid) {
-      this.errorMessage = "Molimo unesite ispravne podatke.";
-      this.snackBar.open(this.errorMessage, "U redu", {
-        duration: 2000,
-        panelClass: ['red-snackbar']
-      });
-      return;
-    }
+    if (this.resetPasswordForm.invalid) return;
 
     if (!(this.resetPasswordForm.value.password === this.resetPasswordForm.value.passwordRepeat)) {
-      this.errorMessage = "Lozinke moraju da se podudaraju!";
-      this.snackBar.open(this.errorMessage, "U redu", {
+      this.snackBar.open("Lozinke moraju da se podudaraju!", "U redu", {
         duration: 2000,
         panelClass: ['red-snackbar']
       });
       return;
     }
 
+    this.loading = true;
+    
     this.authenticationService.updatePassword(this.resetPasswordForm.value.password, this.token).subscribe(
       data => {
         this.snackBar.open(data['message'], "U redu", {
@@ -60,6 +56,7 @@ export class ResetPasswordComponent implements OnInit {
         });
         this.router.navigate(['/login']);
       }, error => {
+        this.loading = false;
         this.snackBar.open(error, "U redu", {
           duration: 2000,
           panelClass: ['red-snackbar']
