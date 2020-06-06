@@ -25,9 +25,8 @@ export class IzvestajDialogComponent implements OnInit {
     public menadzerService: MenadzerService) { }
 
   ngOnInit() {
-    this.menadzerService.getMenadzer(this.authenticationService.currentUserValue.korisnikID).subscribe(menadzer =>
-      this.data.menadzerID = menadzer[0].menadzerID
-    );
+    this.menadzerService.getMenadzer(this.authenticationService.currentUserValue.korisnikID).subscribe(
+      menadzer => this.data.menadzerID = menadzer[0].menadzerID, error => this.showError(error));
   }
 
   compareTo(a: Izvestaj, b: Izvestaj) {
@@ -49,19 +48,14 @@ export class IzvestajDialogComponent implements OnInit {
     d2.setHours(12, 0, 0);
     this.data.datumDo = d1;
     this.data.datumOd = d2;
-    this.izvestajService.addIzvestaj(this.data).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+
+    this.izvestajService.addIzvestaj(this.data).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public delete() {
-    this.izvestajService.deleteIzvestaj(this.data.izvestajID).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.izvestajService.deleteIzvestaj(this.data.izvestajID).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public cancel() {

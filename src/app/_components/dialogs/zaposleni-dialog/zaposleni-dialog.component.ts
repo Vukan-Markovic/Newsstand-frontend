@@ -18,19 +18,18 @@ export class ZaposleniDialogComponent implements OnInit {
   menadzer: MenadzerDO = new MenadzerDO();
   prodavac: ProdavacDO = new ProdavacDO();
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   constructor(public snackBar: MatSnackBar, public dialogRef: MatDialogRef<ZaposleniDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Prodavac, public prodavacService: ProdavacService,
     public menadzerService: MenadzerService, public korisnikService: KorisnikService) { }
 
   public update() {
-    if (this.data.datumRodjenja > this.data.datumZaposlenja) {
+    if (this.data.datumRodjenja >= this.data.datumZaposlenja) {
       this.snackBar.open("Datum rođenja mora biti pre datume zaposlenja!", "U redu", {
         duration: 2000,
         panelClass: ['red-snackbar']
       });
-
       return;
     }
 
@@ -64,19 +63,16 @@ export class ZaposleniDialogComponent implements OnInit {
 
   public delete() {
     if (this.data.menadzer) {
-      this.menadzerService.deleteMenadzer(this.data.prodavacID).subscribe(d => {
-        this.deleteProdavac();
-      }, error => this.showError(error));
+      this.menadzerService.deleteMenadzer(this.data.prodavacID).subscribe(
+        d => this.deleteProdavac(), error => this.showError(error));
     }
     else this.deleteProdavac();
-
   }
 
   public deleteProdavac() {
     this.prodavacService.deleteProdavac(this.data.prodavacID).subscribe(data => {
-      this.korisnikService.deleteKorisnik(this.data.prodavacID).subscribe(d => {
-        this.showSuccess(data);
-      }, error => this.showError(error));
+      this.korisnikService.deleteKorisnik(this.data.prodavacID).subscribe(
+        d => this.showSuccess(data), error => this.showError(error));
     }, error => this.showError(error));
   }
 

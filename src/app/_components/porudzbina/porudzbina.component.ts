@@ -100,22 +100,11 @@ export class PorudzbinaComponent implements OnInit {
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
               }
-            }, error => {
-              this.showError(error);
-            });
-          },
-            error => {
-              this.showError(error);
-            });
-        },
-          error => {
-            this.showError(error);
-          });
+            }, error => this.showError(error));
+          }, error => this.showError(error));
+        }, error => this.showError(error));
       });
-    },
-      error => {
-        this.showError(error);
-      });
+    }, error => this.showError(error));
   }
 
   showError(error) {

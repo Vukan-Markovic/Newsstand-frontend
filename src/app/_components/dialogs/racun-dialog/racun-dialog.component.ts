@@ -1,12 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Prodavac } from 'src/app/_models/prodavac';
+import { ProdavacDO } from 'src/app/_models/prodavacDO';
+import { Racun } from 'src/app/_models/racun';
+import { RacunDO } from 'src/app/_models/racunDO';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
 import { RacunService } from 'src/app/_services/racun.service';
-import { Prodavac } from 'src/app/_models/prodavac';
-import { RacunDO } from 'src/app/_models/racunDO';
-import { Racun } from 'src/app/_models/racun';
-import { ProdavacDO } from 'src/app/_models/prodavacDO';
 
 @Component({
   selector: 'app-racun-dialog',
@@ -33,7 +33,7 @@ export class RacunDialogComponent implements OnInit {
         });
         this.dialogRef.close();
       }
-    });
+    }, error => this.showError(error));
   }
 
   isArray() {
@@ -52,28 +52,19 @@ export class RacunDialogComponent implements OnInit {
 
   public add() {
     this.setRacun();
-    this.racunService.addRacun(this.racun).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.racunService.addRacun(this.racun).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public update() {
     this.setRacun();
-    this.racunService.updateRacun(this.data.racunID, this.racun).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.racunService.updateRacun(this.data.racunID, this.racun).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public delete() {
-    this.racunService.deleteRacun(this.data.racunID).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.racunService.deleteRacun(this.data.racunID).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public cancel() {

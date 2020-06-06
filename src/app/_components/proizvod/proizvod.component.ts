@@ -60,9 +60,7 @@ export class ProizvodComponent implements OnInit {
       data.forEach(element => {
         this.fillTable(element, null);
       });
-    }, error => {
-      this.showError(error)
-    });
+    }, error => this.showError(error));
   }
 
   loadProizvodPorudzbina() {
@@ -72,16 +70,11 @@ export class ProizvodComponent implements OnInit {
         this.k = data.length;
 
         data.forEach(element => {
-          this.proizvodService.getProizvod(element.proizvodID).subscribe(proizvod => {
-            this.fillTable(proizvod[0], element);
-          }, error => {
-            this.showError(error)
-          });
+          this.proizvodService.getProizvod(element.proizvodID).subscribe(
+            proizvod => this.fillTable(proizvod[0], element), error => this.showError(error));
         });
       }
-    }, error => {
-      this.showError(error)
-    });
+    }, error => this.showError(error));
   }
 
   loadProizvodRacun() {
@@ -91,16 +84,11 @@ export class ProizvodComponent implements OnInit {
         this.k = data.length;
 
         data.forEach(element => {
-          this.proizvodService.getProizvod(element.proizvodID).subscribe(proizvod => {
-            this.fillTable(proizvod[0], element);
-          }, error => {
-            this.showError(error)
-          });
+          this.proizvodService.getProizvod(element.proizvodID).subscribe(
+            proizvod => this.fillTable(proizvod[0], element), error => this.showError(error));
         });
       }
-    }, error => {
-      this.showError(error)
-    });
+    }, error => this.showError(error));
   }
 
   initializeTable() {
@@ -159,12 +147,8 @@ export class ProizvodComponent implements OnInit {
       this.proizvodjacService.getProizvodjac(element.proizvodjacID).subscribe(proizvodjac => {
         this.proizvodi[this.i++].proizvodjac = proizvodjac[0];
         if (this.k == this.i && this.k == this.j) this.initializeTable();
-      }, error => {
-        this.showError(error);
-      });
-    }, error => {
-      this.showError(error);
-    });
+      }, error => this.showError(error));
+    }, error => this.showError(error));
   }
 
   showError(error) {

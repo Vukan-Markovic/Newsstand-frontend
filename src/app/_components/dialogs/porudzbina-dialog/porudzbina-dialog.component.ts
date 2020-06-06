@@ -11,6 +11,7 @@ import { MenadzerService } from 'src/app/_services/menadzer.service';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
 import { Porudzbina } from 'src/app/_models/porudzbina';
 import { ProdavacDO } from 'src/app/_models/prodavacDO';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 @Component({
   selector: 'app-porudzbina-dialog',
@@ -26,8 +27,9 @@ export class PorudzbinaDialogComponent implements OnInit {
   i: number = 0;
   k: number = 0;
   loaded = false;
+  isMenadzer = false;
 
-  constructor(public snackBar: MatSnackBar,
+  constructor(public snackBar: MatSnackBar, public authenticationService: AuthenticationService,
     public dialogRef: MatDialogRef<PorudzbinaDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Porudzbina,
     public porudzbinaService: PorudzbinaService,
@@ -37,6 +39,7 @@ export class PorudzbinaDialogComponent implements OnInit {
 
   ngOnInit() {
     this.loaded = false;
+    if (this.authenticationService.currentUserValue.uloga == 'menadžer') this.isMenadzer = true;
 
     this.dobavljacService.getDobavljaci().subscribe(dobavljaci => {
       if (!Array.isArray(dobavljaci)) this.exit();
@@ -60,11 +63,11 @@ export class PorudzbinaDialogComponent implements OnInit {
             this.prodavacService.getProdavac(element.menadzerID).subscribe(prodavac => {
               this.menadzeri[this.i++].prodavac = prodavac[0];
               if (this.k == this.i) this.loaded = true;
-            });
+            }, error => this.showError(error));
           });
-        });
-      });
-    });
+        }, error => this.showError(error));
+      }, error => this.showError(error));
+    }, error => this.showError(error));
   }
 
   isArray() {
@@ -97,31 +100,22 @@ export class PorudzbinaDialogComponent implements OnInit {
   public add() {
     if (this.checkDates) {
       this.setPorudzbina();
-      this.porudzbinaService.addPorudzbina(this.porudzbina).subscribe(data => {
-        this.showSuccess(data);
-      }, error => {
-        this.showError(error);
-      });
+      this.porudzbinaService.addPorudzbina(this.porudzbina).subscribe(
+        data => this.showSuccess(data), error => this.showError(error));
     }
   }
 
   public update() {
     if (this.checkDates) {
       this.setPorudzbina();
-      this.porudzbinaService.updatePorudzbina(this.data.porudzbinaID, this.porudzbina).subscribe(data => {
-        this.showSuccess(data);
-      }, error => {
-        this.showError(error);
-      });
+      this.porudzbinaService.updatePorudzbina(this.data.porudzbinaID, this.porudzbina).subscribe(
+        data => this.showSuccess(data), error => this.showError(error));
     }
   }
 
   public delete() {
-    this.porudzbinaService.deletePorudzbina(this.data.porudzbinaID).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.porudzbinaService.deletePorudzbina(this.data.porudzbinaID).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public cancel() {

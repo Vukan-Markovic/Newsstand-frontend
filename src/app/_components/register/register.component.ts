@@ -207,8 +207,12 @@ export class RegisterComponent implements OnInit {
                             if (this.korisnik.uloga == 'prodavac' || this.korisnik.uloga == 'menadžer') {
                                 this.prodavac.JMBG = this.registerForm.value.JMBG;
                                 this.prodavac.adresaStanovanja = this.registerForm.value.adresaStanovanja;
-                                this.prodavac.datumRodjenja = this.registerForm.value.datumRodjenja;
-                                this.prodavac.datumZaposlenja = this.registerForm.value.datumZaposlenja;
+                                var d1 = new Date(this.registerForm.value.datumRodjenja);
+                                var d2 = new Date(this.registerForm.value.datumZaposlenja);
+                                d1.setHours(12, 0, 0);
+                                d2.setHours(12, 0, 0);
+                                this.prodavac.datumRodjenja = d1;
+                                this.prodavac.datumZaposlenja = d2;
                                 this.prodavac.ime = this.registerForm.value.ime;
                                 this.prodavac.pol = this.registerForm.value.pol;
                                 this.prodavac.prezime = this.registerForm.value.prezime;

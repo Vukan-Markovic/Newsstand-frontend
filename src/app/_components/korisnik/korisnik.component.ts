@@ -46,14 +46,13 @@ export class KorisnikComponent implements OnInit {
         this.prodavac.telefon = prodavac[0].telefon;
 
         if (this.uloga == 'menadžer') {
-          this.menadzerService.getMenadzer(this.id).subscribe(menadzer => {
-            this.prodavac.menadzer = menadzer[0];
-          }, error => this.showError(error))
+          this.menadzerService.getMenadzer(this.id).subscribe(
+            menadzer => this.prodavac.menadzer = menadzer[0], error => this.showError(error))
         }
       }, error => this.showError(error));
     } else {
-      this.dobavljacService.getDobavljac(this.id).subscribe(dobavljac => this.dobavljac = dobavljac[0],
-        error => this.showError(error));
+      this.dobavljacService.getDobavljac(this.id).subscribe(
+        dobavljac => this.dobavljac = dobavljac[0], error => this.showError(error));
     }
   }
 

@@ -57,8 +57,8 @@
 
     <div class="form">
       <mat-form-field hintLabel="JMBG treba da ima 13 cifara">
-        <input matInput #input5 minlength="13" maxlength="13" placeholder="JMBG" [(ngModel)]="data.JMBG" name="JMBG"
-          [disabled]="flag == 3" required>
+        <input pattern="[0-9]+" matInput #input5 minlength="13" maxlength="13" placeholder="JMBG, mora biti jedinstven"
+          [(ngModel)]="data.JMBG" name="JMBG" [disabled]="flag == 3" required>
         <mat-hint align="end">{{input5.value?.length || 0}}/13</mat-hint>
       </mat-form-field>
     </div>

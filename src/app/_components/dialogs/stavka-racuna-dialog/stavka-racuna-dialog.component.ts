@@ -34,7 +34,7 @@ export class StavkaRacunaDialogComponent implements OnInit {
         });
         this.dialogRef.close();
       }
-    });
+    }, error => this.showError(error));
   }
 
   isArray() {
@@ -53,19 +53,13 @@ export class StavkaRacunaDialogComponent implements OnInit {
 
   public add() {
     this.data.proizvodID = this.proizvodDO.proizvodID;
-    this.stavkaRacunaService.addStavkaRacuna(this.data).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.stavkaRacunaService.addStavkaRacuna(this.data).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public delete() {
-    this.stavkaRacunaService.deleteStavkaRacuna(this.data.racunID, this.data.proizvodID).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.stavkaRacunaService.deleteStavkaRacuna(this.data.racunID, this.data.proizvodID).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public cancel() {

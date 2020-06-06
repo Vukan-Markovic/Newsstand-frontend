@@ -22,18 +22,14 @@ export class DobavljacDialogComponent implements OnInit {
     public korisnikService: KorisnikService) { }
 
   public update() {
-    this.dobavljacService.updateDobavljac(this.data.dobavljacID, this.data).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.dobavljacService.updateDobavljac(this.data.dobavljacID, this.data).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public delete() {
     this.dobavljacService.deleteDobavljac(this.data.dobavljacID).subscribe(d => {
-      this.korisnikService.deleteKorisnik(this.data.dobavljacID).subscribe(data => {
-        this.showSuccess(data);
-      }, error => this.showError(error))
+      this.korisnikService.deleteKorisnik(this.data.dobavljacID).subscribe(
+        data => this.showSuccess(data), error => this.showError(error));
     }, error => this.showError(error));
   }
 

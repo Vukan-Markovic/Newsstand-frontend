@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -18,17 +18,19 @@ export class ResetPasswordComponent implements OnInit {
     private authenticationService: AuthenticationService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    if (this.authenticationService.isLoggedIn()) this.router.navigate(['/']);
+    
+    this.route.queryParams.subscribe(
+      (queyParams: Params) => {
+        this.token = queyParams['code'];
+        if (this.token == null) this.router.navigate(['/']);
+      }
+    );
+
     this.resetPasswordForm = new FormGroup({
       'lozinka': new FormControl('', [Validators.required, Validators.minLength(8)]),
       'passwordRepeat': new FormControl('', [Validators.required, Validators.minLength(8)])
     });
-
-    // this.route.queryParams.subscribe(
-    //   (queyParams: Params) => {
-    //     this.token = queyParams['code'];
-    //     if (this.token == null) this.router.navigate(['/']);
-    //   }
-    // );
   }
 
   get f() {
@@ -48,7 +50,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     this.loading = true;
-    
+
     this.authenticationService.updatePassword(this.resetPasswordForm.value.password, this.token).subscribe(
       data => {
         this.snackBar.open(data['message'], "U redu", {

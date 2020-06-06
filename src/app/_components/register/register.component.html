@@ -67,7 +67,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="required" for="kontaktDobavljaca">Kontakt</label>&nbsp;<small>Mora biti jedinstven</small>
+                            <label class="required" for="kontaktDobavljaca">Kontakt</label>&nbsp;<small>Mora biti
+                                jedinstven</small>
                             <input type="text" maxlength="20" placeholder="Unesite broj telefona"
                                 formControlName="kontaktDobavljaca" class="form-control" required
                                 [ngClass]="{ 'is-invalid': submitted && f.kontaktDobavljaca.errors }" />
@@ -129,7 +130,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="required" for="brojZiroRacuna">Broj žiro računa</label>&nbsp;<small>Mora biti jedinstven</small>
+                            <label class="required" for="brojZiroRacuna">Broj žiro računa</label>&nbsp;<small>Mora biti
+                                jedinstven</small>
                             <input required type="text" maxlength="30" placeholder="Unesite broj žiro računa"
                                 [ngClass]="{ 'is-invalid': submitted && f.brojZiroRacuna.errors }"
                                 formControlName="brojZiroRacuna" class="form-control" />
@@ -173,7 +175,8 @@
 
                         <div class="form-group">
                             <label class="required" for="datumRodjenja">Datum rođenja</label>
-                            <input type="date" formControlName="datumRodjenja" class="form-control" required
+                            <input onkeydown="return false" type="date" formControlName="datumRodjenja"
+                                class="form-control" required
                                 [ngClass]="{ 'is-invalid': submitted && f.datumRodjenja.errors }" />
                             <div *ngIf="submitted && f.datumRodjenja.errors" class="invalid-feedback">
                                 <div *ngIf="f.datumRodjenja.errors.required">Datum rođenja je obavezan</div>
@@ -207,7 +210,8 @@
 
                         <div class="form-group">
                             <label class="required" for="datumZaposlenja">Datum zaposlenja</label>
-                            <input required type="date" formControlName="datumZaposlenja" class="form-control"
+                            <input onkeydown="return false" required type="date" formControlName="datumZaposlenja"
+                                class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.datumZaposlenja.errors }" />
                             <div *ngIf="submitted && f.datumZaposlenja.errors" class="invalid-feedback">
                                 <div *ngIf="f.datumZaposlenja.errors.required">Datum zaposlenja je obavezan</div>

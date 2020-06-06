@@ -26,10 +26,10 @@
           <mat-option value="poruceno">
             poručeno
           </mat-option>
-          <mat-option value="kompletirano">
+          <mat-option *ngIf="isMenadzer" value="kompletirano">
             kompletirano
           </mat-option>
-          <mat-option value="reklamacija">
+          <mat-option *ngIf="isMenadzer" value="reklamacija">
             reklamacija
           </mat-option>
         </mat-select>

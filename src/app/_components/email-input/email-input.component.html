@@ -5,14 +5,18 @@
             <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label class="required" for="email">Email</label>
-                    <input placeholder="Unesite email adresu" required type="email" id="email" formControlName="email"
-                        class="form-control" />
-                    <span *ngIf="!emailForm.get('email').valid && emailForm.get('email').touched" class="help-block">
-                        Email adresa nije ispravna!
-                    </span>
+                    <input type="email" required placeholder="Unesite email adresu" formControlName="email"
+                        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">Email je obavezan</div>
+                    </div>
                 </div>
-                <button type="submit" [disabled]="!emailForm.valid" class="btn btn-primary" data-toggle="tooltip"
-                    data-placement="top" title="Send email">Pošalji</button>
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn btn-success btn-block">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Pošalji
+                    </button>
+                </div>
             </form>
         </div>
     </div>

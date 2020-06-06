@@ -41,13 +41,12 @@ export class ProizvodDialogComponent implements OnInit {
           });
           this.dialogRef.close();
         }
-      });
-    });
+      }, error => this.showError(error));
+    }, error => this.showError(error));
   }
 
   isArray() {
-    if (!Array.isArray(this.proizvodjaci) || !Array.isArray(this.vrsteProizvoda))
-      return false;
+    if (!Array.isArray(this.proizvodjaci) || !Array.isArray(this.vrsteProizvoda)) return false;
     return true;
   }
 
@@ -68,28 +67,19 @@ export class ProizvodDialogComponent implements OnInit {
 
   public add() {
     this.setProizvod();
-    this.proizvodService.addProizvod(this.proizvod).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.proizvodService.addProizvod(this.proizvod).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public update() {
     this.setProizvod();
-    this.proizvodService.updateProizvod(this.proizvod.proizvodID, this.proizvod).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.proizvodService.updateProizvod(this.proizvod.proizvodID, this.proizvod).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public delete() {
-    this.proizvodService.deleteProizvod(this.data.proizvodID).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.proizvodService.deleteProizvod(this.data.proizvodID).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public cancel() {

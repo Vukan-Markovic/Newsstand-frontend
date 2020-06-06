@@ -15,6 +15,6 @@ export class Proizvod {
     raspolozivaKolicina: number;
     proizvodjac: Proizvodjac;
     vrstaProizvoda: VrstaProizvoda;
-    stavkaRacuna: StavkaRacuna; 
+    stavkaRacuna: StavkaRacuna;
     stavkaPorudzbine: StavkaPorudzbine;
 }

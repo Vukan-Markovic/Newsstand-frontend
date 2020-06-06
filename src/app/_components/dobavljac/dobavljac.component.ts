@@ -24,6 +24,7 @@ export class DobavljacComponent implements OnInit {
     this.dobavljacService.getDobavljaci().subscribe(data => {
       if (!Array.isArray(data)) return;
       this.dataSource = new MatTableDataSource(data);
+
       this.dataSource.sortingDataAccessor = (data, property) => {
         if (data[property]) return data[property].toLocaleLowerCase();
       };

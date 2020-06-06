@@ -20,27 +20,18 @@ export class ProizvodjacDialogComponent implements OnInit {
     public proizvodjacService: ProizvodjacService) { }
 
   public add() {
-    this.proizvodjacService.addProizvodjac(this.data).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.proizvodjacService.addProizvodjac(this.data).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public update() {
-    this.proizvodjacService.updateProizvodjac(this.data.proizvodjacID, this.data).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.proizvodjacService.updateProizvodjac(this.data.proizvodjacID, this.data).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public delete() {
-    this.proizvodjacService.deleteProizvodjac(this.data.proizvodjacID).subscribe(data => {
-      this.showSuccess(data);
-    }, error => {
-      this.showError(error);
-    });
+    this.proizvodjacService.deleteProizvodjac(this.data.proizvodjacID).subscribe(
+      data => this.showSuccess(data), error => this.showError(error));
   }
 
   public cancel() {
