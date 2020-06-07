@@ -46,22 +46,24 @@
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>
-          <button mat-icon-button color="primary" (click)="openDialog(1)" matTooltip="Dodajte novu porudžbinu">
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-header-cell>
+        <div *ngIf="!isDobavljac">
+          <mat-header-cell *matHeaderCellDef>
+            <button mat-icon-button color="primary" (click)="openDialog(1)" matTooltip="Dodajte novu porudžbinu">
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-header-cell>
 
-        <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="primary" matTooltip="Izmenite porudžbinu"
-            (click)="openDialog(2, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
-            <mat-icon aria-label="Edit">edit</mat-icon>
-          </button>
-          <button mat-icon-button color="primary" matTooltip="Izbrišite porudžbinu"
-            (click)="openDialog(3, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
-            <mat-icon aria-label="Delete">delete</mat-icon>
-          </button>
-        </mat-cell>
+          <mat-cell *matCellDef="let row; let i=index;">
+            <button mat-icon-button color="primary" matTooltip="Izmenite porudžbinu"
+              (click)="openDialog(2, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" matTooltip="Izbrišite porudžbinu"
+              (click)="openDialog(3, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </div>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

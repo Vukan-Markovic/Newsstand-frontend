@@ -17,6 +17,7 @@ import { StavkaRacunaService } from 'src/app/_services/stavkaRacuna.service';
 import { StavkaPorudzbineService } from 'src/app/_services/stavkaPorudzbine.service';
 import { StavkaPorudzbineDialogComponent } from '../dialogs/stavka-porudzbine-dialog/stavka-porudzbine-dialog.component';
 import { StavkaRacunaDialogComponent } from '../dialogs/stavka-racuna-dialog/stavka-racuna-dialog.component';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
 
 @Component({
   selector: 'app-proizvod',
@@ -29,6 +30,7 @@ export class ProizvodComponent implements OnInit {
   i: number = 0;
   j: number = 0;
   k: number = 0;
+  isDobavljac = false;
   proizvodi: Proizvod[] = [];
   @Input() selektovanaPorudzbina: Porudzbina;
   @Input() selektovanRacun: Racun;
@@ -36,12 +38,13 @@ export class ProizvodComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public proizvodService: ProizvodService, public dialog: MatDialog, public snackBar: MatSnackBar,
-    public vrstaProizvodaService: VrstaProizvodaService, public proizvodjacService: ProizvodjacService,
+    public vrstaProizvodaService: VrstaProizvodaService, public proizvodjacService: ProizvodjacService, public authenticationService: AuthenticationService,
     public stavkaRacunaService: StavkaRacunaService, public stavkaPorudzbineService: StavkaPorudzbineService) { }
 
   ngOnInit() {
     this.i = 0, this.j = 0;
     this.proizvodi = [];
+    if (this.authenticationService.currentUserValue.uloga == 'dobavljac') this.isDobavljac = true;
     if (!this.selektovanaPorudzbina && !this.selektovanRacun) this.loadData();
   }
 

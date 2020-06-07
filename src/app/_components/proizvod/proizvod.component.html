@@ -111,7 +111,7 @@
           </mat-cell>
         </div>
 
-        <div *ngIf="selektovanaPorudzbina">
+        <div *ngIf="selektovanaPorudzbina && !isDobavljac">
           <mat-header-cell *matHeaderCellDef>
             <button mat-icon-button color="primary" matTooltip="Dodajte novu stavku porudžbine"
               matTooltipClass="example-tooltip-blue" (click)="openStavkaPorudzbineDialog(1)">

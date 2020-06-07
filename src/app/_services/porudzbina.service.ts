@@ -12,6 +12,10 @@ export class PorudzbinaService {
         return this.httpClient.get<PorudzbinaDO[]>(this.API_URL);
     }
 
+    public getPorudzbineForDobavljac(id: number) {
+        return this.httpClient.get<PorudzbinaDO[]>(this.API_URL + 'dobavljac/' + id);
+    }
+
     public getPorudzbina(id: number) {
         return this.httpClient.get<PorudzbinaDO>(this.API_URL + id);
     }
