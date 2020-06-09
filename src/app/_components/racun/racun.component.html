@@ -47,7 +47,7 @@
 
       <ng-container matColumnDef="prodavac">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Prodavac</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{row.prodavac.ime}}</mat-cell>
+        <mat-cell *matCellDef="let row">{{row.prodavac.ime}} {{row.prodavac.prezime}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="actions">

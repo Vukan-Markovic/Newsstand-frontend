@@ -42,20 +42,32 @@ export class PorudzbinaDialogComponent implements OnInit {
     if (this.authenticationService.currentUserValue.uloga == 'menadžer') this.isMenadzer = true;
 
     this.dobavljacService.getDobavljaci().subscribe(dobavljaci => {
-      if (!Array.isArray(dobavljaci)) this.exit();
+      if (!Array.isArray(dobavljaci)) {
+        this.exit();
+        return;
+      }
+
       this.dobavljaci = dobavljaci;
 
       this.prodavacService.getProdavci().subscribe(prodavci => {
-        if (!Array.isArray(prodavci)) this.exit();
+        if (!Array.isArray(prodavci)) {
+          this.exit();
+          return;
+        }
+
         this.prodavci = prodavci;
 
         this.menadzerService.getMenadzeri().subscribe(data => {
-          if (!Array.isArray(data)) this.exit();
+          if (!Array.isArray(data)) {
+            this.exit();
+            return;
+          }
           this.k = data.length;
           this.menadzeri = [];
 
           data.forEach(element => {
             var menadzer = new Menadzer();
+            menadzer.menadzerID = element.menadzerID;
             menadzer.adresaKancelarije = element.adresaKancelarije;
             menadzer.brojKancelarije = element.brojKancelarije;
             this.menadzeri.push(menadzer);

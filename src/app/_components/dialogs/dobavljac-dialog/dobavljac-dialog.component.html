@@ -61,7 +61,7 @@
     <div class="form">
       <mat-form-field hintLabel="PIB mora biti jedinstveni broj između 100000010 i 999999999">
         <input matInput type="number" #input8 min="100000010" placeholder="PIB" [formControl]="PIB"
-          [(ngModel)]="data.PIB" name="PIB" [attr.disabled]="flag == 3" required>
+          [(ngModel)]="data.PIB" name="PIB" required>
         <mat-hint align="end">{{input8.value?.length || 0}}/9</mat-hint>
       </mat-form-field>
     </div>
@@ -84,7 +84,7 @@
 
     <div mat-dialog-actions>
       <button mat-raised-button color="accent" *ngIf="flag == 2" type="submit" [mat-dialog-close]="1" (click)="update()"
-        [disabled]="!formControl.valid">Ažuriraj</button>
+        [disabled]="!formControl.valid || !data.PIB">Ažuriraj</button>
       <button mat-raised-button color="primary" *ngIf="flag == 3" type="submit" [mat-dialog-close]="1"
         (click)="delete()">Obriši</button>
       <button mat-raised-button color="warn" (click)="cancel()" tabindex="-1">Poništi</button>

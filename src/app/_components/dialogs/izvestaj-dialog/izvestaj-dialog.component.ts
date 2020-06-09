@@ -7,6 +7,7 @@ import { MenadzerService } from 'src/app/_services/menadzer.service';
 import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { IzvestajDO } from 'src/app/_models/izvestajDO';
 import { Izvestaj } from 'src/app/_models/izvestaj';
+import { RacunService } from 'src/app/_services/racun.service';
 
 @Component({
   selector: 'app-izvestaj-dialog',
@@ -21,12 +22,25 @@ export class IzvestajDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<IzvestajDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IzvestajDO,
     public izvestajService: IzvestajService,
+    public racunService: RacunService,
     public authenticationService: AuthenticationService,
     public menadzerService: MenadzerService) { }
 
   ngOnInit() {
-    this.menadzerService.getMenadzer(this.authenticationService.currentUserValue.korisnikID).subscribe(
-      menadzer => this.data.menadzerID = menadzer[0].menadzerID, error => this.showError(error));
+    if (this.flag == 1) {
+      this.racunService.getRacuni().subscribe(racuni => {
+        if (!Array.isArray(racuni)) {
+          this.snackBar.open("Da biste dodali novi izveštaj prethodno mora postajati bar jedan račun!", "U redu", {
+            duration: 2000,
+          });
+          this.dialogRef.close();
+          return;
+        }
+
+        this.menadzerService.getMenadzer(this.authenticationService.currentUserValue.korisnikID).subscribe(
+          menadzer => this.data.menadzerID = menadzer[0].menadzerID, error => this.showError(error));
+      });
+    }
   }
 
   compareTo(a: Izvestaj, b: Izvestaj) {

@@ -182,7 +182,7 @@ export class RegisterComponent implements OnInit {
         }
 
         this.korisnikService.getKorisnikByEmail(this.registerForm.value.email).subscribe(data => {
-            if (data != null) {
+            if (data[0]) {
                 this.snackBar.open("Već postoji kreiran nalog sa datom email adresom!", "U redu", {
                     duration: 2000,
                     panelClass: ['red-snackbar']

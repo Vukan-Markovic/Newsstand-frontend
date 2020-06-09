@@ -5,14 +5,13 @@
         <div class="form" *ngIf="flag == 1">
             <mat-form-field>
                 <input type="number" min="1" matInput #input placeholder="Količina" [(ngModel)]="data.kolicinaProizvoda"
-                    name="kolicinaProizvoda" [formControl]="kolicinaProizvoda" required>
+                    name="kolicinaProizvoda" [formControl]="kolicinaProizvoda" required max="2147483647">
             </mat-form-field>
         </div>
 
         <div class="form" *ngIf="isArray() && flag == 1">
             <mat-form-field>
-                <mat-select [(ngModel)]="proizvodDO" placeholder="Proizvod" name="proizvod" [compareWith]="compareTo"
-                    required>
+                <mat-select [(ngModel)]="proizvodDO" placeholder="Proizvod" name="proizvod" [compareWith]="compareTo" required>
                     <mat-option *ngFor="let proizvod of proizvodi" [value]="proizvod">
                         {{ proizvod.nazivProizvoda }}
                     </mat-option>
@@ -26,7 +25,7 @@
 
         <div mat-dialog-actions>
             <button mat-raised-button color="accent" *ngIf="flag == 1" type="submit" [mat-dialog-close]="1"
-                (click)="add()" [disabled]="!formControl.valid">Dodaj</button>
+                (click)="add()" [disabled]="!formControl.valid  || !data.kolicinaProizvoda || isEmptyObject(proizvodDO)">Dodaj</button>
             <button mat-raised-button color="primary" *ngIf="flag == 3" type="submit" [mat-dialog-close]="1"
                 (click)="delete()">Obriši</button>
             <button mat-raised-button color="warn" (click)="cancel()" tabindex="-1">Poništi</button>

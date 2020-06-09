@@ -1,11 +1,18 @@
 <mat-toolbar class="toolbarNew" color="primary">
-  <span class="title-center">Proizvodi</span>
+  <span *ngIf="!selektovanRacun && !selektovanaPorudzbina" class="title-center">Proizvodi</span>
+  <span *ngIf="selektovanRacun" class="title-center">Stavke računa</span>
+  <span *ngIf="selektovanaPorudzbina" class="title-center">Stavke porudžbine</span>
 </mat-toolbar>
 <div class="height">
   <div class="container mat-elevation-z8">
 
     <mat-form-field class="search">
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Pretražite proizvode">
+      <input *ngIf="!selektovanRacun && !selektovanaPorudzbina" matInput (keyup)="applyFilter($event.target.value)"
+        placeholder="Pretražite proizvode">
+      <input *ngIf="selektovanRacun" matInput (keyup)="applyFilter($event.target.value)"
+        placeholder="Pretražite stavke računa">
+      <input *ngIf="selektovanaPorudzbina" matInput (keyup)="applyFilter($event.target.value)"
+        placeholder="Pretražite stavke porudžbine">
     </mat-form-field>
 
     <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">

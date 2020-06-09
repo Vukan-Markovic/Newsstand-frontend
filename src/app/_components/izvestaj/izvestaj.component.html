@@ -44,12 +44,8 @@
         </mat-header-cell>
 
         <mat-cell *matCellDef="let row; let i=index;">
-          <button mat-icon-button color="primary" matTooltip="Izmenite izveštaj"
-            (click)="openDialog(2, row.izvestajID, row.datumOd, row.datumDo, row.menadzer)">
-            <mat-icon aria-label="Edit">edit</mat-icon>
-          </button>
           <button mat-icon-button color="primary" matTooltip="Izbrišite izveštaj"
-            (click)="openDialog(3, row.izvestajID, row.datumOd, row.datumDo, row.menadzer.menadzerID)">
+            (click)="openDialog(3, row.izvestajID, row.datumOd, row.datumDo)">
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </mat-cell>

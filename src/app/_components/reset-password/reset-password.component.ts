@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
     this.submitted = true;
     if (this.resetPasswordForm.invalid) return;
 
-    if (!(this.resetPasswordForm.value.password === this.resetPasswordForm.value.passwordRepeat)) {
+    if (!(this.resetPasswordForm.value.lozinka === this.resetPasswordForm.value.passwordRepeat)) {
       this.snackBar.open("Lozinke moraju da se podudaraju!", "U redu", {
         duration: 2000,
         panelClass: ['red-snackbar']
@@ -51,7 +51,7 @@ export class ResetPasswordComponent implements OnInit {
 
     this.loading = true;
 
-    this.authenticationService.updatePassword(this.resetPasswordForm.value.password, this.token).subscribe(
+    this.authenticationService.updatePassword(this.resetPasswordForm.value.lozinka, this.token).subscribe(
       data => {
         this.snackBar.open(data['message'], "U redu", {
           duration: 2000

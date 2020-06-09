@@ -51,7 +51,19 @@ export class StavkaRacunaDialogComponent implements OnInit {
     this.proizvodDO = proizvod;
   }
 
+  isEmptyObject(obj) {
+    return (obj && (Object.keys(obj).length === 0));
+  }
+
   public add() {
+    if (this.data.kolicinaProizvoda > this.proizvodDO.raspolozivaKolicina) {
+      this.snackBar.open("Količina kupljenog proizvoda ne može biti veća od njegove dostupnosti!", "U redu", {
+        duration: 2000,
+        panelClass: ['red-snackbar']
+      });
+      return;
+    }
+
     this.data.proizvodID = this.proizvodDO.proizvodID;
     this.stavkaRacunaService.addStavkaRacuna(this.data).subscribe(
       data => this.showSuccess(data), error => this.showError(error));

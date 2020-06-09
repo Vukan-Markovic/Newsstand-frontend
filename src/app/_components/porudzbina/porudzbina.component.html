@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <span class="title-center">Porudžbine</span>
 </mat-toolbar>
-<div class="height" style="overflow-y: hidden;">
+<div class="height">
   <div class="container mat-elevation-z8">
 
     <mat-form-field class="search">
@@ -46,24 +46,23 @@
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <div *ngIf="!isDobavljac">
-          <mat-header-cell *matHeaderCellDef>
-            <button mat-icon-button color="primary" (click)="openDialog(1)" matTooltip="Dodajte novu porudžbinu">
-              <mat-icon>add</mat-icon>
-            </button>
-          </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>
+          <button *ngIf="!isDobavljac" mat-icon-button color="primary" (click)="openDialog(1)"
+            matTooltip="Dodajte novu porudžbinu">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-header-cell>
 
-          <mat-cell *matCellDef="let row; let i=index;">
-            <button mat-icon-button color="primary" matTooltip="Izmenite porudžbinu"
-              (click)="openDialog(2, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
-              <mat-icon aria-label="Edit">edit</mat-icon>
-            </button>
-            <button mat-icon-button color="primary" matTooltip="Izbrišite porudžbinu"
-              (click)="openDialog(3, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
-              <mat-icon aria-label="Delete">delete</mat-icon>
-            </button>
-          </mat-cell>
-        </div>
+        <mat-cell *matCellDef="let row; let i=index;">
+          <button *ngIf="!isDobavljac" mat-icon-button color="primary" matTooltip="Izmenite porudžbinu"
+            (click)="openDialog(2, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+          <button *ngIf="!isDobavljac" mat-icon-button color="primary" matTooltip="Izbrišite porudžbinu"
+            (click)="openDialog(3, row.porudzbinaID, row.datumPorucivanja, row.datumIsporuke, row.ukupanIznosPorudzbine, row.statusPorudzbine, row.dobavljac, row.menadzer, row.prodavac)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

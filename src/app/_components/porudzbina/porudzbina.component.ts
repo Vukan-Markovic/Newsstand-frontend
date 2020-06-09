@@ -89,7 +89,7 @@ export class PorudzbinaComponent implements OnInit {
                   if (key === 'prodavac')
                     return currentTerm + data.prodavac.ime;
                   else if (key === 'menadzer')
-                    return currentTerm + data.menadzer.adresaKancelarije;
+                    return currentTerm + data.menadzer.prodavac.ime;
                   else if (key === 'dobavljac')
                     return currentTerm + data.dobavljac.skraceniNaziv;
                   return currentTerm + data[key];
@@ -105,7 +105,7 @@ export class PorudzbinaComponent implements OnInit {
                   switch (property) {
                     case 'prodavac': return data.prodavac.ime.toLocaleLowerCase();
                     case 'dobavljac': return data.dobavljac.skraceniNaziv.toLocaleLowerCase();
-                    case 'menadzer': return data.menadzer.adresaKancelarije.toLocaleLowerCase();
+                    case 'menadzer': return data.menadzer.prodavac.ime.toLocaleLowerCase();
                     default: return typeof data[property] == "string" ? data[property].toLocaleLowerCase() : data[property];
                   }
                 }
@@ -156,6 +156,6 @@ export class PorudzbinaComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource) this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

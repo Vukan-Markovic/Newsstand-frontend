@@ -19,8 +19,6 @@ export class RacunComponent implements OnInit {
   displayedColumns = ['vremeIzdavanja', 'mestoIzdavanja', 'ukupanIznosRacuna', 'nazivProdavnice', 'nacinPlacanja', 'brojRacuna', 'tipRacuna', 'prodavac', 'actions'];
   dataSource: MatTableDataSource<Racun>;
   selektovanRacun: Racun;
-  i: number = 0;
-  k: number = 0;
   racuni: Racun[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -33,12 +31,12 @@ export class RacunComponent implements OnInit {
   }
 
   public loadData() {
-    this.i = 0;
+    var i = 0;
     this.racuni = [];
 
     this.racunService.getRacuni().subscribe(data => {
       if (!Array.isArray(data)) return;
-      this.k = data.length;
+      var k = data.length;
 
       data.forEach(element => {
         var racun = new Racun();
@@ -53,9 +51,9 @@ export class RacunComponent implements OnInit {
         this.racuni.push(racun);
 
         this.prodavacService.getProdavac(element.prodavacID).subscribe(prodavac => {
-          this.racuni[this.i++].prodavac = prodavac[0];
+          this.racuni[i++].prodavac = prodavac[0];
 
-          if (this.k == this.i) {
+          if (k == i) {
             this.dataSource = new MatTableDataSource(this.racuni);
 
             this.dataSource.filterPredicate = (data, filter: string) => {
@@ -123,6 +121,6 @@ export class RacunComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource) this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

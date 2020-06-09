@@ -5,7 +5,7 @@
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label class="required" for="email">Email</label>
-                    <input type="email" required placeholder="Unesite email adresu" formControlName="email"
+                    <input autocomplete="email" type="email" required placeholder="Unesite email adresu" formControlName="email"
                         class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                     <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                         <div *ngIf="f.email.errors.required">Email je obavezan</div>
@@ -14,7 +14,7 @@
                 </div>
                 <div class="form-group">
                     <label class="required" for="lozinka">Lozinka</label>
-                    <input type="password" required placeholder="Unesite lozinku" minlength="8"
+                    <input autocomplete="current-password" type="password" required placeholder="Unesite lozinku" minlength="8"
                         formControlName="lozinka" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.lozinka.errors }" />
                     <div *ngIf="submitted && f.lozinka.errors" class="invalid-feedback">
@@ -23,12 +23,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button [disabled]="loading" class="btn btn-success btn-block">
+                    <button type="submit" [disabled]="loading" class="btn btn-success btn-block">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         Prijavi se
                     </button><br />
-                    <button routerLink="/register" class="btn btn-primary">Registruj se</button>&nbsp;
-                    <button routerLink="/emailInput" class="btn btn-info">Resetuj lozinku</button>
+                    <button type="button" routerLink="/register" class="btn btn-primary">Registruj se</button>&nbsp;
+                    <button type="button" routerLink="/emailInput" class="btn btn-info">Resetuj lozinku</button>
                 </div>
             </form>
         </div>

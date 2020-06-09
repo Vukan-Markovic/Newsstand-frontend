@@ -51,6 +51,10 @@ export class StavkaPorudzbineDialogComponent implements OnInit {
     this.proizvodDO = proizvod;
   }
 
+  isEmptyObject(obj) {
+    return (obj && (Object.keys(obj).length === 0));
+  }
+
   public add() {
     this.data.proizvodID = this.proizvodDO.proizvodID;
     this.stavkaPorudzbineService.addStavkaPorudzbine(this.data).subscribe(

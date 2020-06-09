@@ -16,8 +16,6 @@ import { MenadzerService } from 'src/app/_services/menadzer.service';
 export class ZaposleniComponent implements OnInit {
   displayedColumns = ['ime', 'prezime', 'pol', 'datumRodjenja', 'adresaStanovanja', 'telefon', 'JMBG', 'datumZaposlenja', 'strucnaSprema', 'menadzer'];
   dataSource: MatTableDataSource<Prodavac>;
-  i: number = 0;
-  k: number = 0;
   prodavci: Prodavac[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -30,12 +28,12 @@ export class ZaposleniComponent implements OnInit {
   }
 
   public loadData() {
-    this.i = 0;
+    var i = 0;
     this.prodavci = [];
 
     this.prodavacService.getProdavci().subscribe(data => {
       if (!Array.isArray(data)) return;
-      this.k = data.length;
+      var k = data.length;
 
       data.forEach(element => {
         var prodavac = new Prodavac();
@@ -50,11 +48,12 @@ export class ZaposleniComponent implements OnInit {
         prodavac.strucnaSprema = element.strucnaSprema;
         prodavac.telefon = element.telefon;
         this.prodavci.push(prodavac);
-
+ 
         this.menadzerService.getMenadzer(element.prodavacID).subscribe(menadzer => {
-          this.prodavci[this.i++].menadzer = menadzer[0];
+          if (Array.isArray(menadzer)) this.prodavci[i].menadzer = menadzer[0];
+          i++;
 
-          if (this.k == this.i) {
+          if (k == i) {
             this.dataSource = new MatTableDataSource(this.prodavci);
 
             this.dataSource.filterPredicate = (data, filter: string) => {
@@ -92,6 +91,6 @@ export class ZaposleniComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource) this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

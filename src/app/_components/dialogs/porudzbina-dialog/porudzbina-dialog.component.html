@@ -5,7 +5,7 @@
   <form class="mat-dialog-content" ngSubmit="submit" #formControl="ngForm">
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input onkeydown="return false" type="date" matInput placeholder="Datum poručivanja"
+        <input min="1900-01-01" max="2078-12-31" onkeydown="return false" type="date" matInput placeholder="Datum poručivanja"
           (ngModelChange)="data.datumPorucivanja=$event" [ngModel]="data.datumPorucivanja | date : 'yyyy-MM-dd'"
           name="datumPorucivanja" [disabled]="flag == 3" required>
       </mat-form-field>
@@ -13,7 +13,7 @@
 
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input onkeydown="return false" type="date" matInput placeholder="Datum isporuke"
+        <input min="1900-01-01" max="2078-12-31" onkeydown="return false" type="date" matInput placeholder="Datum isporuke"
           [ngModel]="data.datumIsporuke | date : 'yyyy-MM-dd'" (ngModelChange)="data.datumIsporuke=$event"
           name="datumIsporuke" [disabled]="flag == 3">
       </mat-form-field>

@@ -6,8 +6,9 @@
                 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <label class="required" for="email">Email</label>
-                        <input type="email" maxlength="30" placeholder="Unesite email adresu" formControlName="email"
-                            class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required />
+                        <input autocomplete="email" type="email" maxlength="30" placeholder="Unesite email adresu"
+                            formControlName="email" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required />
                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                             <div *ngIf="f.email.errors.required">Email je obavezan</div>
                             <div *ngIf="f.email.errors.email">Unesite ispravnu email adresu</div>
@@ -15,8 +16,8 @@
                     </div>
                     <div class="form-group">
                         <label class="required" for="lozinka">Lozinka</label>
-                        <input type="password" required placeholder="Unesite lozinku" formControlName="lozinka"
-                            class="form-control" minlength="8"
+                        <input autocomplete="new-password" type="password" required placeholder="Unesite lozinku"
+                            formControlName="lozinka" class="form-control" minlength="8"
                             [ngClass]="{ 'is-invalid': submitted && f.lozinka.errors }" />
                         <div *ngIf="submitted && f.lozinka.errors" class="invalid-feedback">
                             <div *ngIf="f.lozinka.errors.required">Lozinka je obavezna</div>
@@ -26,8 +27,8 @@
 
                     <div class="form-group">
                         <label class="required" for="passwordRepeat">Potvrdite lozinku</label>
-                        <input type="password" required placeholder="Ponovite vašu lozinku" id="passwordRepeat"
-                            formControlName="passwordRepeat" class="form-control" minlength="8"
+                        <input autocomplete="new-password" type="password" required placeholder="Ponovite vašu lozinku"
+                            id="passwordRepeat" formControlName="passwordRepeat" class="form-control" minlength="8"
                             [ngClass]="{ 'is-invalid': submitted && f.passwordRepeat.errors }" />
                         <div *ngIf="submitted && f.passwordRepeat.errors" class="invalid-feedback">
                             <div *ngIf="f.passwordRepeat.errors.required">Morate potvrditi lozinku</div>
@@ -113,14 +114,10 @@
                         <div class="form-group">
                             <label class="required" for="PIB">PIB</label>&nbsp;<small>Mora biti jedinstven</small>
                             <input type="number" min="100000010" max="999999999" required
-                                placeholder="Unesite poreski identifikacioni broj" formControlName="PIB"
+                                placeholder="Mora biti od 100000010 do 999999999" formControlName="PIB"
                                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.PIB.errors }" />
                             <div *ngIf="submitted && f.PIB.errors" class="invalid-feedback">
                                 <div *ngIf="f.PIB.errors.required">PIB je obavezan</div>
-                                <div *ngIf="f.PIB.errors.minlength">PIB mora biti između brojeva 100000010 i 999999999!
-                                </div>
-                                <div *ngIf="f.PIB.errors.maxlength">PIB mora biti između brojeva 100000010 i 999999999!
-                                </div>
                             </div>
                         </div>
 
@@ -176,8 +173,8 @@
 
                         <div class="form-group">
                             <label class="required" for="datumRodjenja">Datum rođenja</label>
-                            <input onkeydown="return false" type="date" formControlName="datumRodjenja"
-                                class="form-control" required
+                            <input min="1900-01-01" max="2078-12-31" onkeydown="return false" type="date"
+                                formControlName="datumRodjenja" class="form-control" required
                                 [ngClass]="{ 'is-invalid': submitted && f.datumRodjenja.errors }" />
                             <div *ngIf="submitted && f.datumRodjenja.errors" class="invalid-feedback">
                                 <div *ngIf="f.datumRodjenja.errors.required">Datum rođenja je obavezan</div>
@@ -211,8 +208,8 @@
 
                         <div class="form-group">
                             <label class="required" for="datumZaposlenja">Datum zaposlenja</label>
-                            <input onkeydown="return false" required type="date" formControlName="datumZaposlenja"
-                                class="form-control"
+                            <input min="1900-01-01" max="2078-12-31" onkeydown="return false" required type="date"
+                                formControlName="datumZaposlenja" class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.datumZaposlenja.errors }" />
                             <div *ngIf="submitted && f.datumZaposlenja.errors" class="invalid-feedback">
                                 <div *ngIf="f.datumZaposlenja.errors.required">Datum zaposlenja je obavezan</div>
@@ -230,7 +227,7 @@
                         <div class="form-group">
                             <label class="required" for="adresaKancelarije">Adresa kancelarije</label>
                             <input type="text" placeholder="Unesite adresu kancelarije" required
-                                formControlName="adresaKancelarije" class="form-control"
+                                formControlName="adresaKancelarije" class="form-control" maxlength="50"
                                 [ngClass]="{ 'is-invalid': submitted && f.adresaKancelarije.errors }" />
                             <div *ngIf="submitted && f.adresaKancelarije.errors" class="invalid-feedback">
                                 <div *ngIf="f.adresaKancelarije.errors.required">Adresa kancelarije je obavezna</div>
@@ -239,13 +236,13 @@
 
                         <div class="form-group">
                             <label for="brojKancelarije">Broj kancelarije</label>
-                            <input placeholder="Unesite broj kancelarije" type="text" formControlName="brojKancelarije"
+                            <input max="5" placeholder="Unesite broj kancelarije" type="text" formControlName="brojKancelarije"
                                 class="form-control" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <button [disabled]="loading" class="btn btn-success btn-block">
+                        <button type="submit" [disabled]="loading" class="btn btn-success btn-block">
                             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                             Registruj se
                         </button>

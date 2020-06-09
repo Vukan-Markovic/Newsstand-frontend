@@ -15,7 +15,9 @@ export class DobavljacDialogComponent implements OnInit {
   public flag: number;
   PIB = new FormControl('', [Validators.min(100000010), Validators.max(999999999)]);
 
-  ngOnInit() { }
+  ngOnInit() {
+    if(this.flag==3) this.PIB.disable();
+   }
 
   constructor(public snackBar: MatSnackBar, public dialogRef: MatDialogRef<DobavljacDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Dobavljac, public dobavljacService: DobavljacService,

@@ -27,12 +27,6 @@ export class RacunDialogComponent implements OnInit {
   ngOnInit() {
     this.prodavacService.getProdavci().subscribe(prodavci => {
       this.prodavci = prodavci;
-      if (!Array.isArray(this.prodavci)) {
-        this.snackBar.open("Da biste dodali novi račun prethodno mora postajati bar jedan zaposleni!", "U redu", {
-          duration: 2000,
-        });
-        this.dialogRef.close();
-      }
     }, error => this.showError(error));
   }
 
@@ -85,7 +79,7 @@ export class RacunDialogComponent implements OnInit {
     this.racun.ukupanIznosRacuna = this.data.ukupanIznosRacuna;
     var d1 = new Date(this.data.vremeIzdavanja);
     d1.setSeconds(0);
-    d1.setHours(d1.getHours() + 2);
+    d1.setHours(d1.getHours() + 1);
     this.racun.vremeIzdavanja = d1;
   }
 

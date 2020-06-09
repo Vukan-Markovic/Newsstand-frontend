@@ -20,15 +20,21 @@ export class ProizvodDialogComponent implements OnInit {
   proizvod: ProizvodDO = new ProizvodDO();
   proizvodjaci: Proizvodjac[];
   vrsteProizvoda: VrstaProizvoda[];
-  cena = new FormControl('', [Validators.min(1), Validators.max(99999999)]);
-  masa = new FormControl('', [Validators.min(1), Validators.max(99999999)]);
-  raspolozivaKolicina = new FormControl('', [Validators.min(1), Validators.max(2147483647)]);
+  cena = new FormControl('', [Validators.min(1), Validators.max(99999999), Validators.required]);
+  masa = new FormControl('', [Validators.min(1), Validators.max(99999999), Validators.required]);
+  raspolozivaKolicina = new FormControl('', [Validators.min(1), Validators.max(2147483647), Validators.required]);
 
   constructor(public snackBar: MatSnackBar, public dialogRef: MatDialogRef<ProizvodDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Proizvod, public proizvodService: ProizvodService,
     public proizvodjacService: ProizvodjacService, public vrstaProizvodaService: VrstaProizvodaService) { }
 
   ngOnInit() {
+    if(this.flag==3) {
+      this.cena.disable();
+      this.masa.disable();
+      this.raspolozivaKolicina.disable();
+    }
+    
     this.proizvodjacService.getProizvodjaci().subscribe(proizvodjaci => {
       this.proizvodjaci = proizvodjaci;
 

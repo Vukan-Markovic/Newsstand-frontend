@@ -9,6 +9,8 @@ import { IzvestajDialogComponent } from '../dialogs/izvestaj-dialog/izvestaj-dia
 import { MenadzerService } from 'src/app/_services/menadzer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
+import { Prodavac } from 'src/app/_models/prodavac';
+import { Menadzer } from 'src/app/_models/menadzer';
 
 @Component({
   selector: 'app-izvestaj',
@@ -20,8 +22,6 @@ export class IzvestajComponent implements OnInit {
   dataSource: MatTableDataSource<Izvestaj>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  i: number = 0;
-  k: number = 0;
   izvestaji: Izvestaj[] = [];
 
   constructor(public izvestajService: IzvestajService, public dialog: MatDialog, public prodavacService: ProdavacService,
@@ -32,12 +32,12 @@ export class IzvestajComponent implements OnInit {
   }
 
   public loadData() {
-    this.i = 0;
     this.izvestaji = [];
+    var i = 0;
 
     this.izvestajService.getIzvestaji().subscribe(data => {
       if (!Array.isArray(data)) return;
-      this.k = data.length;
+      var k = data.length;
 
       data.forEach(element => {
         var izvestaj = new Izvestaj();
@@ -48,42 +48,39 @@ export class IzvestajComponent implements OnInit {
         izvestaj.promet = element.promet;
         this.izvestaji.push(izvestaj);
 
-        this.menadzerService.getMenadzer(element.menadzerID).subscribe(menadzer => {
-          this.izvestaji[this.i].menadzer = menadzer[0];
+        this.prodavacService.getProdavac(element.menadzerID).subscribe(prodavac => {
+          this.izvestaji[i].menadzer = new Menadzer();
+          this.izvestaji[i].menadzer.prodavac = prodavac[0];
+          i++;
 
-          this.prodavacService.getProdavac(element.menadzerID).subscribe(prodavac => {
-            this.izvestaji[this.i].menadzer.prodavac = prodavac[0];
-            this.i++;
+          if (k == i) {
+            this.dataSource = new MatTableDataSource(this.izvestaji);
 
-            if (this.k == this.i) {
-              this.dataSource = new MatTableDataSource(this.izvestaji);
-
-              this.dataSource.filterPredicate = (data, filter: string) => {
-                const accumulator = (currentTerm, key: string) => {
-                  return key === 'menadzer' ? currentTerm + data.menadzer.adresaKancelarije : currentTerm + data[key];
-                };
-
-                const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
-                const transformedFilter = filter.trim().toLowerCase();
-                return dataStr.indexOf(transformedFilter) !== -1;
+            this.dataSource.filterPredicate = (data, filter: string) => {
+              const accumulator = (currentTerm, key: string) => {
+                return key === 'menadzer' ? currentTerm + data.menadzer.prodavac.ime : currentTerm + data[key];
               };
 
-              this.dataSource.sortingDataAccessor = (data, property) => {
-                if (data[property]) {
-                  switch (property) {
-                    case 'menadzer': return data.menadzer.adresaKancelarije.toLocaleLowerCase();
-                    default: return typeof data[property] == "string" ? data[property].toLocaleLowerCase() : data[property];
-                  }
+              const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+              const transformedFilter = filter.trim().toLowerCase();
+              return dataStr.indexOf(transformedFilter) !== -1;
+            };
+
+            this.dataSource.sortingDataAccessor = (data, property) => {
+              if (data[property]) {
+                switch (property) {
+                  case 'menadzer': return data.menadzer.prodavac.ime.toLocaleLowerCase();
+                  default: return typeof data[property] == "string" ? data[property].toLocaleLowerCase() : data[property];
                 }
-              };
+              }
+            };
 
-              this.dataSource.paginator = this.paginator;
-              this.dataSource.sort = this.sort;
-            }
-          }, error => this.showError(error));
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          }
         }, error => this.showError(error));
-      });
-    }, error => this.showError(error));
+      }, error => this.showError(error));
+    });
   }
 
   showError(error) {
@@ -96,11 +93,11 @@ export class IzvestajComponent implements OnInit {
   public openDialog(flag: number, izvestajID?: number,
     datumOd?: Date,
     datumDo?: Date,
-    menadzerID?: number) {
+    prodavacID?: number) {
     const dialogRef = this.dialog.open(IzvestajDialogComponent, {
       data: {
         i: izvestajID, izvestajID: izvestajID, datumOd: datumOd,
-        datumDo: datumDo, menadzerID: menadzerID
+        datumDo: datumDo
       }
     });
 
@@ -112,6 +109,6 @@ export class IzvestajComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource) this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

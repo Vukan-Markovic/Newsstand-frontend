@@ -33,7 +33,7 @@
 
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input onkeydown="return false" type="date" matInput placeholder="Datum rođenja"
+        <input min="1900-01-01" max="2078-12-31" onkeydown="return false" type="date" matInput placeholder="Datum rođenja"
           [ngModel]="data.datumRodjenja | date : 'yyyy-MM-dd'" (ngModelChange)="data.datumRodjenja=$event"
           name="datumRodjenja" [disabled]="flag == 3" required>
       </mat-form-field>
@@ -65,7 +65,7 @@
 
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input onkeydown="return false" type="date" matInput placeholder="Datum zaposlenja" required
+        <input min="1900-01-01" max="2079-06-06" onkeydown="return false" type="date" matInput placeholder="Datum zaposlenja" required
           (ngModelChange)="data.datumZaposlenja=$event" [ngModel]="data.datumZaposlenja | date : 'yyyy-MM-dd'"
           name="datumZaposlenja" [disabled]="flag == 3">
       </mat-form-field>
