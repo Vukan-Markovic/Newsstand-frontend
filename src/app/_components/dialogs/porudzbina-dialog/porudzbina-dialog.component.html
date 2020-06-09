@@ -5,17 +5,18 @@
   <form class="mat-dialog-content" ngSubmit="submit" #formControl="ngForm">
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input min="1900-01-01" max="2078-12-31" onkeydown="return false" type="date" matInput placeholder="Datum poručivanja"
-          (ngModelChange)="data.datumPorucivanja=$event" [ngModel]="data.datumPorucivanja | date : 'yyyy-MM-dd'"
-          name="datumPorucivanja" [disabled]="flag == 3" required>
+        <input min="1900-01-01" max="2078-12-31" onkeydown="return false" type="date" matInput
+          placeholder="Datum poručivanja" (ngModelChange)="data.datumPorucivanja=$event"
+          [ngModel]="data.datumPorucivanja | date : 'yyyy-MM-dd'" name="datumPorucivanja" [disabled]="flag == 3"
+          required>
       </mat-form-field>
     </div>
 
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input min="1900-01-01" max="2078-12-31" onkeydown="return false" type="date" matInput placeholder="Datum isporuke"
-          [ngModel]="data.datumIsporuke | date : 'yyyy-MM-dd'" (ngModelChange)="data.datumIsporuke=$event"
-          name="datumIsporuke" [disabled]="flag == 3">
+        <input min="1900-01-01" max="2078-12-31" onkeydown="return false" type="date" matInput
+          placeholder="Datum isporuke" [ngModel]="data.datumIsporuke | date : 'yyyy-MM-dd'"
+          (ngModelChange)="data.datumIsporuke=$event" name="datumIsporuke" [disabled]="flag == 3">
       </mat-form-field>
     </div>
 
@@ -49,7 +50,7 @@
 
     <div class="form" *ngIf="isArray() && loaded">
       <mat-form-field>
-        <mat-select [(ngModel)]="data.menadzer" placeholder="Menadžer" name="menadzer" [compareWith]="compareMenadzer"
+        <mat-select [(ngModel)]="data.menadzer" placeholder="Menadžer" name="menadzer" [compareWith]="compareProdavac"
           [disabled]="flag == 3" required>
           <mat-option *ngFor="let menadzer of menadzeri" [value]="menadzer">
             {{ menadzer.prodavac.ime }} {{ menadzer.prodavac.prezime }}

@@ -5,8 +5,9 @@
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label class="required" for="email">Email</label>
-                    <input autocomplete="email" type="email" required placeholder="Unesite email adresu" formControlName="email"
-                        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                    <input autocomplete="email" type="email" required placeholder="Unesite email adresu"
+                        formControlName="email" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                     <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                         <div *ngIf="f.email.errors.required">Email je obavezan</div>
                         <div *ngIf="f.email.errors.email">Unesite ispravnu email adresu</div>
@@ -14,8 +15,8 @@
                 </div>
                 <div class="form-group">
                     <label class="required" for="lozinka">Lozinka</label>
-                    <input autocomplete="current-password" type="password" required placeholder="Unesite lozinku" minlength="8"
-                        formControlName="lozinka" class="form-control"
+                    <input autocomplete="current-password" type="password" required placeholder="Unesite lozinku"
+                        minlength="8" formControlName="lozinka" class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.lozinka.errors }" />
                     <div *ngIf="submitted && f.lozinka.errors" class="invalid-feedback">
                         <div *ngIf="f.lozinka.errors.required">Lozinka je obavezna</div>

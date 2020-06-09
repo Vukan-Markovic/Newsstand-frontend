@@ -78,6 +78,7 @@ export class PorudzbinaComponent implements OnInit {
 
           this.prodavacService.getProdavac(element.menadzerID).subscribe(menadzer => {
             this.porudzbine[this.l].menadzer = new Menadzer();
+            this.porudzbine[this.l].menadzer.menadzerID = element.menadzerID;
             this.porudzbine[this.l].menadzer.prodavac = menadzer[0];
             this.l++;
 

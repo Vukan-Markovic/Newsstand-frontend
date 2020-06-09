@@ -57,7 +57,9 @@
 
       <ng-container matColumnDef="menadzer">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Adresa i broj kancelarije</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.menadzer.adresaKancelarije}} {{row.menadzer.brojKancelarije}}</mat-cell>
+        <mat-cell *matCellDef="let row">
+          <div *ngIf="row.menadzer">{{row.menadzer.adresaKancelarije}} {{row.menadzer.brojKancelarije}}</div>
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

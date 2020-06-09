@@ -48,7 +48,7 @@ export class ZaposleniComponent implements OnInit {
         prodavac.strucnaSprema = element.strucnaSprema;
         prodavac.telefon = element.telefon;
         this.prodavci.push(prodavac);
- 
+
         this.menadzerService.getMenadzer(element.prodavacID).subscribe(menadzer => {
           if (Array.isArray(menadzer)) this.prodavci[i].menadzer = menadzer[0];
           i++;

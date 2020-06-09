@@ -33,9 +33,9 @@
 
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input min="1900-01-01" max="2078-12-31" onkeydown="return false" type="date" matInput placeholder="Datum rođenja"
-          [ngModel]="data.datumRodjenja | date : 'yyyy-MM-dd'" (ngModelChange)="data.datumRodjenja=$event"
-          name="datumRodjenja" [disabled]="flag == 3" required>
+        <input min="1900-01-01" max="2078-12-31" onkeydown="return false" type="date" matInput
+          placeholder="Datum rođenja" [ngModel]="data.datumRodjenja | date : 'yyyy-MM-dd'"
+          (ngModelChange)="data.datumRodjenja=$event" name="datumRodjenja" [disabled]="flag == 3" required>
       </mat-form-field>
     </div>
 
@@ -65,9 +65,9 @@
 
     <div class="form">
       <mat-form-field class="example-full-width" color="accent">
-        <input min="1900-01-01" max="2079-06-06" onkeydown="return false" type="date" matInput placeholder="Datum zaposlenja" required
-          (ngModelChange)="data.datumZaposlenja=$event" [ngModel]="data.datumZaposlenja | date : 'yyyy-MM-dd'"
-          name="datumZaposlenja" [disabled]="flag == 3">
+        <input min="1900-01-01" max="2079-06-06" onkeydown="return false" type="date" matInput
+          placeholder="Datum zaposlenja" required (ngModelChange)="data.datumZaposlenja=$event"
+          [ngModel]="data.datumZaposlenja | date : 'yyyy-MM-dd'" name="datumZaposlenja" [disabled]="flag == 3">
       </mat-form-field>
     </div>
 
@@ -98,8 +98,7 @@
     <div mat-dialog-actions>
       <button mat-raised-button color="accent" *ngIf="flag == 2" type="submit" [mat-dialog-close]="1" (click)="update()"
         [disabled]="!formControl.valid">Ažuriraj</button>
-      <button mat-raised-button color="primary" *ngIf="flag == 3" type="submit" [mat-dialog-close]="1"
-        (click)="delete()">Obriši</button>
+      <button mat-raised-button color="primary" *ngIf="flag == 3" type="submit" (click)="delete()">Obriši</button>
       <button mat-raised-button color="warn" (click)="cancel()" tabindex="-1">Poništi</button>
     </div>
   </form>

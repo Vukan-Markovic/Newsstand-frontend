@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,7 +9,6 @@ import { IzvestajDialogComponent } from '../dialogs/izvestaj-dialog/izvestaj-dia
 import { MenadzerService } from 'src/app/_services/menadzer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProdavacService } from 'src/app/_services/prodavac.service';
-import { Prodavac } from 'src/app/_models/prodavac';
 import { Menadzer } from 'src/app/_models/menadzer';
 
 @Component({
@@ -92,8 +91,7 @@ export class IzvestajComponent implements OnInit {
 
   public openDialog(flag: number, izvestajID?: number,
     datumOd?: Date,
-    datumDo?: Date,
-    prodavacID?: number) {
+    datumDo?: Date) {
     const dialogRef = this.dialog.open(IzvestajDialogComponent, {
       data: {
         i: izvestajID, izvestajID: izvestajID, datumOd: datumOd,

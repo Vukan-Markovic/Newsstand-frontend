@@ -64,7 +64,15 @@ export class ZaposleniDialogComponent implements OnInit {
   public delete() {
     if (this.data.menadzer) {
       this.menadzerService.deleteMenadzer(this.data.prodavacID).subscribe(
-        d => this.deleteProdavac(), error => this.showError(error));
+        d => this.deleteProdavac(), error => {
+          this.snackBar.open("Ne možete izbrisati nalog dok imate kreirane porudžbine!", "U redu", {
+            duration: 2000,
+            panelClass: ['red-snackbar']
+          });
+
+          this.dialogRef.close(-1);
+        }
+      );
     }
     else this.deleteProdavac();
   }
@@ -72,7 +80,10 @@ export class ZaposleniDialogComponent implements OnInit {
   public deleteProdavac() {
     this.prodavacService.deleteProdavac(this.data.prodavacID).subscribe(data => {
       this.korisnikService.deleteKorisnik(this.data.prodavacID).subscribe(
-        d => this.showSuccess(data), error => this.showError(error));
+        d => {
+          this.showSuccess(data);
+          this.dialogRef.close(1);
+        }, error => this.showError(error));
     }, error => this.showError(error));
   }
 

@@ -62,6 +62,7 @@ export class PorudzbinaDialogComponent implements OnInit {
             this.exit();
             return;
           }
+
           this.k = data.length;
           this.menadzeri = [];
 
@@ -110,7 +111,7 @@ export class PorudzbinaDialogComponent implements OnInit {
   }
 
   public add() {
-    if (this.checkDates) {
+    if (this.checkDates()) {
       this.setPorudzbina();
       this.porudzbinaService.addPorudzbina(this.porudzbina).subscribe(
         data => this.showSuccess(data), error => this.showError(error));
@@ -118,7 +119,7 @@ export class PorudzbinaDialogComponent implements OnInit {
   }
 
   public update() {
-    if (this.checkDates) {
+    if (this.checkDates()) {
       this.setPorudzbina();
       this.porudzbinaService.updatePorudzbina(this.data.porudzbinaID, this.porudzbina).subscribe(
         data => this.showSuccess(data), error => this.showError(error));

@@ -16,8 +16,8 @@ export class DobavljacDialogComponent implements OnInit {
   PIB = new FormControl('', [Validators.min(100000010), Validators.max(999999999)]);
 
   ngOnInit() {
-    if(this.flag==3) this.PIB.disable();
-   }
+    if (this.flag == 3) this.PIB.disable();
+  }
 
   constructor(public snackBar: MatSnackBar, public dialogRef: MatDialogRef<DobavljacDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Dobavljac, public dobavljacService: DobavljacService,
@@ -31,7 +31,10 @@ export class DobavljacDialogComponent implements OnInit {
   public delete() {
     this.dobavljacService.deleteDobavljac(this.data.dobavljacID).subscribe(d => {
       this.korisnikService.deleteKorisnik(this.data.dobavljacID).subscribe(
-        data => this.showSuccess(data), error => this.showError(error));
+        data => {
+          this.showSuccess(data);
+          this.dialogRef.close(1);
+        }, error => this.showError(error));
     }, error => this.showError(error));
   }
 

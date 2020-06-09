@@ -29,12 +29,12 @@ export class ProizvodDialogComponent implements OnInit {
     public proizvodjacService: ProizvodjacService, public vrstaProizvodaService: VrstaProizvodaService) { }
 
   ngOnInit() {
-    if(this.flag==3) {
+    if (this.flag == 3) {
       this.cena.disable();
       this.masa.disable();
       this.raspolozivaKolicina.disable();
     }
-    
+
     this.proizvodjacService.getProizvodjaci().subscribe(proizvodjaci => {
       this.proizvodjaci = proizvodjaci;
 

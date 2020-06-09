@@ -22,7 +22,7 @@
     <div class="form">
       <mat-form-field hintLabel="Maksimalno 8 cifara">
         <input matInput #input3 [formControl]="cena" type="number" placeholder="Cena" [(ngModel)]="data.cena"
-         name="cena" required min="1" max="99999999">
+          name="cena" required min="1" max="99999999">
         <mat-hint align="end">{{input3.value?.length || 0}}/8</mat-hint>
       </mat-form-field>
     </div>
@@ -54,7 +54,7 @@
     <div class="form">
       <mat-form-field hintLabel="Maksimalno 8 cifara">
         <input matInput #input7 type="number" placeholder="Masa" [(ngModel)]="data.masa" name="masa"
-         [formControl]="masa" min="1" max="99999999">
+          [formControl]="masa" min="1" max="99999999">
         <mat-hint align="end">{{input7.value?.length || 0}}/8</mat-hint>
       </mat-form-field>
     </div>
@@ -91,9 +91,9 @@
 
     <div mat-dialog-actions>
       <button mat-raised-button color="accent" *ngIf="flag == 1" type="submit" [mat-dialog-close]="1" (click)="add()"
-        [disabled]="!formControl.valid || !data.cena || !data.raspolozivaKolicina">Dodaj</button>
+        [disabled]="!formControl.valid || !cena.valid || !raspolozivaKolicina.valid">Dodaj</button>
       <button mat-raised-button color="accent" *ngIf="flag == 2" type="submit" [mat-dialog-close]="1" (click)="update()"
-        [disabled]="!formControl.valid || !data.cena || !data.raspolozivaKolicina">Ažuriraj</button>
+        [disabled]="!formControl.valid || !cena.valid || !raspolozivaKolicina.valid">Ažuriraj</button>
       <button mat-raised-button color="primary" *ngIf="flag == 3" type="submit" [mat-dialog-close]="1"
         (click)="delete()">Obriši</button>
       <button mat-raised-button color="warn" (click)="cancel()" tabindex="-1">Poništi</button>
