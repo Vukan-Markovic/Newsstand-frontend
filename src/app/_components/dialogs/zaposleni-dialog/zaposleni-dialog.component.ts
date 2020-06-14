@@ -64,15 +64,7 @@ export class ZaposleniDialogComponent implements OnInit {
   public delete() {
     if (this.data.menadzer) {
       this.menadzerService.deleteMenadzer(this.data.prodavacID).subscribe(
-        d => this.deleteProdavac(), error => {
-          this.snackBar.open("Ne možete izbrisati nalog dok imate kreirane porudžbine!", "U redu", {
-            duration: 2000,
-            panelClass: ['red-snackbar']
-          });
-
-          this.dialogRef.close(-1);
-        }
-      );
+        d => this.deleteProdavac(), error => this.showDeleteError());
     }
     else this.deleteProdavac();
   }
@@ -83,8 +75,8 @@ export class ZaposleniDialogComponent implements OnInit {
         d => {
           this.showSuccess(data);
           this.dialogRef.close(1);
-        }, error => this.showError(error));
-    }, error => this.showError(error));
+        }, error => this.showDeleteError());
+    }, error => this.showDeleteError());
   }
 
   public cancel() {
@@ -92,6 +84,15 @@ export class ZaposleniDialogComponent implements OnInit {
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,
     });
+  }
+
+  showDeleteError() {
+    this.snackBar.open("Ne možete izbrisati nalog dok imate kreirane porudžbine!", "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
+    });
+
+    this.dialogRef.close(-1);
   }
 
   showError(error) {

@@ -128,7 +128,12 @@ export class PorudzbinaDialogComponent implements OnInit {
 
   public delete() {
     this.porudzbinaService.deletePorudzbina(this.data.porudzbinaID).subscribe(
-      data => this.showSuccess(data), error => this.showError(error));
+      data => this.showSuccess(data), error => {
+        this.snackBar.open("Ne možete izbrisati porudžbinu dok ima stavke!", "U redu", {
+          duration: 2000,
+          panelClass: ['red-snackbar']
+        });
+      });
   }
 
   public cancel() {

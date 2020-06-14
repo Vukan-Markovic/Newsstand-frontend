@@ -58,7 +58,12 @@ export class RacunDialogComponent implements OnInit {
 
   public delete() {
     this.racunService.deleteRacun(this.data.racunID).subscribe(
-      data => this.showSuccess(data), error => this.showError(error));
+      data => this.showSuccess(data), error => {
+        this.snackBar.open("Ne možete izbrisati račun dok ima stavke!", "U redu", {
+          duration: 2000,
+          panelClass: ['red-snackbar']
+        });
+      });
   }
 
   public cancel() {

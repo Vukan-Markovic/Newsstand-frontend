@@ -34,8 +34,8 @@ export class DobavljacDialogComponent implements OnInit {
         data => {
           this.showSuccess(data);
           this.dialogRef.close(1);
-        }, error => this.showError(error));
-    }, error => this.showError(error));
+        }, error => this.showDeleteError());
+    }, error => this.showDeleteError());
   }
 
   public cancel() {
@@ -43,6 +43,15 @@ export class DobavljacDialogComponent implements OnInit {
     this.snackBar.open("Odustali ste", "U redu", {
       duration: 1000,
     });
+  }
+
+  showDeleteError() {
+    this.snackBar.open("Ne možete izbrisati nalog dok imate kreirane porudžbine!", "U redu", {
+      duration: 2000,
+      panelClass: ['red-snackbar']
+    });
+
+    this.dialogRef.close(-1);
   }
 
   showError(error) {
